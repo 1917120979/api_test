@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="30">
+    <properties>
+        <!--设置容器日志在硬盘上输出的目录-->
+        <property name="logPath">/opt/logs/renetwork/</property>
+        <!--设置项目日志在硬盘上输出的目录-->
+        <property name="logPathForProject">/opt/logs/renetwork/project/</property>
+    </properties>
+
+    <Appenders>
+        <!--=====容器日志配置=====-->
+        <!--设置在控制台打印日志-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--设置输出格式-->
+            <PatternLayout pattern="[%-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+        </Console>
+
+        <!--设置级别为INFO日志输出到info.log中，filename为输出日志的目录，filepattern为压缩文件的命名规范与目录 -->
+        <RollingFile name="INFO" filename="${logPath}/info.log"
+                     filepattern="${logPath}/%d{YYYYMMdd}-%i-info.log.zip">
+            <!--设置日志级别-->
+            <Filters>
+                <ThresholdFilter level="INFO"/>
+            </Filters>
+            <!--输出日志的格式-->
+            <PatternLayout pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+            <Policies>
+                <!--设置每天打包日志一次-->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!--设置日志文件满50MB后打包-->
+                <SizeBasedTriggeringPolicy size="50MB" />
+            </Policies>
+            <!--设置最多保存20个日志文件，默认为7个-->
+            <DefaultRolloverStrategy max="20" />
+        </RollingFile>
+
+        <!--设置级别为WARN日志输出到warn.log中-->
+        <RollingFile name="WARN" filename="${logPath}/warn.log"
+                     filepattern="${logPath}/%d{YYYYMMdd}-%i-warn.log.zip">
+            <Filters>
+                <!--设置只输出级别为WARN的日志-->
+                <ThresholdFilter level="WARN"/>
+                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingFile>
+
+        <!--设置级别为ERROR日志输出到error.log中-->
+        <RollingFile name="ERROR" filename="${logPath}/error.log"
+                     filepattern="${logPath}/%d{YYYYMMdd}-%i-error.log.zip">
+            <!--设置只输出级别为ERROR的日志-->
+            <ThresholdFilter level="ERROR"/>
+            <PatternLayout pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingFile>
+
+
+        <!--=====项目日志配置=====-->
+        <Console name="ConsolePro" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+        </Console>
+
+        <RollingFile name="INFOPro" filename="${logPathForProject}/info.log"
+                     filepattern="${logPathForProject}/%d{YYYYMMdd}-%i-info.log.zip">
+            <Filters>
+                <ThresholdFilter level="INFO"/>
+            </Filters>
+            <PatternLayout pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingFile>
+
+        <RollingFile name="WARNPro" filename="${logPathForProject}/warn.log"
+                     filepattern="${logPathForProject}/%d{YYYYMMdd}-%i-warn.log.zip">
+            <Filters>
+                <ThresholdFilter level="WARN"/>
+                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingFile>
+
+        <RollingFile name="ERRORPro" filename="${logPathForProject}/error.log"
+                     filepattern="${logPathForProject}/%d{YYYYMMdd}-%i-error.log.zip">
+            <ThresholdFilter level="ERROR"/>
+            <PatternLayout pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingFile>
+    </Appenders>
+    
+    <Loggers>
+        <!--
+            添加项目日志
+            配置项目日志只输出com.bj58.renetwork下面的日志
+            additivity="false" 表示只将该日志输出到该配置的路径下面，并不会再重复输出到root也就是容器日志中
+        -->
+        <logger name="com.bj58.renetwork" level="debug" additivity="false">
+            <appender-ref ref = "ConsolePro"/>
+            <appender-ref ref = "INFOPro"/>
+            <appender-ref ref = "WARNPro" />
+            <appender-ref ref = "ERRORPro" />
+        </logger>
+        <!--添加容器日志-->
+        <root level="INFO">
+            <appender-ref ref = "Console"/>
+            <appender-ref ref = "INFO" />
+            <appender-ref ref = "WARN" />
+            <appender-ref ref = "ERROR" />
+        </root>
+    </Loggers>
+</Configuration>
