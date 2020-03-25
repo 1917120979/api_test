@@ -40,16 +40,16 @@ public class BaseDao {
 
 	}
 
-	public <T> List<T> query(String sql, Object[] obj, Class<T> clz) {
+	public <T> List<T> query(String sql, Object[] params, Class<T> clz) {
 		List<T> list = new ArrayList<T>();
 		try {
 
 			T t = null;
 			conn = DBUtil.getConnection();
 			pst = conn.prepareStatement(sql);
-			if (obj.length > 0 && obj != null) {
-				for (int i = 0; i < obj.length; i++) {
-					pst.setObject(i + 1, obj[i]);
+			if (params.length > 0 && params != null) {
+				for (int i = 0; i < params.length; i++) {
+					pst.setObject(i + 1, params[i]);
 				}
 			}
 
@@ -81,14 +81,14 @@ public class BaseDao {
 		return list;
 	}
 	
-	public <T> Map<String, String> queryMap(String sql, Object[] obj){
+	public <T> Map<String, String> queryMap(String sql, Object[] params){
 		Map<String, String> map = new HashMap<String, String>();
 		try {
 			conn = DBUtil.getConnection();
 			pst = conn.prepareStatement(sql);
-			if (obj.length > 0 && obj != null) {
-				for (int i = 0; i < obj.length; i++) {
-					pst.setObject(i + 1, obj[i]);
+			if (params.length > 0 && params != null) {
+				for (int i = 0; i < params.length; i++) {
+					pst.setObject(i + 1, params[i]);
 				}
 			}
 
@@ -107,14 +107,14 @@ public class BaseDao {
 		return map;
 	}
 
-	public <T> String queryJson(String sql, Object[] obj){
+	public <T> String queryJson(String sql, Object[] params){
 		JSONObject json = new JSONObject();
 		try {
 			conn = DBUtil.getConnection();
 			pst = conn.prepareStatement(sql);
-			if (obj.length > 0 && obj != null) {
-				for (int i = 0; i < obj.length; i++) {
-					pst.setObject(i + 1, obj[i]);
+			if (params.length > 0 && params != null) {
+				for (int i = 0; i < params.length; i++) {
+					pst.setObject(i + 1, params[i]);
 				}
 			}
 
@@ -137,13 +137,13 @@ public class BaseDao {
 		return json.toJSONString();
 	}
 	
-	public <T> void update(String sql, Object[] obj, Class<T> clz) {
+	public <T> void update(String sql, Object[] params, Class<T> clz) {
 		try {
 			conn = DBUtil.getConnection();
 			pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			if (obj.length > 0 && obj != null) {
-				for (int i = 0; i < obj.length; i++) {
-					pst.setObject(i + 1, obj[i]);
+			if (params.length > 0 && params != null) {
+				for (int i = 0; i < params.length; i++) {
+					pst.setObject(i + 1, params[i]);
 				}
 			}
 			pst.execute();

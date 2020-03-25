@@ -2,6 +2,7 @@ package api.bean;
 
 public class Relation {
 	private int id;
+	private int apiId;
 	private String relationName;
 	private String relationValue;
 	public int getId() {
@@ -21,6 +22,12 @@ public class Relation {
 	}
 	public void setRelationValue(String relationValue) {
 		this.relationValue = relationValue;
+	}
+	public int getApiId() {
+		return apiId;
+	}
+	public void setApiId(int apiId) {
+		this.apiId = apiId;
 	}
 	
 	

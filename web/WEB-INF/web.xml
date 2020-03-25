@@ -59,4 +59,14 @@
 		<servlet-name>ApiProjectServlet</servlet-name>
 		<url-pattern>/apiProjectServlet</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>RelationServlet</servlet-name>
+		<servlet-class>api.servlet.RelationServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>RelationServlet</servlet-name>
+		<url-pattern>/relationServlet</url-pattern>
+	</servlet-mapping>
 </web-app>

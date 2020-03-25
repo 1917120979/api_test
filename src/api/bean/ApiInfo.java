@@ -11,6 +11,7 @@ public class ApiInfo {
 	private String method;
 	private String path;
 	private String dataType;
+	private int isRelation;
 
 	public int getId() {
 		return id;
@@ -90,6 +91,14 @@ public class ApiInfo {
 
 	public void setGid(int gid) {
 		this.gid = gid;
+	}
+
+	public int getIsRelation() {
+		return isRelation;
+	}
+
+	public void setIsRelation(int isRelation) {
+		this.isRelation = isRelation;
 	}
 
 }
