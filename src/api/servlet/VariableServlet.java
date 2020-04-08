@@ -5,18 +5,29 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import api.bean.Relation;
+import com.alibaba.fastjson.JSONObject;
+
+import api.bean.Project;
 import api.util.Page;
 
-public class RelationServlet extends BaseBackServlet{
+public class VariableServlet extends BaseBackServlet{
 
-	@Override
-	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
-		return null;
-	}
+	
 
 	@Override
 	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
+		int pid = Integer.parseInt(request.getParameter("pid"));
+		String redirect = "@admin_projectDetail_list?pid="+pid;
+		try {
+			variableDAO.deleteAll(pid);
+		} catch (Exception e) {
+			redirect = redirect + "?msg=delete fail";
+		}
+		return redirect;
+	}
+
+	@Override
+	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
 		return null;
 	}
 
@@ -32,10 +43,9 @@ public class RelationServlet extends BaseBackServlet{
 
 	@Override
 	public String list(HttpServletRequest request, HttpServletResponse response, Page page) {
-		List<Relation> rs = rDAO.list(page.getStart(), page.getCount());
-		
-		
 		return null;
 	}
+
+	
 
 }
