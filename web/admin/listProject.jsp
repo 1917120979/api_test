@@ -49,9 +49,9 @@
 			"id":id
 	    },
 	    success:function(data){
-			var p = data.p;
-			$("#name").val(p.name);
+			var p = data.data;
 			$("#id").val(p.id);
+			$("#name").val(p.name);			
 			$("#isSign").val(p.isSign);
 			$("#isEncript").val(p.isEncript);
 	    },
@@ -201,7 +201,7 @@
 							</c:choose>
 						</td>
 						<td>
-							<a href="admin_projectDetail_list?pid=${p.id }" class="tda"><span class="glyphicon glyphicon-cog"></span></a>
+							<a href="admin_projectVariable_list?pid=${p.id }" class="tda"><span class="glyphicon glyphicon-cog"></span></a>
 							<a onclick="doEdit(${p.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
 							<a onclick="doDelete(${p.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
 						</td>

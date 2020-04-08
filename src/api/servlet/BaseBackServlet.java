@@ -22,9 +22,8 @@ import org.slf4j.LoggerFactory;
 import api.dao.ApiAttributeDAO;
 import api.dao.ApiInfoDAO;
 import api.dao.ProjectDAO;
-import api.dao.VariableDAO;
+import api.dao.ProjectVariableDAO;
 import api.dao.ApiResultDAO;
-import api.dao.ConfigDAO;
 import api.util.Page;
 
 public abstract class BaseBackServlet extends HttpServlet{
@@ -39,9 +38,8 @@ public abstract class BaseBackServlet extends HttpServlet{
 	protected ApiInfoDAO aiDAO = new ApiInfoDAO();
 	protected ApiAttributeDAO aattDAO = new ApiAttributeDAO();
 	protected ApiResultDAO arDAO = new ApiResultDAO();
-	protected ConfigDAO configDAO = new ConfigDAO();
-	protected ProjectDAO projectDAO = new ProjectDAO();
-	protected VariableDAO variableDAO = new VariableDAO();
+	protected ProjectDAO pDAO = new ProjectDAO();
+	protected ProjectVariableDAO pvDAO = new ProjectVariableDAO();
 	
 	public void service(HttpServletRequest request, HttpServletResponse response) {
 		try {

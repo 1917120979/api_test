@@ -19,7 +19,7 @@ public class ApiInfoServlet extends BaseBackServlet{
 		Map<String, Object> params = super.parseParam(request);
 		
 		int pid = Integer.parseInt((String) params.get("pid"));
-		Project project = projectDAO.get(pid);
+		Project project = pDAO.get(pid);
 		params.remove("pid");
 		params.put("project", project);
 		

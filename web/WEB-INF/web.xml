@@ -61,33 +61,14 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>ProjectDetailServlet</servlet-name>
-		<servlet-class>api.servlet.ProjectDetailServlet</servlet-class>
+		<servlet-name>ProjectVariableServlet</servlet-name>
+		<servlet-class>api.servlet.ProjectVariableServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>ProjectDetailServlet</servlet-name>
-		<url-pattern>/projectDetailServlet</url-pattern>
+		<servlet-name>ProjectVariableServlet</servlet-name>
+		<url-pattern>/projectVariableServlet</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>ConfigServlet</servlet-name>
-		<servlet-class>api.servlet.ConfigServlet</servlet-class>
-	</servlet>
 	
-	<servlet-mapping>
-		<servlet-name>ConfigServlet</servlet-name>
-		<url-pattern>/configServlet</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>VariableServlet</servlet-name>
-		<servlet-class>api.servlet.VariableServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>VariableServlet</servlet-name>
-		<url-pattern>/variableServlet</url-pattern>
-	</servlet-mapping>
 </web-app>

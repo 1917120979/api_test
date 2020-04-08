@@ -24,7 +24,7 @@ public class ProjectServlet extends BaseBackServlet{
 		bean.setIsEncript(isEncript);
 		
 		JSONObject json = new JSONObject();		
-		if (projectDAO.add(bean)) {
+		if (pDAO.add(bean)) {
 			json.put("msg", "sucess");
 			json.put("code", 0);
 			json.put("data", "null");
@@ -43,7 +43,7 @@ public class ProjectServlet extends BaseBackServlet{
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 		JSONObject json = new JSONObject();		
-		if (projectDAO.delete(id)) {
+		if (pDAO.delete(id)) {
 			json.put("msg", "sucess");
 			json.put("code", 0);
 			json.put("data", "null");
@@ -60,9 +60,18 @@ public class ProjectServlet extends BaseBackServlet{
 	@Override
 	public String edit(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int id = Integer.parseInt(request.getParameter("id"));
-		Project p = projectDAO.get(id);
+		Project p = pDAO.get(id);
+		
 		JSONObject json = new JSONObject();
-		json.put("p", p);
+		if (p != null) {
+			json.put("msg", "sucess");
+			json.put("code", 0);
+			json.put("data", p);
+		}else {
+			json.put("msg", "fail");
+			json.put("code", 401);
+			json.put("data", "null");
+		}
 		response.setContentType("text/html;charset=UTF-8");
 		return "%"+json.toJSONString();
 	}
@@ -81,7 +90,7 @@ public class ProjectServlet extends BaseBackServlet{
 		bean.setIsEncript(isEncript);
 		
 		JSONObject json = new JSONObject();		
-		if (projectDAO.update(bean)) {
+		if (pDAO.update(bean)) {
 			json.put("msg", "sucess");
 			json.put("code", 0);
 			json.put("data", "null");
@@ -97,8 +106,8 @@ public class ProjectServlet extends BaseBackServlet{
 
 	@Override
 	public String list(HttpServletRequest request, HttpServletResponse response, Page page) {
-		List<Project> ps = projectDAO.list(page.getStart(), page.getCount());
-		int total = projectDAO.getTotal();
+		List<Project> ps = pDAO.list(page.getStart(), page.getCount());
+		int total = pDAO.getTotal();
 		page.setTotal(total);
 		
 		request.setAttribute("page", page);

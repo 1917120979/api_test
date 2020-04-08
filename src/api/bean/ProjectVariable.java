@@ -1,11 +1,11 @@
 package api.bean;
 
-public class Variable {
+public class ProjectVariable {
 	private int id;
 	private Project project;
 	private ApiInfo apiInfo;
-	private String varName;
-	private String varValue;
+	private String variableName;
+	private String variableValue;
 	public int getId() {
 		return id;
 	}
@@ -24,17 +24,18 @@ public class Variable {
 	public void setApiInfo(ApiInfo apiInfo) {
 		this.apiInfo = apiInfo;
 	}
-	public String getVarName() {
-		return varName;
+	public String getVariableName() {
+		return variableName;
 	}
-	public void setVarName(String varName) {
-		this.varName = varName;
+	public void setVariableName(String variableName) {
+		this.variableName = variableName;
 	}
-	public String getVarValue() {
-		return varValue;
+	public String getVariableValue() {
+		return variableValue;
 	}
-	public void setVarValue(String varValue) {
-		this.varValue = varValue;
+	public void setVariableValue(String variableValue) {
+		this.variableValue = variableValue;
 	}
+
 
 }

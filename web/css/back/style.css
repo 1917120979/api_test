@@ -188,3 +188,16 @@ div.left-border{
 .tda{
 	margin-left: 40px;
 }
+.select{
+	background-color: #f5f5f5;
+	padding: 8px 0px;
+}
+.select span{
+	margin-left:15px;
+}
+.select button{
+	margin-left:15px;
+}
+.buttonDiv button{
+	margin-right:15px;
+}
