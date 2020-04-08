@@ -2,6 +2,7 @@ package api.dao;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -22,7 +23,8 @@ public class BaseDao {
 	private Connection conn;
 	private PreparedStatement pst;
 	private ResultSet rs;
-
+	private DatabaseMetaData dbmd = null;  
+	
 	public void close() {
 		try {
 			if (conn != null) {
@@ -39,7 +41,59 @@ public class BaseDao {
 		}
 
 	}
+	
+	public List<String> getTableNames(String schemaName){
+		List<String> tableNames = new ArrayList<String>();
+		try {
+			dbmd = conn.getMetaData();  
+	        String[] types = { "TABLE" };    
+	        rs = dbmd.getTables(null, schemaName, "%", types);
+	        while(rs.next()) {
+	        	String name = rs.getString("TABLE_NAME");
+	        	tableNames.add(name);
+	        }
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return tableNames;
+		
+	}
+	
+	public List<String> getFKNames(String schemaName){
+		List<String> tableNames = getTableNames(schemaName);
+		List<String> fkNames = new ArrayList<String>();
+		try {
+			for (int i = 0; i < tableNames.size(); i++) {
+				rs = dbmd.getExportedKeys(null, schemaName, tableNames.get(i));
+				while(rs.next()) {
+					String fkName =  rs.getString("FKCOLUMN_NAME");
+					fkNames.add(fkName);
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return fkNames;
+		
+	}
 
+	public ResultSet query(String sql, Object[] params) {
+		try {
+			conn = DBUtil.getConnection();
+			pst = conn.prepareStatement(sql);
+			if (params.length > 0 && params != null) {
+				for (int i = 0; i < params.length; i++) {
+					pst.setObject(i + 1, params[i]);
+				}
+			}
+
+			rs = pst.executeQuery();
+		}catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return rs;
+	}
+	
 	public <T> List<T> query(String sql, Object[] params, Class<T> clz) {
 		List<T> list = new ArrayList<T>();
 		try {
@@ -55,6 +109,7 @@ public class BaseDao {
 
 			rs = pst.executeQuery();
 			ResultSetMetaData rsmd = rs.getMetaData();
+			
 			int colNum = rsmd.getColumnCount();
 			while (rs.next()) {
 				t = clz.newInstance();
@@ -80,6 +135,8 @@ public class BaseDao {
 		}
 		return list;
 	}
+	
+	
 	
 	public <T> Map<String, String> queryMap(String sql, Object[] params){
 		Map<String, String> map = new HashMap<String, String>();
@@ -137,7 +194,7 @@ public class BaseDao {
 		return json.toJSONString();
 	}
 	
-	public <T> void update(String sql, Object[] params, Class<T> clz) {
+	public <T> Boolean update(String sql, Object[] params, Class<T> clz) {
 		try {
 			conn = DBUtil.getConnection();
 			pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -147,7 +204,7 @@ public class BaseDao {
 				}
 			}
 			pst.execute();
-			if (sql.contains("insert")) {
+			if (sql.contains("insert") && clz != null) {
 				rs = pst.getGeneratedKeys();
 				while (rs.next()) {
 					T t = clz.newInstance();
@@ -157,11 +214,13 @@ public class BaseDao {
 				}
 
 			}
+			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			return false;
 		} finally {
 			close();
 		}
+		
 	}
 	
 	public int getTotal(String sql, Object[] params) {

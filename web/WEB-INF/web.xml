@@ -51,22 +51,43 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>ApiProjectServlet</servlet-name>
-		<servlet-class>api.servlet.ApiProjectServlet</servlet-class>
+		<servlet-name>ProjectServlet</servlet-name>
+		<servlet-class>api.servlet.ProjectServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>ApiProjectServlet</servlet-name>
-		<url-pattern>/apiProjectServlet</url-pattern>
+		<servlet-name>ProjectServlet</servlet-name>
+		<url-pattern>/projectServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProjectDetailServlet</servlet-name>
+		<servlet-class>api.servlet.ProjectDetailServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ProjectDetailServlet</servlet-name>
+		<url-pattern>/projectDetailServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ConfigServlet</servlet-name>
+		<servlet-class>api.servlet.ConfigServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ConfigServlet</servlet-name>
+		<url-pattern>/configServlet</url-pattern>
 	</servlet-mapping>
 	
+	
 	<servlet>
-		<servlet-name>RelationServlet</servlet-name>
-		<servlet-class>api.servlet.RelationServlet</servlet-class>
+		<servlet-name>VariableServlet</servlet-name>
+		<servlet-class>api.servlet.VariableServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>RelationServlet</servlet-name>
-		<url-pattern>/relationServlet</url-pattern>
+		<servlet-name>VariableServlet</servlet-name>
+		<url-pattern>/variableServlet</url-pattern>
 	</servlet-mapping>
 </web-app>

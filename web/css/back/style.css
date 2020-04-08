@@ -15,6 +15,11 @@ div.addApiDiv {
     height: 420px;
 }
 
+div.addProjDiv {
+    width: 400px;
+    height: 300px;
+}
+
 div.editDiv {
 	width: 400px;
 	margin: 0px auto;
@@ -177,4 +182,9 @@ div.right-border{
 
 div.left-border{
 	border-left: solid #ddd;
+}
+
+
+.tda{
+	margin-left: 40px;
 }

@@ -9,27 +9,42 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONObject;
 
 import api.bean.ApiInfo;
-import api.bean.ApiProject;
+import api.bean.Project;
 import api.util.Page;
 
 public class ApiInfoServlet extends BaseBackServlet{
 
 	@Override
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {	
-		ApiInfo aInfo = super.parseClass(request, ApiInfo.class);
-		int pid = aInfo.getPid();
-		aiDAO.add(aInfo);
-		return "@admin_apiInfo_list?pid="+pid;
+		Map<String, Object> params = super.parseParam(request);
+		
+		int pid = Integer.parseInt((String) params.get("pid"));
+		Project project = projectDAO.get(pid);
+		params.remove("pid");
+		params.put("project", project);
+		
+		ApiInfo bean = super.parseClass(params, ApiInfo.class);		
+		
+		String redirect = "@admin_apiInfo_list?pid="+pid;
+		try {
+			aiDAO.add(bean);
+		} catch (Exception e) {
+			redirect = redirect + "&msg=add fail";
+		}		
+		return redirect;
 	}
 
 	@Override
 	public String list(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int pid = Integer.parseInt(request.getParameter("pid"));
+		Map<String, Object> params = super.parseParam(request);
+		
+		int pid = Integer.parseInt((String) params.get("pid"));
+
 		List<ApiInfo> ais = aiDAO.list(pid, page.getStart(), page.getCount());
 		int total = aiDAO.getTotal(pid);
 		page.setTotal(total);
 		
-		ApiProject ap = apDAO.get(pid);
+		Project ap = apDAO.get(pid);
 		
 		request.setAttribute("ap", ap);
 		request.setAttribute("ais", ais);

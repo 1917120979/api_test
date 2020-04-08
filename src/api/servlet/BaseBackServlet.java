@@ -19,13 +19,12 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import api.bean.ApiAttribute;
-import api.bean.ApiResult;
 import api.dao.ApiAttributeDAO;
 import api.dao.ApiInfoDAO;
-import api.dao.ApiProectDAO;
+import api.dao.ProjectDAO;
+import api.dao.VariableDAO;
 import api.dao.ApiResultDAO;
-import api.dao.RelationDAO;
+import api.dao.ConfigDAO;
 import api.util.Page;
 
 public abstract class BaseBackServlet extends HttpServlet{
@@ -40,8 +39,9 @@ public abstract class BaseBackServlet extends HttpServlet{
 	protected ApiInfoDAO aiDAO = new ApiInfoDAO();
 	protected ApiAttributeDAO aattDAO = new ApiAttributeDAO();
 	protected ApiResultDAO arDAO = new ApiResultDAO();
-	protected RelationDAO rDAO = new RelationDAO();
-	protected ApiProectDAO apDAO = new ApiProectDAO();
+	protected ConfigDAO configDAO = new ConfigDAO();
+	protected ProjectDAO projectDAO = new ProjectDAO();
+	protected VariableDAO variableDAO = new VariableDAO();
 	
 	public void service(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -76,8 +76,8 @@ public abstract class BaseBackServlet extends HttpServlet{
 		}
 	}
 	
-	public Map<String, String> parseParam(HttpServletRequest request) {
-		Map<String, String> params = new HashMap<String, String>();
+	public Map<String, Object> parseParam(HttpServletRequest request) {
+		Map<String, Object> params = new HashMap<String, Object>();
 		try {
 			Enumeration<String> paramNames = request.getParameterNames();
 			while (paramNames.hasMoreElements()) {
@@ -95,38 +95,22 @@ public abstract class BaseBackServlet extends HttpServlet{
 		
 	}
 	
-	public <T> T parseClass(HttpServletRequest request, Class<T> clazz) {
-		Map<String, String> params = parseParam(request);
+	public <T> T parseClass(Map<String, Object>  params, Class<T> clazz) {
+		
 		try {
 			T t = clazz.newInstance();
 			for (String key : params.keySet()) {
-				Object attValue = null;
-				if (key.contains("id")) {
-					String value = params.get(key);
-					if (value.equals("")) {
-						continue;
-					}else {
-						attValue = Integer.parseInt(value);
-					}					
-				}else {
-					attValue = params.get(key);
-				}				
-				if (attValue != null) {
+				Object value = params.get(key);						
+				if (value != null) {
 					Field field = clazz.getDeclaredField(key);
 					field.setAccessible(true);
-					field.set(t, attValue);
+					field.set(t, value);
 				}
 			}
 			return t;
-		} catch (InstantiationException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		}
+		} 
 		return null;				
 	}
 	

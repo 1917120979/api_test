@@ -2,7 +2,7 @@ package api.bean;
 
 public class ApiGroup {
 	private int id;
-	private ApiProject apiProject;
+	private Project apiProject;
 	private String name;
 
 	public int getId() {
@@ -13,11 +13,11 @@ public class ApiGroup {
 		this.id = id;
 	}
 
-	public ApiProject getApiProject() {
+	public Project getApiProject() {
 		return apiProject;
 	}
 
-	public void setApiProject(ApiProject apiProject) {
+	public void setApiProject(Project apiProject) {
 		this.apiProject = apiProject;
 	}
 

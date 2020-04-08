@@ -2,8 +2,7 @@ package api.bean;
 
 public class ApiInfo {
 	private int id;
-	private int pid;
-	private int gid;
+	private Project project;
 	private String apiName;
 	private String protocol;
 	private String serverName;
@@ -77,28 +76,20 @@ public class ApiInfo {
 		this.dataType = dataType;
 	}
 
-	public int getPid() {
-		return pid;
-	}
-
-	public void setPid(int pid) {
-		this.pid = pid;
-	}
-
-	public int getGid() {
-		return gid;
-	}
-
-	public void setGid(int gid) {
-		this.gid = gid;
-	}
-
 	public int getIsRelation() {
 		return isRelation;
 	}
 
 	public void setIsRelation(int isRelation) {
 		this.isRelation = isRelation;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 }
