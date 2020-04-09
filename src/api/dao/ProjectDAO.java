@@ -17,7 +17,7 @@ public class ProjectDAO extends BaseDao{
 	public boolean delete(int id) {
 		String sql = "delete from project where id = ?";
 		Object[] params = {id};
-		return super.update(sql, params, Project.class);
+		return super.update(sql, params, null);
 	}
 	
 	public boolean update(Project bean) {

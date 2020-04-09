@@ -7,31 +7,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mysql.jdbc.Statement;
+import com.sun.org.apache.bcel.internal.generic.GOTO;
 
 import api.bean.ApiInfo;
+import api.bean.Group;
 import api.util.DBUtil;
 
 public class ApiInfoDAO extends BaseDao{
-	public void add(ApiInfo bean) throws Exception {
-		String sql = "insert into api_info values(null,?,null,?,?,?,?,?,?,?)";
-		Object[]  params= {bean.getProject().getId(), bean.getApiName(),bean.getProtocol(),bean.getServerName(),bean.getPortNum(),bean.getMethod(),bean.getPath(),bean.getDataType()};
-		super.update(sql, params, ApiInfo.class);
+	public boolean add(ApiInfo bean) {
+		String sql = "insert into api_info values(null,?,?,?,?,?,?)";
+		Object[]  params= {bean.getProject().getId(), bean.getGroup().getId(),bean.getApiName(),bean.getUrl(),bean.getMethod(),bean.getDataType()};	
+		return super.update(sql, params, ApiInfo.class);
 	}
 	
-	public void delete(int id) throws Exception {
+	public boolean delete(int id) {
 		String sql = "delete from api_info where id = ?";
 		Object[]  params= {id};
-		super.update(sql, params, ApiInfo.class);
+		return super.update(sql, params, null);
 	}
 	
-	public void update(ApiInfo bean) throws Exception {
-		String sql = "update api_info set apiName = ?,protocol = ?,serverName = ?,portNum = ?,method=?,path=?, dataType = ? where id = ?";
-		Object[]  params= {bean.getApiName(),bean.getProtocol(),bean.getServerName(),bean.getPortNum(),bean.getMethod(),bean.getPath(),bean.getDataType(),bean.getId()};
-		super.update(sql, params, ApiInfo.class);
+	public boolean deleteAll(int gid) {
+		String sql = "delete from api_info where gid = ?";
+		Object[]  params= {gid};
+		return super.update(sql, params, null);
+	}
+	
+	public boolean update(ApiInfo bean) {
+		String sql = "update api_info set apiName = ?,url = ?,method=?, dataType = ? where id = ?";
+		Object[]  params= {bean.getApiName(),bean.getUrl(),bean.getMethod(),bean.getDataType(),bean.getId()};
+		return super.update(sql, params, null);
 	}
 	
 	public List<ApiInfo> list(int pid, int start, int count) {
-		String sql = "select * from api_info where pid = ? limit ? , ?";
+		String sql = "select * from api_info where pid = ? and gid = 0 limit ? , ?";
 		Object[] params = {pid, start, count};
 		ResultSet rs = super.query(sql, params);
 		List<ApiInfo> beans = new ArrayList<ApiInfo>();
@@ -39,18 +47,44 @@ public class ApiInfoDAO extends BaseDao{
 			while(rs.next()) {
 				ApiInfo bean = new ApiInfo();
 				ProjectDAO projectDAO = new ProjectDAO();
+				Group group = new Group();
+				group.setId(0);
 				
 				bean.setId(rs.getInt("id"));
 				bean.setProject(projectDAO.get(pid));
+				bean.setGroup(group);
 				bean.setApiName(rs.getString("api_name"));
-				bean.setProtocol(rs.getString("protocol"));
-				bean.setServerName(rs.getString("server_name"));
-				bean.setPortNum(rs.getString("port_num"));
+				bean.setUrl(rs.getString("url"));			
 				bean.setMethod(rs.getString("method"));
-				bean.setPath(rs.getString("path"));
-				bean.setDataType(rs.getString("data_type"));
-				bean.setIsRelation(rs.getInt("isRelation"));
+				bean.setDataType(rs.getInt("data_type"));
+				bean.setHasExtractor(rs.getInt("has_extractor"));
+				bean.setHasAssert(rs.getInt("has_assert"));
+				beans.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return beans;		
+	}
+	
+	public List<ApiInfo> list(int gid) {
+		String sql = "select * from api_info where gid = ?";
+		Object[] params = {gid};
+		ResultSet rs = super.query(sql, params);
+		List<ApiInfo> beans = new ArrayList<ApiInfo>();
+		try {
+			while(rs.next()) {
+				ApiInfo bean = new ApiInfo();
+				GroupDAO groupDAO = new GroupDAO();
 				
+				bean.setId(rs.getInt("id"));
+				bean.setGroup(groupDAO.get(gid));
+				bean.setApiName(rs.getString("api_name"));
+				bean.setUrl(rs.getString("url"));			
+				bean.setMethod(rs.getString("method"));
+				bean.setDataType(rs.getInt("data_type"));
+				bean.setHasExtractor(rs.getInt("has_extractor"));
+				bean.setHasAssert(rs.getInt("has_assert"));
 				beans.add(bean);
 			}
 		} catch (Exception e) {
@@ -74,17 +108,17 @@ public class ApiInfoDAO extends BaseDao{
 			while(rs.next()) {
 				
 				ProjectDAO projectDAO = new ProjectDAO();
+				GroupDAO groupDAO = new GroupDAO();
 				
-				bean.setId(id);
+				bean.setId(rs.getInt("id"));
 				bean.setProject(projectDAO.get(rs.getInt("pid")));
+				bean.setGroup(groupDAO.get(rs.getInt("gid")));
 				bean.setApiName(rs.getString("api_name"));
-				bean.setProtocol(rs.getString("protocol"));
-				bean.setServerName(rs.getString("server_name"));
-				bean.setPortNum(rs.getString("port_num"));
+				bean.setUrl(rs.getString("url"));			
 				bean.setMethod(rs.getString("method"));
-				bean.setPath(rs.getString("path"));
-				bean.setDataType(rs.getString("data_type"));
-				bean.setIsRelation(rs.getInt("isRelation"));
+				bean.setDataType(rs.getInt("data_type"));
+				bean.setHasExtractor(rs.getInt("has_extractor"));
+				bean.setHasAssert(rs.getInt("has_assert"));
 				
 			}
 		} catch (Exception e) {

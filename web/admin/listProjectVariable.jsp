@@ -6,6 +6,7 @@
 <%@include file="../include/admin/adminHeader.jsp"%>
 <%@include file="../include/admin/adminNavigator.jsp"%>
 <script>
+	var pid = ${p.id};
     $(function() {
 	$("#variableName").submit(function() {
 	    if (!checkEmpt("variableName"))
@@ -25,7 +26,7 @@
 	return false;
     }
 
-    function hide() {
+    function cancel() {
 	$('#layer').css({
 	    "display" : "none"
 	});
@@ -65,7 +66,7 @@
 	return false;
     }   
     
-    function doDelete(id,pid){
+    function doDelete(id){
 		var flag = confirm("是否确认删除？");
 		if(flag){
 		    $.ajax({
@@ -86,7 +87,7 @@
 		}
     }
     
-    function submitForm(pid){
+    function submitForm(){
 		var targetUrl = $("#addForm").attr("name");
 	    $.ajax({
 			type:"post",
@@ -102,7 +103,7 @@
 	        }
 	    });	
     }  
-    function s_click(obj,pid){
+    function s_click(obj){
 		var num = $("#pageselect").val();
 		if(num == 0){
 		    window.location.href="admin_projectVariable_list?pid="+pid;
@@ -118,16 +119,16 @@
 		}
 		    
     }
-    function groupManagement(pid){
+    function groupManagement(){
 		window.location.href="admin_group_list?pid="+pid;
     }
-    function apiManagement(pid){
-	window.location.href="admin_group_list?pid="+pid;
+    function apiManagement(){
+	window.location.href="admin_apiInfo_list?pid="+pid;
 	}
-    function apiExecute(pid){
+    function apiExecute(){
 	window.location.href="admin_apiExecute_add?pid="+pid;
 	}
-    function viewResult(pid){
+    function viewResult(){
 	window.location.href="admin_projectResult_list?pid="+pid;
 	}
 </script>
@@ -143,11 +144,10 @@
       <li class="active">项目详情</li>
     </ol>
     
-    <div class="buttonDiv"> 
-    	<button type="button" class="btn btn-success" onclick="groupManagement(${p.id})">分组管理</button>	
-		<button type="button" class="btn btn-success" onclick="apiManagement(${p.id})">接口管理</button>	
-		<button type="button" class="btn btn-success" onclick="apiExecute(${p.id}">接口执行</button>
-		<button type="button" class="btn btn-success" onclick="viewResult(${p.id}">查看结果</button>
+    <div class="buttonDiv"> 	
+		<button type="button" class="btn btn-success" onclick="apiManagement()">接口管理</button>	
+		<button type="button" class="btn btn-success" onclick="apiExecute(}">接口执行</button>
+		<button type="button" class="btn btn-success" onclick="viewResult()">查看结果</button>
 	</div>
 	<br>
 	<div class="select">
@@ -196,7 +196,7 @@
 					</tr>
 					<tr>
 						<td colspan="2" align="center">
-							<button type="button" class="btn btn-success" onclick="submitForm(${p.id})">提 交</button>
+							<button type="button" class="btn btn-success" onclick="submitForm()">提 交</button>
 							<button type="button" class="btn" onclick="cancel()">取 消</button>
 						</td>
 					</tr>
@@ -221,7 +221,7 @@
 			<tbody>
 				<c:if test="${fn:length(pvs) <1}">
 						<tr>
-							<td colspan="4" align="center">没有数据</td>
+							<td colspan="5" align="center">没有数据</td>
 						</tr>
 				</c:if>
 				<c:forEach items="${pvs}" var="pv">
@@ -240,7 +240,7 @@
 							<c:if test="${pv.apiInfo.id == 0 }">
 								<a onclick="doEdit(${pv.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
 							</c:if>						
-							<a onclick="doDelete(${pv.id},${p.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
+							<a onclick="doDelete(${pv.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
 						</td>
 					</tr>
 				</c:forEach>

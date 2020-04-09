@@ -2,17 +2,19 @@
 	pageEncoding="UTF-8" import="java.util.*"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@include file="../include/admin/adminHeader.jsp"%>
 <%@include file="../include/admin/adminNavigator.jsp"%>
 <script>
-    $(function() {
-	$("#addForm").submit(function() {
-	    if (!checkEmpt("name"))
+var pid = ${p.id};
+$(function() {
+	$("#groupName").submit(function() {
+	    if (!checkEmpt("groupName"))
 		return false;
 	});
-    });
+});
 
-    function showLayer() {
+function showApiLayer() {
 	$('#layer').css({
 	    "display" : "block"
 	});
@@ -20,36 +22,114 @@
 	    "display" : "block"
 	});
 	return false;
-    }
+}
 
-    function hideLayer() {
+function showGroupLayer() {
+	$('#layer2').css({
+	    "display" : "block"
+	});
+	$('#layerBg').css({
+	    "display" : "block"
+	});
+	return false;
+}
+
+function cancel() {
 	$('#layer').css({
+	    "display" : "none"
+	});
+	$('#layer2').css({
 	    "display" : "none"
 	});
 	$('#layerBg').css({
 	    "display" : "none"
 	});
 	window.location.reload();
-    }
-    
-    function showLayer2(id){
-	$("#addForm").attr("action","admin_apiInfo_update?id="+id);
-	$("#subTitle").html("编辑接口");
+}
+
+function doGroupEdit(id){
+	$("#addForm2").attr("name","admin_group_update");
+	$("#subTitle2").html("编辑分组");
 	$.ajax({
 	    type:"post",
 	    dataType:"json",
-	    url:"${pageContext.request.contextPath}/admin_apiInfo_edit",
+	    url:"admin_group_edit",
 	    data:{
 			"id":id
 	    },
 	    success:function(data){
-			var api = data.api;
+			var g = data.data;
+			$("#id").val(g.id);
+			$("#pid").val(g.project.id);
+			$("#groupName").val(g.groupName);
+	    },
+	    error:function(data){
+			alert("系统错误");
+	    }
+	});
+	$('#layer2').css({
+	    "display" : "block"
+	});
+	$('#layerBg').css({
+	    "display" : "block"
+	});	
+	return false;
+}   
+
+function submitGroupForm(){
+	var targetUrl = $("#addForm2").attr("name");
+$.ajax({
+		type:"post",
+	    dataType:"json",
+    url:targetUrl,
+    data: $("#addForm2").serialize(),
+    success:function(data){
+        alert(data.msg);
+        window.location.href="admin_apiInfo_list?pid="+pid;
+    },
+    error:function(e){
+        alert("错误！！");
+    }
+});	
+}  
+
+function doGroupDelete(id){
+		var flag = confirm("是否确认删除？");
+		if(flag){
+		    $.ajax({
+			    type:"post",
+			    dataType:"json",
+			    url:"admin_group_delete",
+			    data:{
+					"id":id
+			    },
+			    success:function(data){
+					alert(data.msg);
+					window.location.href="admin_apiInfo_list?pid="+pid;
+			    },
+			    error:function(data){
+					alert("系统错误");
+			    }
+			});
+		}
+}
+ 
+function doApiEdit(id){
+	$("#addForm").attr("name","admin_apiInfo_update");
+	$("#subTitle").html("编辑接口");
+	$.ajax({
+	    type:"post",
+	    dataType:"json",
+	    url:"admin_apiInfo_edit",
+	    data:{
+			"id":id
+	    },
+	    success:function(data){
+			var api = data.data;
+			$("#id").val(api.id);
 			$("#apiName").val(api.apiName);
+			$("#url").val(api.url);
 			$("#method").val(api.method);
-			$("#portNum").val(api.portNum);
-			$("#path").val(api.path);
-			$("#protocol").val(api.protocol);
-			$("#serverName").val(api.serverName);
 			$("#dataType").val(api.dataType);
 	    },
 	    error:function(data){
@@ -61,10 +141,47 @@
 	});
 	$('#layerBg').css({
 	    "display" : "block"
-	});
-	
+	});	
 	return false;
-    }
+}   
+
+function submitApiForm(){
+	var targetUrl = $("#addForm").attr("name");
+$.ajax({
+		type:"post",
+	    dataType:"json",
+url:targetUrl,
+data: $("#addForm").serialize(),
+success:function(data){
+    alert(data.msg);
+    window.location.href="admin_apiInfo_list?pid="+pid;
+},
+error:function(e){
+    alert("错误！！");
+}
+});	
+}  
+
+function doApiDelete(id){
+		var flag = confirm("是否确认删除？");
+		if(flag){
+		    $.ajax({
+			    type:"post",
+			    dataType:"json",
+			    url:"admin_apiInfo_delete",
+			    data:{
+					"id":id
+			    },
+			    success:function(data){
+					alert(data.msg);
+					window.location.href="admin_apiInfo_list?pid="+pid;
+			    },
+			    error:function(data){
+					alert("系统错误");
+			    }
+			});
+		}
+} 
  
 </script>
 
@@ -73,37 +190,28 @@
 <div id="layerBg"></div>
 
 <div class="workingArea">
-   <ol class="breadcrumb">
-      <li><a href="admin_apiProject_list">所有项目</a></li>
-      <li><a href="admin_apiInfo_list?pid=${ap.id}">${ap.proName}</a></li>
-      <li class="active">接口管理</li>
-    </ol>
-
-	<button type="button" class="btn btn-success" onclick="showLayer()">新增接口</button>
-	<br> <br>
+	<ol class="breadcrumb">
+		<li><a href="admin_project_list">所有项目</a></li>
+		<li><a href="admin_apiInfo_list?pid=${p.id}">${p.name}</a></li>
+		<li class="active">接口管理</li>
+	</ol>
 	<div id="layer" class="panel panel-warning addApiDiv">
 		<div class="panel-heading" id="subTitle">新增接口</div>
 		<div class="panel-body">
-			<form method="post" id="addForm" action="admin_apiInfo_add">
+			<form id="addForm" name="admin_apiInfo_add" action="">
 				<table class="addTable">
 					<tr>
 						<td>接口名称</td>
-						<td><input id="apiName" name="apiName" type="text"
+						<td>
+							<input id="aid" name="aid" type="hidden">
+							<input id="pid" name="pid" type="hidden">
+							<input id="gid" name="gid" type="hidden">
+							<input id="apiName" name="apiName" type="text"
 							class="form-control"></td>
 					</tr>
 					<tr>
-						<td>协议</td>
-						<td><input id="protocol" name="protocol" type="text"
-							class="form-control"></td>
-					</tr>
-					<tr>
-						<td>服务</td>
-						<td><input id="serverName" name="serverName" type="text"
-							class="form-control"></td>
-					</tr>
-					<tr>
-						<td>端口</td>
-						<td><input id="portNum" name="portNum" type="text"
+						<td>服务地址</td>
+						<td><input id="url" name="url" type="text"
 							class="form-control"></td>
 					</tr>
 					<tr>
@@ -112,76 +220,114 @@
 							class="form-control"></td>
 					</tr>
 					<tr>
-						<td>路径</td>
-						<td><input id="path" name="path" type="text"
-							class="form-control">
-						</td>
-					</tr>
-					<tr>
 						<td>数据类型</td>
-						<td><input id="path" name="path" type="text"
-							class="form-control">
-						</td>
+						<td><select id="dataType" name="dataType">
+								<option value="0">其他</option>
+								<option value="1">json</option>
+						</select></td>
 					</tr>
 					<tr>
 						<td colspan="2" align="center">
-							<input id="pid" name="pid" type="hidden" value="${ap.id}">
-							<button type="submit" class="btn btn-success">提 交</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<button type="button" class="btn" onclick="hideLayer()">取消</button>
+							<button type="button" class="btn btn-success"
+								onclick="submitApiForm()">提 交</button>
+							<button type="button" class="btn" onclick="cancel()">取 消</button>
 						</td>
 					</tr>
-					
+
 				</table>
 			</form>
 		</div>
 	</div>
-	
-	<div class="listDataTableDiv1">
-		<table
-			class="table table-striped table-bordered table-hover  table-condensed">
-			<thead>
-				<tr class="success">
-					<th>ID</th>
-					<th>接口名称</th>
-					<th>协议</th>
-					<th>服务</th>
-					<th>端口</th>
-					<th>方法</th>
-					<th>路径</th>
-					<th>数据类型</th>
-					<th>属性管理</th>
-					<!--                     <th>执行</th> -->
-					<th>编辑</th>
-					<th>删除</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${ais}" var="api">
 
+	<div id="layer2" class="panel panel-warning addGroupDiv">
+		<div class="panel-heading" id="subTitle2">新增分组</div>
+		<div class="panel-body">
+			<form id="addForm2" name="admin_group_add" action="">
+				<table class="addTable">
 					<tr>
-						<td>${api.id}</td>
-						<td>${api.apiName}</td>
-						<td>${api.protocol}</td>
-						<td>${api.serverName}</td>
-						<td>${api.portNum}</td>
-						<td>${api.method}</td>
-						<td>${api.path}</td>
-						<td>${api.dataType}</td>
-						<td><a href="admin_apiAttribute_list?apiId=${api.id}"><span class="glyphicon glyphicon-th-list"></span></a></td>
-						<%--                     <td><a href="admin_product_list?cid=${api.id}"><span class="glyphicon glyphicon-shopping-cart"></span></a></td>                    --%>
-						<td><a  onclick="showLayer2(${api.id})" ><span
-								class="glyphicon glyphicon-edit"></span></a></td>
-						<td><a deleteLink="true"
-							href="admin_apiInfo_delete?id=${api.id}"><span
-								class="   glyphicon glyphicon-trash"></span></a></td>
-
+						<td>分组名称</td>
+						<td>
+							<input id="gid" name="gid" type="hidden">
+							<input id="pid" name="pid" type="hidden" value="${p.id }">
+							<input id="groupName" name="groupName" type="text"
+							class="form-control"></td>
 					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+					<tr>
+						<td colspan="2" align="center">
+							<button type="button" class="btn btn-success"
+								onclick="submitGroupForm()">提 交</button>
+							<button type="button" class="btn" onclick="cancel()">取 消</button>
+						</td>
+					</tr>
+
+				</table>
+			</form>
+		</div>
 	</div>
 
-	<div class="pageDiv">
-		<%@include file="../include/admin/adminPage.jsp"%>
-	</div>
+	<button type="button" class="btn btn-success"
+		onclick="showGroupLayer()">新增分组</button>
+	<br><br>
+	<c:if test="${fn:length(gs) <1}">
+		<div align="center">没有分组数据</div>
+	</c:if>
+	<c:forEach items="${gs}" var="g">
+		<div class="listDataTableDiv1">
+			<div class="panel-heading select" id="subTitle">${g.name}
+				<span> <a onclick="doGroupEdit(${g.id});return false;"
+					class="tda"><span class="glyphicon glyphicon-edit"></span></a> <a
+					onclick="doGroupDelete(${g.id});return false;" class="tda"><span
+						class="glyphicon glyphicon-trash"></span></a>
+				</span>
+			</div>
+			<br>
+			<button type="button" class="btn btn-success" onclick="showApiLayer()">新增接口</button>
+			<br><br>
+			<table
+				class="table table-striped table-bordered table-hover  table-condensed">
+				<thead>
+					<tr class="success">
+						<th>ID</th>
+						<th>接口名称</th>
+						<th>服务地址</th>
+						<th>方法</th>
+						<th>数据类型</th>
+						<th>提取器</th>
+						<th>断言</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${g.apiByGroup}" var="api">
+						<tr>
+							<td>${api.id}</td>
+							<td>${api.apiName}</td>
+							<td>${api.url}</td>
+							<td>${api.method}</td>
+							<td>${api.path}</td>
+							<td><c:choose>
+									<c:when test="${api.dataType == 0}">普通</c:when>
+									<c:when test="${api.dataType == 1}">json</c:when>
+								</c:choose></td>
+							<td><c:choose>
+									<c:when test="${api.hasExtractor == 0}">无</c:when>
+									<c:when test="${api.hasExtractor == 1}">有</c:when>
+								</c:choose></td>
+							<td><c:choose>
+									<c:when test="${api.hasAssert == 0}">无</c:when>
+									<c:when test="${api.hasAssert == 1}">有</c:when>
+								</c:choose></td>
+							<td><a href="admin_apiAttirbute_list?aid=${api.id }"
+								class="tda"><span class="glyphicon glyphicon-cog"></span></a> <a
+								onclick="doApiEdit(${api.id});return false;" class="tda"><span
+									class="glyphicon glyphicon-edit"></span></a> <a
+								onclick="doApiDelete(${api.id});return false;" class="tda"><span
+									class="glyphicon glyphicon-trash"></span></a></td>
+
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</c:forEach>
 </div>

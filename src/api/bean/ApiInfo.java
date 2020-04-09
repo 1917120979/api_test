@@ -3,17 +3,56 @@ package api.bean;
 public class ApiInfo {
 	private int id;
 	private Project project;
+	private Group group;
 	private String apiName;
-	private String protocol;
-	private String serverName;
-	private String portNum;
+	private String url;
 	private String method;
-	private String path;
-	private String dataType;
-	private int isRelation;
-
+	private int dataType;
+	private int hasExtractor;
+	private int hasAssert;
+	
 	public int getId() {
 		return id;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public int getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(int dataType) {
+		this.dataType = dataType;
+	}
+
+	public int getHasExtractor() {
+		return hasExtractor;
+	}
+
+	public void setHasExtractor(int hasExtractor) {
+		this.hasExtractor = hasExtractor;
+	}
+
+	public int getHasAssert() {
+		return hasAssert;
+	}
+
+	public void setHasAssert(int hasAssert) {
+		this.hasAssert = hasAssert;
 	}
 
 	public void setId(int id) {
@@ -27,61 +66,13 @@ public class ApiInfo {
 	public void setApiName(String apiName) {
 		this.apiName = apiName;
 	}
-
-	public String getProtocol() {
-		return protocol;
-	}
-
-	public void setProtocol(String protocol) {
-		this.protocol = protocol;
-	}
-
-	public String getServerName() {
-		return serverName;
-	}
-
-	public void setServerName(String serverName) {
-		this.serverName = serverName;
-	}
-
-	public String getPortNum() {
-		return portNum;
-	}
-
-	public void setPortNum(String portNum) {
-		this.portNum = portNum;
-	}
-
+	
 	public String getMethod() {
 		return method;
 	}
 
 	public void setMethod(String method) {
 		this.method = method;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
-
-	public String getDataType() {
-		return dataType;
-	}
-
-	public void setDataType(String dataType) {
-		this.dataType = dataType;
-	}
-
-	public int getIsRelation() {
-		return isRelation;
-	}
-
-	public void setIsRelation(int isRelation) {
-		this.isRelation = isRelation;
 	}
 
 	public Project getProject() {

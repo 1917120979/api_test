@@ -31,6 +31,17 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>GroupServlet</servlet-name>
+		<servlet-class>api.servlet.GroupServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>GroupServlet</servlet-name>
+		<url-pattern>/groupServlet</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
 		<servlet-name>ApiAttributeServlet</servlet-name>
 		<servlet-class>api.servlet.ApiAttributeServlet</servlet-class>
 	</servlet>

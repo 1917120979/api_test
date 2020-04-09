@@ -15,6 +15,11 @@ div.addApiDiv {
     height: 420px;
 }
 
+div.addGroupDiv {
+    width: 400px;
+    height: 200px;
+}
+
 div.addProjDiv {
     width: 400px;
     height: 300px;
