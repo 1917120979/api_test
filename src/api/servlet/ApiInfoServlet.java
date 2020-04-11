@@ -1,8 +1,6 @@
 package api.servlet;
 
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,9 +9,9 @@ import com.alibaba.fastjson.JSONObject;
 import api.bean.ApiInfo;
 import api.bean.Group;
 import api.bean.Project;
-import api.dao.ProjectDAO;
 import api.util.Page;
 
+@SuppressWarnings("serial")
 public class ApiInfoServlet extends BaseBackServlet{
 
 	@Override

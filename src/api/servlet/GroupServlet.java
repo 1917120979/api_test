@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import api.bean.Group;
 import api.util.Page;
 
+@SuppressWarnings("serial")
 public class GroupServlet extends BaseBackServlet{
 
 	@Override

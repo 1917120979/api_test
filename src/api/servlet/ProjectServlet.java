@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import api.bean.Project;
 import api.util.Page;
 
+@SuppressWarnings("serial")
 public class ProjectServlet extends BaseBackServlet{
 
 	@Override

@@ -9,9 +9,9 @@ import com.alibaba.fastjson.JSONObject;
 
 import api.bean.ApiAttribute;
 import api.bean.ApiInfo;
-import api.bean.ApiResult;
 import api.util.Page;
 
+@SuppressWarnings("serial")
 public class ApiAttributeServlet extends BaseBackServlet{
 
 	@Override
@@ -79,7 +79,6 @@ public class ApiAttributeServlet extends BaseBackServlet{
 	@Override
 	public String update(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int id = Integer.parseInt(request.getParameter("attrId"));
-		int aid = Integer.parseInt(request.getParameter("aid"));
 		int type = Integer.parseInt(request.getParameter("type"));
 		
 		ApiAttribute bean = new ApiAttribute();

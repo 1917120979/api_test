@@ -26,6 +26,7 @@ import api.dao.ProjectVariableDAO;
 import api.dao.GroupDAO;
 import api.util.Page;
 
+@SuppressWarnings("serial")
 public abstract class BaseBackServlet extends HttpServlet{
 	private static final Logger logger = LoggerFactory.getLogger(BaseBackServlet.class);
 	 

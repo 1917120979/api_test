@@ -1,17 +1,11 @@
 package api.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.jdbc.Statement;
-import com.sun.org.apache.bcel.internal.generic.GOTO;
-
 import api.bean.ApiInfo;
 import api.bean.Group;
-import api.util.DBUtil;
 
 public class ApiInfoDAO extends BaseDao{
 	public boolean add(ApiInfo bean) {

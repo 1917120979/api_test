@@ -12,6 +12,7 @@ import api.bean.Project;
 import api.bean.ProjectVariable;
 import api.util.Page;
 
+@SuppressWarnings("serial")
 public class ProjectVariableServlet extends BaseBackServlet{
 
 
