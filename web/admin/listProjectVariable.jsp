@@ -8,7 +8,7 @@
 <script>
 	var pid = ${p.id};
     $(function() {
-	$("#variableName").submit(function() {
+	$("#addForm").submit(function() {
 	    if (!checkEmpt("variableName"))
 		return false;
 	});
@@ -106,7 +106,7 @@
     function s_click(obj){
 		var num = $("#pageselect").val();
 		if(num == 0){
-		    window.location.href="admin_projectVariable_list?pid="+pid;
+		    window.location.href="admin_projectVariable_list?pid="+pid+"&type=0";
 		}
 		if(num == 1){
 		    window.location.href="admin_projectVariable_list?pid="+pid+"&type=1";
@@ -133,36 +133,32 @@
 	}
 </script>
 
-<title>项目管理</title>
+<title>项目配置</title>
 
 <div id="layerBg"></div>
 
 <div class="workingArea">
 	<ol class="breadcrumb">
       <li><a href="admin_project_list">所有项目</a></li>
-      <li><a href="admin_projectVariable_list?pid=${p.id}">${p.name}</a></li>
-      <li class="active">项目详情</li>
+      <li class="active">当前项目名称：${p.name}</li>
     </ol>
-    
-    <div class="buttonDiv"> 	
-		<button type="button" class="btn btn-success" onclick="apiManagement()">接口管理</button>	
-		<button type="button" class="btn btn-success" onclick="apiExecute(}">接口执行</button>
-		<button type="button" class="btn btn-success" onclick="viewResult()">查看结果</button>
+	<div id="listTitle">
+		<span>
+			项目变量列表 &nbsp;&nbsp;&nbsp;&nbsp;查询:
+			<select id="pageselect" onchange="s_click(this,${p.id})" > 
+	   			<OPTION value="0">全部</OPTION> 
+				<OPTION value="1">项目配置</OPTION> 
+				<OPTION value="2">公共参数</OPTION> 
+				<OPTION value="3">接口关联</OPTION> 
+			</select>
+			<button type="button" class="btn btn-success" onclick="showAddDiv()">新增变量</button> 	
+		</span>				
+		<span class="rightSpan">
+			<button type="button" class="btn btn-success" onclick="apiManagement()">接口管理</button>
+			<button type="button" class="btn btn-success" onclick="apiExecute(}">接口执行</button>
+			<button type="button" class="btn btn-success" onclick="viewResult()">查看结果</button>
+		</span>	
 	</div>
-	<br>
-	<div class="select">
-		<span>用户变量列表</span>
-		<span>查询:</span>
-   		<select id="pageselect" onchange="s_click(this,${p.id})" > 
-   			<OPTION value="0">全部</OPTION> 
-			<OPTION value="1">项目配置</OPTION> 
-			<OPTION value="2">公共参数</OPTION> 
-			<OPTION value="3">接口关联</OPTION> 
-		</select> 
-		<button type="button" class="btn btn-success" onclick="showAddDiv()">新增变量</button>
-	</div>
-    
-    <br>
 	<div id="layer" class="panel panel-warning addProjDiv">
 		<div class="panel-heading" id="subTitle">新增属性</div>
 		<div class="panel-body">
@@ -237,7 +233,7 @@
 							</c:choose>
 						</td>
 						<td>
-							<c:if test="${pv.apiInfo.id == 0 }">
+							<c:if test="${pv.apiInfo.id <= 0 }">
 								<a onclick="doEdit(${pv.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
 							</c:if>						
 							<a onclick="doDelete(${pv.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>

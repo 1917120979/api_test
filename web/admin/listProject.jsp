@@ -112,10 +112,13 @@
 <div id="layerBg"></div>
 
 <div class="workingArea">
-	<h1 class="label label-info">项目管理</h1>
-	<br> <br>
-	<button type="button" class="btn btn-success" onclick="showAddDiv()">新增项目</button>
-	<br> <br>	
+	<ol class="breadcrumb">
+      <li class="active">所有项目</li>
+    </ol>
+    <div id="listTitle">
+    	<span>项目列表</span>
+    	<span><button type="button" class="btn btn-success" onclick="showAddDiv()">新增项目</button></span>
+    </div>	
 	<div id="layer" class="panel panel-warning addProjDiv">
 		<div class="panel-heading" id="subTitle">新增项目</div>
 		<div class="panel-body">

@@ -23,7 +23,6 @@ import api.dao.ApiAttributeDAO;
 import api.dao.ApiInfoDAO;
 import api.dao.ProjectDAO;
 import api.dao.ProjectVariableDAO;
-import api.dao.ApiResultDAO;
 import api.dao.GroupDAO;
 import api.util.Page;
 
@@ -37,8 +36,7 @@ public abstract class BaseBackServlet extends HttpServlet{
 	public abstract String list(HttpServletRequest request, HttpServletResponse response,Page page);
 	
 	protected ApiInfoDAO apiDAO = new ApiInfoDAO();
-	protected ApiAttributeDAO aattDAO = new ApiAttributeDAO();
-	protected ApiResultDAO arDAO = new ApiResultDAO();
+	protected ApiAttributeDAO attrDAO = new ApiAttributeDAO();
 	protected ProjectDAO pDAO = new ProjectDAO();
 	protected ProjectVariableDAO pvDAO = new ProjectVariableDAO();
 	protected GroupDAO gDAO = new GroupDAO();

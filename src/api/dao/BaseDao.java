@@ -2,28 +2,17 @@ package api.dao;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.alibaba.fastjson.JSONObject;
 import com.mysql.jdbc.Statement;
 
 import api.util.DBUtil;
-import api.util.DateUtil;
 
 public class BaseDao {
 
 	private Connection conn;
 	private PreparedStatement pst;
 	private ResultSet rs;
-	private DatabaseMetaData dbmd = null;  
 	
 	public void close() {
 		try {
@@ -41,41 +30,6 @@ public class BaseDao {
 		}
 
 	}
-	
-	public List<String> getTableNames(String schemaName){
-		List<String> tableNames = new ArrayList<String>();
-		try {
-			dbmd = conn.getMetaData();  
-	        String[] types = { "TABLE" };    
-	        rs = dbmd.getTables(null, schemaName, "%", types);
-	        while(rs.next()) {
-	        	String name = rs.getString("TABLE_NAME");
-	        	tableNames.add(name);
-	        }
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return tableNames;
-		
-	}
-	
-	public List<String> getFKNames(String schemaName){
-		List<String> tableNames = getTableNames(schemaName);
-		List<String> fkNames = new ArrayList<String>();
-		try {
-			for (int i = 0; i < tableNames.size(); i++) {
-				rs = dbmd.getExportedKeys(null, schemaName, tableNames.get(i));
-				while(rs.next()) {
-					String fkName =  rs.getString("FKCOLUMN_NAME");
-					fkNames.add(fkName);
-				}
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return fkNames;
-		
-	}
 
 	public ResultSet query(String sql, Object[] params) {
 		try {
@@ -92,106 +46,6 @@ public class BaseDao {
 			e.printStackTrace();
 		} 
 		return rs;
-	}
-	
-	public <T> List<T> query(String sql, Object[] params, Class<T> clz) {
-		List<T> list = new ArrayList<T>();
-		try {
-
-			T t = null;
-			conn = DBUtil.getConnection();
-			pst = conn.prepareStatement(sql);
-			if (params.length > 0 && params != null) {
-				for (int i = 0; i < params.length; i++) {
-					pst.setObject(i + 1, params[i]);
-				}
-			}
-
-			rs = pst.executeQuery();
-			ResultSetMetaData rsmd = rs.getMetaData();
-			
-			int colNum = rsmd.getColumnCount();
-			while (rs.next()) {
-				t = clz.newInstance();
-				for (int i = 0; i < colNum; i++) {
-					String colName = rsmd.getColumnName(i + 1);
-					Object value = rs.getObject(colName);
-					if (rsmd.getColumnTypeName(i+1).equals("datetime")) {
-						value = DateUtil.t2d((Timestamp) value);
-					}
-					if (value == null) {
-						continue;
-					}
-					Field field = clz.getDeclaredField(colName);
-					field.setAccessible(true);
-					field.set(t, value);
-				}
-				list.add(t);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-		return list;
-	}
-	
-	
-	
-	public <T> Map<String, String> queryMap(String sql, Object[] params){
-		Map<String, String> map = new HashMap<String, String>();
-		try {
-			conn = DBUtil.getConnection();
-			pst = conn.prepareStatement(sql);
-			if (params.length > 0 && params != null) {
-				for (int i = 0; i < params.length; i++) {
-					pst.setObject(i + 1, params[i]);
-				}
-			}
-
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				String key = rs.getString("propName");
-				String value = rs.getString("propValue");
-				map.put(key, value);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-
-		return map;
-	}
-
-	public <T> String queryJson(String sql, Object[] params){
-		JSONObject json = new JSONObject();
-		try {
-			conn = DBUtil.getConnection();
-			pst = conn.prepareStatement(sql);
-			if (params.length > 0 && params != null) {
-				for (int i = 0; i < params.length; i++) {
-					pst.setObject(i + 1, params[i]);
-				}
-			}
-
-			rs = pst.executeQuery();
-			ResultSetMetaData rsmd = rs.getMetaData();
-			int colNum = rsmd.getColumnCount();
-			while (rs.next()) {
-				for (int i = 0; i < colNum; i++) {
-					String colName = rsmd.getColumnName(i + 1);
-					Object value = rs.getObject(colName);
-					json.put(colName, (String) value);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-
-		return json.toJSONString();
 	}
 	
 	public <T> Boolean update(String sql, Object[] params, Class<T> clz) {

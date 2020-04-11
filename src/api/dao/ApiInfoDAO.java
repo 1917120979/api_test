@@ -15,8 +15,8 @@ import api.util.DBUtil;
 
 public class ApiInfoDAO extends BaseDao{
 	public boolean add(ApiInfo bean) {
-		String sql = "insert into api_info values(null,?,?,?,?,?,?)";
-		Object[]  params= {bean.getProject().getId(), bean.getGroup().getId(),bean.getApiName(),bean.getUrl(),bean.getMethod(),bean.getDataType()};	
+		String sql = "insert into api_info values(null,?,?,?,?,?,?,?,?)";
+		Object[]  params= {bean.getProject().getId(), bean.getGroup().getId(),bean.getApiName(),bean.getUrl(),bean.getMethod(),bean.getDataType(),bean.getHasExtractor(),bean.getHasAssert()};	
 		return super.update(sql, params, ApiInfo.class);
 	}
 	
@@ -33,7 +33,7 @@ public class ApiInfoDAO extends BaseDao{
 	}
 	
 	public boolean update(ApiInfo bean) {
-		String sql = "update api_info set apiName = ?,url = ?,method=?, dataType = ? where id = ?";
+		String sql = "update api_info set api_name = ?,url = ?,method=?, data_type = ? where id = ?";
 		Object[]  params= {bean.getApiName(),bean.getUrl(),bean.getMethod(),bean.getDataType(),bean.getId()};
 		return super.update(sql, params, null);
 	}

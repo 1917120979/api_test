@@ -14,13 +14,14 @@ $(function() {
 	});
 });
 
-function showApiLayer() {
+function showApiLayer(gid) {
 	$('#layer').css({
 	    "display" : "block"
 	});
 	$('#layerBg').css({
 	    "display" : "block"
 	});
+	$("#api_gid").val(gid);
 	return false;
 }
 
@@ -59,9 +60,9 @@ function doGroupEdit(id){
 	    },
 	    success:function(data){
 			var g = data.data;
-			$("#id").val(g.id);
-			$("#pid").val(g.project.id);
-			$("#groupName").val(g.groupName);
+			$("#gid").val(g.id);
+			$("#group_pid").val(pid);
+			$("#groupName").val(g.name);
 	    },
 	    error:function(data){
 			alert("系统错误");
@@ -126,7 +127,8 @@ function doApiEdit(id){
 	    },
 	    success:function(data){
 			var api = data.data;
-			$("#id").val(api.id);
+			$("#aid").val(api.id);
+			$("#api_gid").val(api.group.id);
 			$("#apiName").val(api.apiName);
 			$("#url").val(api.url);
 			$("#method").val(api.method);
@@ -147,19 +149,20 @@ function doApiEdit(id){
 
 function submitApiForm(){
 	var targetUrl = $("#addForm").attr("name");
-$.ajax({
+	var formData = $("#addForm").serialize();
+	$.ajax({
 		type:"post",
-	    dataType:"json",
-url:targetUrl,
-data: $("#addForm").serialize(),
-success:function(data){
-    alert(data.msg);
-    window.location.href="admin_apiInfo_list?pid="+pid;
-},
-error:function(e){
-    alert("错误！！");
-}
-});	
+		dataType:"json",
+		url:targetUrl,
+		data:formData,
+		success:function(data){
+	    alert(data.msg);
+	    window.location.href="admin_apiInfo_list?pid="+pid;
+	},
+	error:function(e){
+	    alert("错误！！");
+	}
+	});	
 }  
 
 function doApiDelete(id){
@@ -192,7 +195,7 @@ function doApiDelete(id){
 <div class="workingArea">
 	<ol class="breadcrumb">
 		<li><a href="admin_project_list">所有项目</a></li>
-		<li><a href="admin_apiInfo_list?pid=${p.id}">${p.name}</a></li>
+		<li><a href="admin_projectVariable_list?pid=${p.id}">${p.name}</a></li>
 		<li class="active">接口管理</li>
 	</ol>
 	<div id="layer" class="panel panel-warning addApiDiv">
@@ -204,10 +207,9 @@ function doApiDelete(id){
 						<td>接口名称</td>
 						<td>
 							<input id="aid" name="aid" type="hidden">
-							<input id="pid" name="pid" type="hidden">
-							<input id="gid" name="gid" type="hidden">
-							<input id="apiName" name="apiName" type="text"
-							class="form-control"></td>
+							<input id="api_pid" name="pid" type="hidden" value="${p.id}">
+							<input id="api_gid" name="gid" type="hidden" value="">
+							<input id="apiName" name="apiName" type="text" class="form-control"></td>
 					</tr>
 					<tr>
 						<td>服务地址</td>
@@ -248,7 +250,7 @@ function doApiDelete(id){
 						<td>分组名称</td>
 						<td>
 							<input id="gid" name="gid" type="hidden">
-							<input id="pid" name="pid" type="hidden" value="${p.id }">
+							<input id="group_pid" name="pid" type="hidden" value="${p.id }">
 							<input id="groupName" name="groupName" type="text"
 							class="form-control"></td>
 					</tr>
@@ -264,25 +266,25 @@ function doApiDelete(id){
 			</form>
 		</div>
 	</div>
-
-	<button type="button" class="btn btn-success"
-		onclick="showGroupLayer()">新增分组</button>
-	<br><br>
+	<div id="listTitle">
+    	<span>接口列表</span>
+    	<span><button type="button" class="btn btn-success" onclick="showGroupLayer()">新增分组</button></span>
+    </div>	
 	<c:if test="${fn:length(gs) <1}">
 		<div align="center">没有分组数据</div>
 	</c:if>
 	<c:forEach items="${gs}" var="g">
-		<div class="listDataTableDiv1">
-			<div class="panel-heading select" id="subTitle">${g.name}
-				<span> <a onclick="doGroupEdit(${g.id});return false;"
-					class="tda"><span class="glyphicon glyphicon-edit"></span></a> <a
-					onclick="doGroupDelete(${g.id});return false;" class="tda"><span
-						class="glyphicon glyphicon-trash"></span></a>
-				</span>
-			</div>
-			<br>
-			<button type="button" class="btn btn-success" onclick="showApiLayer()">新增接口</button>
-			<br><br>
+		<div id="groupTitle">
+			<span>
+				分组：${g.name}&nbsp;&nbsp;&nbsp;&nbsp;
+				<a onclick="doGroupEdit(${g.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
+				<a onclick="doGroupDelete(${g.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
+			</span> 				
+			<span class="rightSpan">
+				<button type="button" class="btn btn-success" onclick="showApiLayer(${g.id})">新增接口</button>
+			</span>	
+		</div>
+		<div class="listDataTableDiv1">		
 			<table
 				class="table table-striped table-bordered table-hover  table-condensed">
 				<thead>
@@ -304,7 +306,6 @@ function doApiDelete(id){
 							<td>${api.apiName}</td>
 							<td>${api.url}</td>
 							<td>${api.method}</td>
-							<td>${api.path}</td>
 							<td><c:choose>
 									<c:when test="${api.dataType == 0}">普通</c:when>
 									<c:when test="${api.dataType == 1}">json</c:when>
@@ -317,12 +318,11 @@ function doApiDelete(id){
 									<c:when test="${api.hasAssert == 0}">无</c:when>
 									<c:when test="${api.hasAssert == 1}">有</c:when>
 								</c:choose></td>
-							<td><a href="admin_apiAttirbute_list?aid=${api.id }"
-								class="tda"><span class="glyphicon glyphicon-cog"></span></a> <a
-								onclick="doApiEdit(${api.id});return false;" class="tda"><span
-									class="glyphicon glyphicon-edit"></span></a> <a
-								onclick="doApiDelete(${api.id});return false;" class="tda"><span
-									class="glyphicon glyphicon-trash"></span></a></td>
+							<td>
+								<a href="admin_apiAttribute_list?aid=${api.id }" class="tda"><span class="glyphicon glyphicon-cog"></span></a> 
+								<a onclick="doApiEdit(${api.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a> 
+								<a onclick="doApiDelete(${api.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
+							</td>
 
 						</tr>
 					</c:forEach>

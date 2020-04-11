@@ -53,7 +53,7 @@ public class ApiInfoServlet extends BaseBackServlet{
 
 	@Override
 	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int id = Integer.parseInt(request.getParameter("aid"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		
 		JSONObject json = new JSONObject();		
 		if (apiDAO.delete(id)) {
@@ -92,25 +92,25 @@ public class ApiInfoServlet extends BaseBackServlet{
 
 	@Override
 	public String update(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int id = Integer.parseInt(request.getParameter("id"));
-		int pid = Integer.parseInt(request.getParameter("pid"));
-		int gid = Integer.parseInt(request.getParameter("gid"));
+		int id = Integer.parseInt(request.getParameter("aid"));
+		//int pid = Integer.parseInt(request.getParameter("pid"));
+		//int gid = Integer.parseInt(request.getParameter("gid"));
 		int dataType = Integer.parseInt(request.getParameter("dataType"));
-		Project project = pDAO.get(pid);
-		Group group = gDAO.get(gid);
+		//Project project = pDAO.get(pid);
+		//Group group = gDAO.get(gid);
 		
 		
 		ApiInfo bean = new ApiInfo();
 		bean.setId(id);
-		bean.setProject(project);
-		bean.setGroup(group);
+		//bean.setProject(project);
+		//bean.setGroup(group);
 		bean.setApiName(request.getParameter("apiName"));
 		bean.setUrl(request.getParameter("url"));			
 		bean.setMethod(request.getParameter("method"));
 		bean.setDataType(dataType);
 
 		JSONObject json = new JSONObject();		
-		if (apiDAO.add(bean)) {
+		if (apiDAO.update(bean)) {
 			json.put("msg", "sucess");
 			json.put("code", 0);
 			json.put("data", "null");

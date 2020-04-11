@@ -12,7 +12,7 @@ public class GroupServlet extends BaseBackServlet{
 
 	@Override
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int pid = Integer.parseInt(request.getParameter("pid"));
+		int pid = Integer.parseInt(request.getParameter("group_pid"));
 		Group bean = new Group();
 		bean.setProject(pDAO.get(pid));
 		bean.setName(request.getParameter("groupName"));
@@ -34,7 +34,7 @@ public class GroupServlet extends BaseBackServlet{
 
 	@Override
 	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int id = Integer.parseInt(request.getParameter("gid"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		
 		JSONObject json = new JSONObject();		
 		if (gDAO.delete(id) && apiDAO.deleteAll(id)) {
@@ -74,7 +74,7 @@ public class GroupServlet extends BaseBackServlet{
 
 	@Override
 	public String update(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter("gid"));
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		Group bean = new Group();
 		bean.setId(id);
