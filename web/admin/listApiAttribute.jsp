@@ -217,4 +217,49 @@
             </tbody>
         </table>
     </div>
+    
+    <div id="listTitle">
+		<span>
+			提取器列表 		
+			<button type="button" class="btn btn-success" onclick="showExtractorAddDiv()">新增提取器</button> 	
+		</span>				
+	</div>
+	<div class="listDataTableDiv1 panel-warning">
+        <table
+            class="table table-striped table-bordered table-hover  table-condensed">
+            <thead>
+                <tr class="success">
+                    <th>提取器名称</th>
+                    <th>变量名称</th>
+                    <th>正则表达式</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+           		 <c:if test="${fn:length(extrs) <1}">
+						<tr>
+							<td colspan="5" align="center">没有数据</td>
+						</tr>
+				</c:if>
+                <c:forEach items="${extr}" var="e">
+ 
+                    <tr>
+                        <td>${e.attributeName}</td>
+                        <td>${e.attributeValue}</td>
+                        <td>
+                        	<c:choose>
+                        		<c:when test="${attr.type == 0 }">请求头</c:when>
+                        		<c:when test="${attr.type == 1 }">参数</c:when>
+                        	</c:choose>
+                        </td>
+                        
+                        <td>
+							<a onclick="doAttrEdit(${attr.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
+							<a onclick="doAttrDelete(${attr.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
+						</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </div>
