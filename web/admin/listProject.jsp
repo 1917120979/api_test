@@ -6,18 +6,6 @@
 <%@include file="../include/admin/adminHeader.jsp"%>
 <%@include file="../include/admin/adminNavigator.jsp"%>
 <script>
-    $(function() {
-	$("#addForm").submit(function() {
-	    if (!checkEmpt("name"))
-			return false;
-	    if (!checkEmpt("isSign"))
-			return false;
-	    if (!checkEmpt("isEncript"))
-			return false;
-	    return true;
-	});
-    });
-
     function showAddDiv() {
 	$('#layer').css({
 	    "display" : "block"
@@ -90,6 +78,12 @@
     }
     
     function submitForm(){
+		if (!checkEmpt("name","项目 名称"))
+			return false;
+		if (!checkEmpt("isSign","是否签名"))
+				return false;
+		if (!checkEmpt("isEncript","是否加密"))
+			return false;
 		var targetUrl = $("#addForm").attr("name");
 	    $.ajax({
 			type:"post",

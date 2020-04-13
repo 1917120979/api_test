@@ -1,6 +1,8 @@
 package api.dao;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import api.bean.Extractor;
 
@@ -30,7 +32,9 @@ public class ExtractorDAO extends BaseDao{
 		Extractor bean = new Extractor();
 		try {
 			while(rs.next()) {
+				ApiInfoDAO apiInfoDAO = new ApiInfoDAO();
 				bean.setId(id);
+				bean.setApiInfo(apiInfoDAO.get(rs.getInt("aid")));
 				bean.setName(rs.getString("name"));
 				bean.setExpression(rs.getString("expression"));
 			}
@@ -38,5 +42,28 @@ public class ExtractorDAO extends BaseDao{
 			e.printStackTrace();
 		}
 		return bean;
+	}
+	
+	public List<Extractor> list(int aid) {
+		String sql = "select * from api_extractor where aid = ?";
+		Object[] params = {aid};
+		List<Extractor> beans = new ArrayList<Extractor>();
+		
+		ResultSet rs = super.query(sql, params);
+		try {
+			while(rs.next()) {
+				Extractor bean = new Extractor();
+				ApiInfoDAO apiInfoDAO = new ApiInfoDAO();
+				
+				bean.setId(rs.getInt("id"));
+				bean.setApiInfo(apiInfoDAO.get(rs.getInt("aid")));
+				bean.setName(rs.getString("name"));
+				bean.setExpression(rs.getString("expression"));
+				beans.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return beans;
 	}
 }

@@ -7,12 +7,6 @@
 <%@include file="../include/admin/adminNavigator.jsp"%>
 <script>
 var pid = ${p.id};
-$(function() {
-	$("#groupName").submit(function() {
-	    if (!checkEmpt("groupName"))
-		return false;
-	});
-});
 
 function showApiLayer(gid) {
 	$('#layer').css({
@@ -78,19 +72,22 @@ function doGroupEdit(id){
 }   
 
 function submitGroupForm(){
+    if (!checkEmpty("groupName","分组名称"))
+		return false;
+    
 	var targetUrl = $("#addForm2").attr("name");
-$.ajax({
-		type:"post",
-	    dataType:"json",
-    url:targetUrl,
-    data: $("#addForm2").serialize(),
-    success:function(data){
-        alert(data.msg);
-        window.location.href="admin_apiInfo_list?pid="+pid;
-    },
-    error:function(e){
-        alert("错误！！");
-    }
+	$.ajax({
+			type:"post",
+		    dataType:"json",
+	    url:targetUrl,
+	    data: $("#addForm2").serialize(),
+	    success:function(data){
+	        alert(data.msg);
+	        window.location.href="admin_apiInfo_list?pid="+pid;
+	    },
+	    error:function(e){
+	        alert("错误！！");
+	    }
 });	
 }  
 
@@ -148,6 +145,15 @@ function doApiEdit(id){
 }   
 
 function submitApiForm(){
+    if (!checkEmpty("apiName","接口名称"))
+		return false;
+    if (!checkEmpty("url","请求地址"))
+		return false;
+    if (!checkEmpty("method","方法"))
+		return false;
+    if (!checkEmpty("dataType","数据类型"))
+		return false;
+    
 	var targetUrl = $("#addForm").attr("name");
 	var formData = $("#addForm").serialize();
 	$.ajax({

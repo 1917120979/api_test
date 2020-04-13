@@ -9,8 +9,7 @@
 	var pid = ${p.id};
     $(function() {
 	$("#addForm").submit(function() {
-	    if (!checkEmpt("variableName"))
-		return false;
+	    
 	});
 	var type = ${type};
 	$("#pageselect").val(type);
@@ -88,6 +87,12 @@
     }
     
     function submitForm(){
+		if (!checkEmpt("variableName","变量名称"))
+			return false;
+		if (!checkEmpt("variableValue","变量值"))
+			return false;
+		if (!checkEmpt("aid","类型"))
+			return false;
 		var targetUrl = $("#addForm").attr("name");
 	    $.ajax({
 			type:"post",

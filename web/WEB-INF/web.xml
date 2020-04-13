@@ -21,6 +21,26 @@
 	</filter-mapping>
 	
 	<servlet>
+		<servlet-name>ProjectServlet</servlet-name>
+		<servlet-class>api.servlet.ProjectServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ProjectServlet</servlet-name>
+		<url-pattern>/projectServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProjectVariableServlet</servlet-name>
+		<servlet-class>api.servlet.ProjectVariableServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ProjectVariableServlet</servlet-name>
+		<url-pattern>/projectVariableServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>ApiInfoServlet</servlet-name>
 		<servlet-class>api.servlet.ApiInfoServlet</servlet-class>
 	</servlet>
@@ -51,6 +71,27 @@
 		<url-pattern>/apiAttributeServlet</url-pattern>
 	</servlet-mapping>
 	
+	
+	<servlet>
+		<servlet-name>ExtractorServlet</servlet-name>
+		<servlet-class>api.servlet.ExtractorServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ExtractorServlet</servlet-name>
+		<url-pattern>/extractorServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AssertServlet</servlet-name>
+		<servlet-class>api.servlet.AssertServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>AssertServlet</servlet-name>
+		<url-pattern>/assertServlet</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>ApiResultServlet</servlet-name>
 		<servlet-class>api.servlet.ApiResultServlet</servlet-class>
@@ -61,25 +102,7 @@
 		<url-pattern>/apiResultServlet</url-pattern>
 	</servlet-mapping>
 	
-	<servlet>
-		<servlet-name>ProjectServlet</servlet-name>
-		<servlet-class>api.servlet.ProjectServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>ProjectServlet</servlet-name>
-		<url-pattern>/projectServlet</url-pattern>
-	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>ProjectVariableServlet</servlet-name>
-		<servlet-class>api.servlet.ProjectVariableServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>ProjectVariableServlet</servlet-name>
-		<url-pattern>/projectVariableServlet</url-pattern>
-	</servlet-mapping>
 
 	
 </web-app>
