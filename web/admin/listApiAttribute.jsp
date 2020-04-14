@@ -274,6 +274,28 @@
 		    window.location.href="admin_apiAttribute_list?aid="+aid+"&type=1";
 		}   
     }
+    
+    function apiDebug(){
+    	$.ajax({
+    	    type:"post",
+    	    dataType:"json",
+    	    url:"admin_debugAPI_add",
+    	    data:{
+    			"aid":aid
+    	    },
+    	    success:function(data){
+    	    	alert(data.msg);
+    	    	$('#layer3').css({
+    	    	    "display" : "block"
+    	    	});  	    	
+	            window.location.href="admin_apiAttribute_list?aid="+aid;
+    	    },
+    	    error:function(data){
+    			alert("系统错误");
+    	    }
+    	});
+    	
+    }
 </script>
 
 <title>属性管理</title>
@@ -496,7 +518,7 @@
                 </tr>
             </thead>
             <tbody>
-           		 <c:if test="${fn:length(asserts) <1}">
+           		<c:if test="${fn:length(asserts) <1}">
 						<tr>
 							<td colspan="5" align="center">没有数据</td>
 						</tr>
@@ -523,12 +545,11 @@
 			<button type="button" class="btn btn-success" onclick="apiDebug()">调试</button> 	
 		</span>				
 	</div>
-	<div class="listDataTableDiv1 panel-warning">
-        <table
-            class="table table-striped table-bordered table-hover  table-condensed">
+	<div id="layer3" class="listDataTableDiv1 panel-warning">
+        <table class="table table-striped table-bordered table-hover table-condensed">
             <thead>
                 <tr class="success">
-                	<th>编号</th>
+                	<th>时间</th>
                     <th>接口请求</th>
                     <th>接口返回</th>
                     <th>提取器</th>
@@ -536,11 +557,20 @@
                 </tr>
             </thead>
             <tbody>
-           		 <c:if test="${fn:length(rs) <1}">
+            	<c:if test="${fn:length(debugs) <1}">
 						<tr>
 							<td colspan="5" align="center">没有数据</td>
 						</tr>
 				</c:if>
+				<c:forEach items="${debugs}" var="d">
+                    <tr>
+                    	<td>${d.date}</td>
+                        <td>${d.debugReq}</td>
+                        <td>${d.debugResp}</td>                  
+                        <td>${d.debugExtractor}</td>
+                        <td>${d.debugAssert}</td>
+                    </tr>
+               	</c:forEach>
             </tbody>
         </table>
     </div>
