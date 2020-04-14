@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 
+import api.bean.ApiInfo;
 import api.bean.Assert;
 import api.util.Page;
 
@@ -15,7 +16,8 @@ public class AssertServlet extends BaseBackServlet{
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int aid = Integer.parseInt(request.getParameter("ass_aid"));
 		Assert bean = new Assert();
-		bean.setApiInfo(apiDAO.get(aid));
+		ApiInfo apiInfo = apiDAO.get(aid);
+		bean.setApiInfo(apiInfo);
 		bean.setAssertExpress(request.getParameter("assertExpress"));
 		bean.setAssertExpect(request.getParameter("assertExpect"));
 		
@@ -24,6 +26,8 @@ public class AssertServlet extends BaseBackServlet{
 			json.put("code", "0");
 			json.put("msg", "success");
 			json.put("data", "null");
+			apiInfo.setHasAssert(1);
+			apiDAO.update(apiInfo);
 		}else {
 			json.put("code", "401");
 			json.put("msg", "fail");
@@ -36,11 +40,14 @@ public class AssertServlet extends BaseBackServlet{
 	@Override
 	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int id = Integer.parseInt(request.getParameter("id"));
+		ApiInfo apiInfo = assertDAO.get(id).getApiInfo();
 		JSONObject json = new JSONObject();
 		if (assertDAO.delete(id)) {
 			json.put("code", "0");
 			json.put("msg", "success");
 			json.put("data", "null");
+			apiInfo.setHasExtractor(0);
+			apiDAO.update(apiInfo);
 		}else {
 			json.put("code", "401");
 			json.put("msg", "fail");
