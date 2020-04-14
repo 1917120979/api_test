@@ -40,6 +40,8 @@ public class ExtractorDAO extends BaseDao{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			super.close();
 		}
 		return bean;
 	}
@@ -63,6 +65,8 @@ public class ExtractorDAO extends BaseDao{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			super.close();
 		}
 		return beans;
 	}
