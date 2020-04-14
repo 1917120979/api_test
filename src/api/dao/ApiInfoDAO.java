@@ -1,6 +1,7 @@
 package api.dao;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,28 +9,55 @@ import api.bean.ApiInfo;
 import api.bean.Group;
 
 public class ApiInfoDAO extends BaseDao{
+	/**
+	 * 
+	 * @Title: add   
+	 * @Description: 添加接口并设置接口id  
+	 * @param: @param bean
+	 * @param: @return      
+	 * @return: boolean      
+	 * @throws
+	 */
 	public boolean add(ApiInfo bean) {
 		String sql = "insert into api_info values(null,?,?,?,?,?,?,?,?)";
 		Object[]  params= {bean.getProject().getId(), bean.getGroup().getId(),bean.getApiName(),bean.getUrl(),bean.getMethod(),bean.getDataType(),bean.getHasExtractor(),bean.getHasAssert()};	
-		return super.update(sql, params, ApiInfo.class);
+		ResultSet rs = super.insert(sql, params);
+		try {
+			while(rs.next()) {
+				bean.setId(rs.getInt(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}finally {
+			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return true;
 	}
 	
 	public boolean delete(int id) {
 		String sql = "delete from api_info where id = ?";
 		Object[]  params= {id};
-		return super.update(sql, params, null);
+		return super.update(sql, params);
 	}
 	
 	public boolean deleteAll(int gid) {
 		String sql = "delete from api_info where gid = ?";
 		Object[]  params= {gid};
-		return super.update(sql, params, null);
+		return super.update(sql, params);
 	}
 	
 	public boolean update(ApiInfo bean) {
 		String sql = "update api_info set api_name = ?,url = ?,method=?, data_type = ? where id = ?";
 		Object[]  params= {bean.getApiName(),bean.getUrl(),bean.getMethod(),bean.getDataType(),bean.getId()};
-		return super.update(sql, params, null);
+		return super.update(sql, params);
 	}
 	
 	public List<ApiInfo> list(int pid, int start, int count) {
@@ -57,6 +85,15 @@ public class ApiInfoDAO extends BaseDao{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return beans;		
 	}
@@ -83,6 +120,15 @@ public class ApiInfoDAO extends BaseDao{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return beans;		
 	}
@@ -117,6 +163,15 @@ public class ApiInfoDAO extends BaseDao{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return bean;	
 	}

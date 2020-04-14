@@ -11,19 +11,19 @@ public class GroupDAO extends BaseDao{
 	public boolean add(Group bean) {
 		String sql = "insert into project_group value(null,?,?)";
 		Object[] params = {bean.getProject().getId(), bean.getName()};
-		return super.update(sql, params, Group.class);
+		return super.update(sql, params);
 	}
 	
 	public boolean delete(int id) {
 		String sql = "delete from project_group where id = ?";
 		Object[] params = {id};
-		return super.update(sql, params, null);
+		return super.update(sql, params);
 	}
 	
 	public boolean update(Group bean) {
 		String sql = "update project_group set group_name = ? where id = ?";
 		Object[] params = {bean.getName(), bean.getId()};
-		return super.update(sql, params, null);
+		return super.update(sql, params);
 	}
 	
 	public Group get(int id) {

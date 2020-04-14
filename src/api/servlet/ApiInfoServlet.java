@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import api.bean.ApiInfo;
 import api.bean.Group;
 import api.bean.Project;
+import api.bean.ProjectVariable;
 import api.util.Page;
 
 @SuppressWarnings("serial")
@@ -21,6 +22,7 @@ public class ApiInfoServlet extends BaseBackServlet{
 		int dataType = Integer.parseInt(request.getParameter("dataType"));
 		Project project = pDAO.get(pid);
 		Group group = gDAO.get(gid);
+		
 		
 		
 		ApiInfo bean = new ApiInfo();
@@ -39,6 +41,13 @@ public class ApiInfoServlet extends BaseBackServlet{
 			json.put("msg", "sucess");
 			json.put("code", 0);
 			json.put("data", "null");
+			List<ProjectVariable> pvs = pvDAO.list(pid, 2);
+			System.out.println("接口id---"+bean.getId());
+			if (pvs != null && pvs.size() > 0) {
+				for (ProjectVariable pv : pvs) {
+					attrDAO.add(pv, bean.getId());
+				}			
+			}
 		}else {
 			json.put("msg", "fail");
 			json.put("code", 401);

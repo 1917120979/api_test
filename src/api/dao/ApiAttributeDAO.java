@@ -10,24 +10,32 @@ import java.util.Map;
 import com.alibaba.fastjson.JSONObject;
 
 import api.bean.ApiAttribute;
+import api.bean.ProjectVariable;
 
 public class ApiAttributeDAO extends BaseDao{
 	public boolean add(ApiAttribute bean) {
 		String sql = "insert into api_attribute values(null,?,?,?,?)";
 		Object[] params = {bean.getApiInfo().getId(),bean.getAttributeName(),bean.getAttributeValue(),bean.getType()};
-		return super.update(sql, params, ApiAttribute.class);
+		return super.update(sql, params);
 	}
+	
+	public boolean add(ProjectVariable bean, int aid) {
+		String sql = "insert into api_attribute values(null,?,?,?,?)";	
+		Object[] params = {aid,bean.getVariableName(),bean.getVariableValue(),0};
+		return super.update(sql, params);
+	}
+	
 	
 	public boolean delete(int id) {
 		String sql = "delete from api_attribute where id = ?";
 		Object[] params = {id};
-		return super.update(sql, params, null);
+		return super.update(sql, params);
 	}
 	
 	public boolean update(ApiAttribute bean) {
 		String sql = "update api_attribute set attribute_name= ?,attribute_value =?,type=? where id = ?";
 		Object[] params = {bean.getAttributeName(),bean.getAttributeValue(), bean.getType(), bean.getId()};
-		return super.update(sql, params, null);
+		return super.update(sql, params);
 	}
 	
 	public List<ApiAttribute> list(int aid, int type){
@@ -48,6 +56,13 @@ public class ApiAttributeDAO extends BaseDao{
 			e.printStackTrace();
 		}finally {
 			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return beans;
 	}
@@ -70,6 +85,13 @@ public class ApiAttributeDAO extends BaseDao{
 			e.printStackTrace();
 		}finally {
 			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return beans;
 	}
@@ -91,6 +113,13 @@ public class ApiAttributeDAO extends BaseDao{
 			e.printStackTrace();
 		}finally {
 			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return bean;
 	}
@@ -110,6 +139,13 @@ public class ApiAttributeDAO extends BaseDao{
 			e.printStackTrace();
 		}finally {
 			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return map;
 	}
@@ -129,6 +165,13 @@ public class ApiAttributeDAO extends BaseDao{
 			e.printStackTrace();
 		}finally {
 			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return json.toJSONString();
 	}
@@ -148,6 +191,13 @@ public class ApiAttributeDAO extends BaseDao{
 			e.printStackTrace();
 		}finally {
 			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return map;
 	}

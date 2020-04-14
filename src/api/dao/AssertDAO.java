@@ -1,6 +1,7 @@
 package api.dao;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,19 +11,19 @@ public class AssertDAO extends BaseDao{
 	public boolean add(Assert bean) {
 		String sql = "insert into api_assert values(null,?,?,?)";
 		Object[] params = {bean.getApiInfo().getId(), bean.getAssertExpress(), bean.getAssertExpect()};
-		return super.update(sql, params, Assert.class);
+		return super.update(sql, params);
 	}
 	
 	public boolean delete(int id) {
 		String sql = "delete from api_assert where id = ?";
 		Object[] params = {id};
-		return super.update(sql, params, null);
+		return super.update(sql, params);
 	}
 	
 	public boolean update(Assert bean) {
 		String sql = "update api_assert set assert_express = ? ,assert_expect = ? where id = ?";
 		Object[] params = {bean.getAssertExpress(), bean.getAssertExpect(), bean.getId()};
-		return super.update(sql, params, null);
+		return super.update(sql, params);
 	}
 	
 	public Assert get(int id) {
@@ -43,6 +44,13 @@ public class AssertDAO extends BaseDao{
 			e.printStackTrace();
 		}finally {
 			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return bean;
 	}
@@ -68,6 +76,13 @@ public class AssertDAO extends BaseDao{
 			e.printStackTrace();
 		}finally {
 			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return beans;
 	}

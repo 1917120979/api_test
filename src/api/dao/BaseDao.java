@@ -48,7 +48,7 @@ public class BaseDao {
 		return rs;
 	}
 	
-	public <T> Boolean update(String sql, Object[] params, Class<T> clz) {
+	public Boolean update(String sql, Object[] params) {
 		try {
 			conn = DBUtil.getConnection();
 			pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -58,23 +58,32 @@ public class BaseDao {
 				}
 			}
 			pst.execute();
-			if (sql.contains("insert") && clz != null) {
-				rs = pst.getGeneratedKeys();
-				while (rs.next()) {
-					T t = clz.newInstance();
-					Field field = clz.getDeclaredField("id");
-					field.setAccessible(true);
-					field.set(t, rs.getInt(1));
-				}
-
-			}
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		} finally {
 			close();
+		}	
+	}
+	
+	public ResultSet insert(String sql, Object[] params) {
+		try {
+			conn = DBUtil.getConnection();
+			pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			if (params.length > 0 && params != null) {
+				for (int i = 0; i < params.length; i++) {
+					pst.setObject(i + 1, params[i]);
+				}
+			}
+			pst.execute();
+			rs = pst.getGeneratedKeys();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
 		}
-		
+		return rs;	
 	}
 	
 	public int getTotal(String sql, Object[] params) {
@@ -96,5 +105,9 @@ public class BaseDao {
 			close();
 		}
 		return 0;
+	}
+	
+	public int getTotal(String sql) {
+		return getTotal(sql, null);
 	}
 }

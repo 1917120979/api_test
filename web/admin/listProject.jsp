@@ -78,11 +78,11 @@
     }
     
     function submitForm(){
-		if (!checkEmpt("name","项目 名称"))
+		if (!checkEmpty("name","项目 名称"))
 			return false;
-		if (!checkEmpt("isSign","是否签名"))
+		if (!checkEmpty("isSign","是否签名"))
 				return false;
-		if (!checkEmpt("isEncript","是否加密"))
+		if (!checkEmpty("isEncript","是否加密"))
 			return false;
 		var targetUrl = $("#addForm").attr("name");
 	    $.ajax({

@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import api.bean.ApiAttribute;
 import api.bean.ApiInfo;
 import api.bean.Assert;
+import api.bean.DebugResult;
 import api.bean.Extractor;
 import api.util.Page;
 
@@ -111,6 +112,7 @@ public class ApiAttributeServlet extends BaseBackServlet{
 		
 		List<Extractor> extrs = eDAO.list(aid);
 		List<Assert> asserts = assertDAO.list(aid);
+		List<DebugResult> drs = drDAO.list(aid);
 		List<ApiAttribute> attrs = null;
 		if (null == type) {
 			type = "-1";
@@ -128,7 +130,7 @@ public class ApiAttributeServlet extends BaseBackServlet{
 		request.setAttribute("type", type);
 		request.setAttribute("extrs", extrs);
 		request.setAttribute("asserts", asserts);
-		
+		request.setAttribute("drs", drs);
 		return "admin/listApiAttribute.jsp";
 	}
 

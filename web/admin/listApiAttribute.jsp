@@ -279,7 +279,7 @@
     	$.ajax({
     	    type:"post",
     	    dataType:"json",
-    	    url:"admin_debugAPI_add",
+    	    url:"admin_debugResult_add",
     	    data:{
     			"aid":aid
     	    },
@@ -296,6 +296,27 @@
     	});
     	
     }
+    
+    function deleteDebugResult(){
+		var flag = confirm("是否确认删除？");
+		if(flag){
+		    $.ajax({
+			    type:"post",
+			    dataType:"json",
+			    url:"admin_debugResult_delete",
+			    data:{
+					"aid":aid
+			    },
+			    success:function(data){
+					alert(data.msg);
+					window.location.href="admin_apiAttribute_list?aid="+aid;
+			    },
+			    error:function(data){
+					alert("系统错误");
+			    }
+			});
+		}
+    }
 </script>
 
 <title>属性管理</title>
@@ -306,7 +327,7 @@
     <ol class="breadcrumb">
 		<li><a href="admin_project_list">所有项目</a></li>
 		<li><a href="admin_projectVariable_list?pid=${api.project.id}">当前项目：${api.project.name}</a></li>
-		<li><a href="admin_apiInfo_list?pid=${p.id}">当前接口：${api.apiName }</a></li>
+		<li><a href="admin_apiInfo_list?pid=${api.project.id}">当前接口：${api.apiName }</a></li>
 		<li class="active">接口配置</li>
 	</ol>
     <div id="listTitle">
@@ -373,7 +394,7 @@
                 </tr>
             </thead>
             <tbody>
-           		 <c:if test="${fn:length(attrs) <1}">
+           		<c:if test="${fn:length(attrs) <1}">
 						<tr>
 							<td colspan="5" align="center">没有数据</td>
 						</tr>
@@ -542,7 +563,8 @@
     <div id="listTitle">
 		<span>
 			接口调试		
-			<button type="button" class="btn btn-success" onclick="apiDebug()">调试</button> 	
+			<button type="button" class="btn btn-success" onclick="apiDebug()">调试</button> 
+			<button type="button" class="btn btn-success" onclick="deleteDebugResult()">清空调试结果</button>	
 		</span>				
 	</div>
 	<div id="layer3" class="listDataTableDiv1 panel-warning">
@@ -557,12 +579,12 @@
                 </tr>
             </thead>
             <tbody>
-            	<c:if test="${fn:length(debugs) <1}">
+            	<c:if test="${fn:length(drs) <1}">
 						<tr>
 							<td colspan="5" align="center">没有数据</td>
 						</tr>
 				</c:if>
-				<c:forEach items="${debugs}" var="d">
+				<c:forEach items="${drs}" var="d">
                     <tr>
                     	<td>${d.date}</td>
                         <td>${d.debugReq}</td>

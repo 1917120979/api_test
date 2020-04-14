@@ -13,7 +13,7 @@ public class GroupServlet extends BaseBackServlet{
 
 	@Override
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int pid = Integer.parseInt(request.getParameter("group_pid"));
+		int pid = Integer.parseInt(request.getParameter("pid"));
 		Group bean = new Group();
 		bean.setProject(pDAO.get(pid));
 		bean.setName(request.getParameter("groupName"));

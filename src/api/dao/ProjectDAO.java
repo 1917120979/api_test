@@ -11,19 +11,19 @@ public class ProjectDAO extends BaseDao{
 	public boolean add(Project bean) {
 		String sql = "insert into project values(null,?,?,?)";
 		Object[] params = {bean.getName(), bean.getIsSign(), bean.getIsEncript()};
-		return super.update(sql, params, Project.class);
+		return super.update(sql, params);
 	}
 	
 	public boolean delete(int id) {
 		String sql = "delete from project where id = ?";
 		Object[] params = {id};
-		return super.update(sql, params, null);
+		return super.update(sql, params);
 	}
 	
 	public boolean update(Project bean) {
 		String sql = "update project set project_name = ? ,isSign = ?,isEncript = ? where id=?";
 		Object[] params = {bean.getName(), bean.getIsSign(), bean.getIsEncript(),bean.getId()};
-		return super.update(sql, params, Project.class);
+		return super.update(sql, params);
 	}
 	
 	public Project get(int id) {
@@ -71,6 +71,6 @@ public class ProjectDAO extends BaseDao{
 	
 	public int getTotal() {
 		String sql = "select count(*) from project";
-		return super.getTotal(sql, null);
+		return super.getTotal(sql);
 	}
 }

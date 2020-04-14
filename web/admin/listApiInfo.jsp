@@ -201,7 +201,7 @@ function doApiDelete(id){
 <div class="workingArea">
 	<ol class="breadcrumb">
 		<li><a href="admin_project_list">所有项目</a></li>
-		<li><a href="admin_projectVariable_list?pid=${p.id}">${p.name}</a></li>
+		<li><a href="admin_projectVariable_list?pid=${p.id}">当前项目：${p.name}</a></li>
 		<li class="active">接口管理</li>
 	</ol>
 	<div id="layer" class="panel panel-warning addApiDiv">

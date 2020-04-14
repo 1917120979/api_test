@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -142,5 +144,15 @@ public abstract class BaseBackServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 		return is;
+	}
+	
+	public String getExtractorValue(String str, String regex) {
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(str);
+		if (matcher.find()) {
+			return matcher.group(1);
+		}else {
+			return "";
+		}	
 	}
 }

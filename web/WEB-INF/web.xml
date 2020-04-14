@@ -93,13 +93,13 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>ApiResultServlet</servlet-name>
-		<servlet-class>api.servlet.ApiResultServlet</servlet-class>
+		<servlet-name>DebugResultServlet</servlet-name>
+		<servlet-class>api.servlet.DebugResultServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>ApiResultServlet</servlet-name>
-		<url-pattern>/apiResultServlet</url-pattern>
+		<servlet-name>DebugResultServlet</servlet-name>
+		<url-pattern>/debugResultServlet</url-pattern>
 	</servlet-mapping>
 	
 

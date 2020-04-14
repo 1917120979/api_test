@@ -1,6 +1,7 @@
 package api.dao;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,19 +11,19 @@ public class ExtractorDAO extends BaseDao{
 	public boolean add(Extractor bean) {
 		String sql = "insert into api_extractor values(null,?,?,?)";
 		Object[] params = {bean.getApiInfo().getId(), bean.getName(), bean.getExpression()};
-		return super.update(sql, params, Extractor.class);
+		return super.update(sql, params);
 	}
 	
 	public boolean delete(int id) {
 		String sql = "delete from api_extractor where id = ?";
 		Object[] params = {id};
-		return super.update(sql, params, null);
+		return super.update(sql, params);
 	}
 	
 	public boolean update(Extractor bean) {
 		String sql = "update api_extractor set name = ? ,expression = ? where id = ?";
 		Object[] params = {bean.getName(), bean.getExpression(),bean.getId()};
-		return super.update(sql, params, null);
+		return super.update(sql, params);
 	}
 	
 	public Extractor get(int id) {
@@ -42,6 +43,13 @@ public class ExtractorDAO extends BaseDao{
 			e.printStackTrace();
 		}finally {
 			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return bean;
 	}
@@ -67,6 +75,13 @@ public class ExtractorDAO extends BaseDao{
 			e.printStackTrace();
 		}finally {
 			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return beans;
 	}

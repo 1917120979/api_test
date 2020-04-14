@@ -48,9 +48,9 @@
 	    success:function(data){
 			var pv = data.data;
 			$("#id").val(pv.id);
-			$("#pid").val(pv.project.id);
 			$("#variableName").val(pv.variableName);
 			$("#variableValue").val(pv.variableValue);
+			$("#type").val(pv.type);
 	    },
 	    error:function(data){
 			alert("系统错误");
@@ -87,11 +87,11 @@
     }
     
     function submitForm(){
-		if (!checkEmpt("variableName","变量名称"))
+		if (!checkEmpty("variableName","变量名称"))
 			return false;
-		if (!checkEmpt("variableValue","变量值"))
+		if (!checkEmpty("variableValue","变量值"))
 			return false;
-		if (!checkEmpt("aid","类型"))
+		if (!checkEmpty("type","类型"))
 			return false;
 		var targetUrl = $("#addForm").attr("name");
 	    $.ajax({
@@ -111,7 +111,7 @@
     function s_click(obj){
 		var num = $("#pageselect").val();
 		if(num == 0){
-		    window.location.href="admin_projectVariable_list?pid="+pid+"&type=0";
+		    window.location.href="admin_projectVariable_list?pid="+pid;
 		}
 		if(num == 1){
 		    window.location.href="admin_projectVariable_list?pid="+pid+"&type=1";
@@ -188,9 +188,9 @@
 					<tr>
 						<td>类型</td>
 						<td>
-							<select id="aid" name="aid">
-								<option value="0">项目配置</option>
-								<option value="-1" >公共参数</option>								
+							<select id="type" name="type">
+								<option value="1">项目配置</option>
+								<option value="2">公共参数-请求头</option>								
 							</select>					
 						</td>
 							
@@ -232,13 +232,13 @@
 						<td>${pv.variableValue}</td>
 						<td>
 							<c:choose>
-								<c:when test="${pv.apiInfo.id == 0}">项目配置</c:when>
-								<c:when test="${pv.apiInfo.id == -1}">公共参数</c:when>
-								<c:when test="${pv.apiInfo.id > 0}">接口关联：${pv.apiInfo.apiName}</c:when>
+								<c:when test="${pv.type == 1}">项目配置</c:when>
+								<c:when test="${pv.type == 2}">公共参数-请求头</c:when>
+								<c:when test="${pv.type == 3}">接口关联：${pv.apiInfo.apiName}</c:when>
 							</c:choose>
 						</td>
 						<td>
-							<c:if test="${pv.apiInfo.id <= 0 }">
+							<c:if test="${pv.type == 1 }">
 								<a onclick="doEdit(${pv.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
 							</c:if>						
 							<a onclick="doDelete(${pv.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>

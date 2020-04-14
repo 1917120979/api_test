@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 
-import api.bean.ApiInfo;
 import api.bean.Project;
 import api.bean.ProjectVariable;
 import api.util.Page;
@@ -25,13 +24,13 @@ public class ProjectVariableServlet extends BaseBackServlet{
 		
 		if (type != null) {
 			if (type.equals("1")) {
-				pvs = pvDAO.list(pid, 0, page.getStart(), page.getCount());
+				pvs = pvDAO.list(pid, 1, page.getStart(), page.getCount());
 			}	
 			if (type.equals("2")) {
-				pvs = pvDAO.list(pid, -1, page.getStart(), page.getCount());
+				pvs = pvDAO.list(pid, 2, page.getStart(), page.getCount());
 			}
 			if (type.equals("3")) {
-				pvs = pvDAO.list(pid, page.getStart(), page.getCount());
+				pvs = pvDAO.list(pid, 3, page.getStart(), page.getCount());
 			}
 		}else {
 			type = "0";
@@ -53,22 +52,20 @@ public class ProjectVariableServlet extends BaseBackServlet{
 	@Override
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int pid = Integer.parseInt(request.getParameter("pid"));
-		int aid = Integer.parseInt(request.getParameter("aid"));
-		ApiInfo apiInfo = new ApiInfo();
-		apiInfo.setId(aid);
-		
+		int type = Integer.parseInt(request.getParameter("type"));
+	
 		String variableName = request.getParameter("variableName");
 		String variableValue = request.getParameter("variableValue");
 		
 		ProjectVariable bean = new ProjectVariable();
 		bean.setProject(pDAO.get(pid));
-		bean.setApiInfo(apiInfo);
+		bean.setType(type);
 		bean.setVariableName(variableName);
 		bean.setVariableValue(variableValue);
 		
 		JSONObject json = new JSONObject();
 		
-		if (pvDAO.isExistVariableName(bean.getProject().getId(), bean.getVariableName()) < 0) {
+		if (pvDAO.isExistVariableName(pid,variableName) < 0) {
 			
 			if (pvDAO.add(bean)) {
 				json.put("msg", "sucess");
@@ -139,7 +136,7 @@ public class ProjectVariableServlet extends BaseBackServlet{
 		
 		JSONObject json = new JSONObject();
 		
-		if (pvDAO.add(bean)) {
+		if (pvDAO.update(bean)) {
 			json.put("msg", "sucess");
 			json.put("code", 0);
 			json.put("data", "null");
