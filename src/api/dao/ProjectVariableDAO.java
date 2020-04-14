@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import api.bean.ApiInfo;
-import api.bean.Project;
 import api.bean.ProjectVariable;
 
 public class ProjectVariableDAO extends BaseDao{
