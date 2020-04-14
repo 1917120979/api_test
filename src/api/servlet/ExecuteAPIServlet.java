@@ -10,7 +10,6 @@ public class ExecuteAPIServlet extends BaseBackServlet{
 
 	@Override
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int aid;
 		return null;
 	}
 

@@ -1,6 +1,5 @@
 package api.dao;
 
-import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -62,9 +61,9 @@ public class BaseDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
-		} finally {
+		}finally {
 			close();
-		}	
+		}
 	}
 	
 	public ResultSet insert(String sql, Object[] params) {
@@ -80,9 +79,7 @@ public class BaseDao {
 			rs = pst.getGeneratedKeys();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			close();
-		}
+		} 
 		return rs;	
 	}
 	

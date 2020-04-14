@@ -42,7 +42,6 @@ public class ApiInfoServlet extends BaseBackServlet{
 			json.put("code", 0);
 			json.put("data", "null");
 			List<ProjectVariable> pvs = pvDAO.list(pid, 2);
-			System.out.println("接口id---"+bean.getId());
 			if (pvs != null && pvs.size() > 0) {
 				for (ProjectVariable pv : pvs) {
 					attrDAO.add(pv, bean.getId());
