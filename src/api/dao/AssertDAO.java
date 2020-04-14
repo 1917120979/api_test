@@ -41,6 +41,8 @@ public class AssertDAO extends BaseDao{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			super.close();
 		}
 		return bean;
 	}
@@ -64,6 +66,8 @@ public class AssertDAO extends BaseDao{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			super.close();
 		}
 		return beans;
 	}
