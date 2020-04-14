@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import api.dao.ApiAttributeDAO;
 import api.dao.ApiInfoDAO;
 import api.dao.AssertDAO;
+import api.dao.DebugResultDAO;
 import api.dao.ExtractorDAO;
 import api.dao.ProjectDAO;
 import api.dao.ProjectVariableDAO;
@@ -45,6 +46,7 @@ public abstract class BaseBackServlet extends HttpServlet{
 	protected GroupDAO gDAO = new GroupDAO();
 	protected ExtractorDAO eDAO = new ExtractorDAO();
 	protected AssertDAO assertDAO = new AssertDAO();
+	protected DebugResultDAO drDAO = new DebugResultDAO();
 	
 	public void service(HttpServletRequest request, HttpServletResponse response) {
 		try {
