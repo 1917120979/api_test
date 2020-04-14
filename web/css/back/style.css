@@ -111,6 +111,10 @@ th {
 	z-index: 11;
 }
 
+#layer3 {
+	display: none;
+}
+
 #layerBg {
 	display: none;
 	position: absolute;
