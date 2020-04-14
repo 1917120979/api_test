@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 
+import api.bean.ApiInfo;
 import api.bean.Extractor;
 import api.util.Page;
 
@@ -15,7 +16,8 @@ public class ExtractorServlet extends BaseBackServlet{
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int aid = Integer.parseInt(request.getParameter("extr_aid"));
 		Extractor bean = new Extractor();
-		bean.setApiInfo(apiDAO.get(aid));
+		ApiInfo apiInfo = apiDAO.get(aid);
+		bean.setApiInfo(apiInfo);
 		bean.setName(request.getParameter("variableName"));
 		bean.setExpression(request.getParameter("expression"));
 		
@@ -24,6 +26,8 @@ public class ExtractorServlet extends BaseBackServlet{
 			json.put("code", "0");
 			json.put("msg", "success");
 			json.put("data", "null");
+			apiInfo.setHasExtractor(1);
+			apiDAO.update(apiInfo);
 		}else {
 			json.put("code", "401");
 			json.put("msg", "fail");
@@ -36,11 +40,15 @@ public class ExtractorServlet extends BaseBackServlet{
 	@Override
 	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int id = Integer.parseInt(request.getParameter("id"));
+
+		ApiInfo apiInfo = eDAO.get(id).getApiInfo();
 		JSONObject json = new JSONObject();
 		if (eDAO.delete(id)) {
 			json.put("code", "0");
 			json.put("msg", "success");
 			json.put("data", "null");
+			apiInfo.setHasExtractor(0);
+			apiDAO.update(apiInfo);
 		}else {
 			json.put("code", "401");
 			json.put("msg", "fail");
