@@ -15,7 +15,14 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * 
+ * @ClassName:  BackServletFilter   
+ * @Description:过滤器，处理所有配置的请求，组装servlet并服务端跳转到相应的servlet  
+ * @author: Durant2035
+ * @date:   2020年4月15日 下午8:35:57      
+ * @Copyright:
+ */
 public class BackServletFilter implements Filter{
 	 private static final Logger logger = LoggerFactory.getLogger(BackServletFilter.class);
 
@@ -32,7 +39,7 @@ public class BackServletFilter implements Filter{
 		String contextPath = request.getServletContext().getContextPath();
 		String uri = request.getRequestURI();
 		uri = StringUtils.remove(uri, contextPath);
-		logger.info("uri----"+uri);
+		logger.debug("本次的requestUri是>>>"+uri);
 		if (uri.startsWith("/admin_")) {
 			String servletPath = StringUtils.substringBetween(uri, "_","_")+"Servlet";
 			String method = StringUtils.substringAfterLast(uri, "_");

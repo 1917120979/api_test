@@ -6,57 +6,56 @@
 <%@include file="../include/admin/adminHeader.jsp"%>
 <%@include file="../include/admin/adminNavigator.jsp"%>
 <script>
-    function showAddDiv() {
-	$('#layer').css({
-	    "display" : "block"
-	});
-	$('#layerBg').css({
-	    "display" : "block"
-	});
-	return false;
+    function showAddProjectDiv() {
+		$('#addProjectDiv').css({
+		    "display" : "block"
+		});
+		$('#layerBg').css({
+		    "display" : "block"
+		});
+		return false;
     }
 
     function cancel() {
-	$('#layer').css({
-	    "display" : "none"
-	});
-	$('#layerBg').css({
-	    "display" : "none"
-	});
-	window.location.reload();
+		$('#addProjectDiv').css({
+		    "display" : "none"
+		});
+		$('#layerBg').css({
+		    "display" : "none"
+		});
+		window.location.reload();
     }
     
-    function doEdit(id){
-	$("#addForm").attr("name","admin_project_update");
-	$("#subTitle").html("编辑项目");
-	$.ajax({
-	    type:"post",
-	    dataType:"json",
-	    url:"${pageContext.request.contextPath}/admin_project_edit",
-	    data:{
-			"id":id
-	    },
-	    success:function(data){
-			var p = data.data;
-			$("#id").val(p.id);
-			$("#name").val(p.name);			
-			$("#isSign").val(p.isSign);
-			$("#isEncript").val(p.isEncript);
-	    },
-	    error:function(data){
-			alert("系统错误");
-	    }
-	});
-	$('#layer').css({
-	    "display" : "block"
-	});
-	$('#layerBg').css({
-	    "display" : "block"
-	});	
-	return false;
+    function doProjectEdit(id){
+		$("#addProjectForm").attr("name","admin_project_update");
+		$("#subTitle").html("编辑项目");
+		$.ajax({
+		    type:"post",
+		    dataType:"json",
+		    url:"${pageContext.request.contextPath}/admin_project_edit",
+		    data:{
+				"id":id
+		    },
+		    success:function(data){
+				var p = data.data;
+				$("#id").val(p.id);
+				$("#name").val(p.name);			
+				$("#isSign").val(p.isSign);
+				$("#isEncript").val(p.isEncript);
+				$('#addProjectDiv').css({
+				    "display" : "block"
+				});
+				$('#layerBg').css({
+				    "display" : "block"
+				});	
+		    },
+		    error:function(data){
+				alert("系统错误");
+		    }
+		});
     }
     
-    function doDelete(id){
+    function doProjectDel(id){
 		var flag = confirm("是否确认删除？");
 		if(flag){
 		    $.ajax({
@@ -77,19 +76,19 @@
 		}
     }
     
-    function submitForm(){
+    function submitProjectForm(){
 		if (!checkEmpty("name","项目 名称"))
 			return false;
 		if (!checkEmpty("isSign","是否签名"))
 				return false;
 		if (!checkEmpty("isEncript","是否加密"))
 			return false;
-		var targetUrl = $("#addForm").attr("name");
+		var targetUrl = $("#addProjectForm").attr("name");
 	    $.ajax({
 			type:"post",
 		    dataType:"json",
 	        url:targetUrl,
-	        data: $("#addForm").serialize(),
+	        data: $("#addProjectForm").serialize(),
 	        success:function(data){
 	            alert(data.msg);
 	            window.location.href="admin_project_list";
@@ -106,17 +105,19 @@
 <div id="layerBg"></div>
 
 <div class="workingArea">
-	<ol class="breadcrumb">
-      <li class="active">所有项目</li>
-    </ol>
+	<div id="workNav">
+		<ol class="">
+	      <li class="">所有项目</li>
+	    </ol>
+	</div>
     <div id="listTitle">
     	<span>项目列表</span>
-    	<span><button type="button" class="btn btn-success" onclick="showAddDiv()">新增项目</button></span>
+    	<span><button type="button" class="btn btn-success" onclick="showAddProjectDiv()">新增项目</button></span>
     </div>	
-	<div id="layer" class="panel panel-warning addProjDiv">
+	<div id="addProjectDiv" class="panel panel-warning">
 		<div class="panel-heading" id="subTitle">新增项目</div>
 		<div class="panel-body">
-			<form method="post" id="addForm" name="admin_project_add" action="">
+			<form id="addProjectForm" name="admin_project_add" action="">
 				<table class="addTable">
 					<tr>
 						<td>项目名称</td>
@@ -150,7 +151,7 @@
 					</tr>
 					<tr>
 						<td colspan="2" align="center">
-							<button type="button" class="btn btn-success" onclick="submitForm()">提 交</button>
+							<button type="button" class="btn btn-success" onclick="submitProjectForm()">提 交</button>
 							<button type="button" class="btn" onclick="cancel()">取 消</button>
 						</td>
 					</tr>
@@ -160,7 +161,7 @@
 		</div>
 	</div>
 	
-	<div class="listDataTableDiv1">
+	<div class="listDataTableDiv">
 		<table
 			class="table table-striped table-bordered table-hover  table-condensed">
 			<thead>
@@ -175,7 +176,7 @@
 			<tbody>		
 				<c:if test="${fn:length(ps) <1}">
 						<tr>
-							<td colspan="4" align="center">没有数据</td>
+							<td colspan="5" align="center">没有数据</td>
 						</tr>
 				</c:if>
 				<c:forEach items="${ps}" var="p">
@@ -198,9 +199,9 @@
 							</c:choose>
 						</td>
 						<td>
-							<a href="admin_projectVariable_list?pid=${p.id }" class="tda"><span class="glyphicon glyphicon-cog"></span></a>
-							<a onclick="doEdit(${p.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
-							<a onclick="doDelete(${p.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
+							<a href="admin_projectVariable_list?pid=${p.id}" class="tda"><span class="glyphicon glyphicon-cog"></span></a>
+							<a onclick="doProjectEdit(${p.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
+							<a onclick="doProjectDel(${p.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
 						</td>
 					</tr>
 				</c:forEach>

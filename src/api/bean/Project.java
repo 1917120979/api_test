@@ -1,5 +1,13 @@
 package api.bean;
 
+/**
+ * 
+ * @ClassName: Project
+ * @Description:封装Project并对外提供属性获取的方法
+ * @author: Durant2035
+ * @date: 2020年4月15日 下午8:32:43
+ * @Copyright:
+ */
 public class Project {
 	private int id;
 	private String name;
@@ -13,8 +21,6 @@ public class Project {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	
 
 	public int getIsSign() {
 		return isSign;
@@ -40,5 +46,9 @@ public class Project {
 		this.name = name;
 	}
 
-	
+	@Override
+	public String toString() {
+		return String.format("project[id:%d, name:%s, isSign:%d, isEncript:%d]", id, name, isSign, isEncript);
+	}
+
 }

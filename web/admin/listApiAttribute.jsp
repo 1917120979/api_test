@@ -8,134 +8,137 @@
 <script>
 	var aid = ${api.id};
 	var type = ${type};
-	$("#pageselect").val(type);
+	$(function(){
+	    $("#pageSelect").val(type);	    
+	});
 	   
     function showAttrAddDiv() {
-	$('#layer').css({
-	    "display" : "block"
-	});
-	$('#layerBg').css({
-	    "display" : "block"
-	});
-	return false;
+		$('#addAttributeDiv').css({
+		    "display" : "block"
+		});
+		$('#layerBg').css({
+		    "display" : "block"
+		});
+		return false;
     }
     
     function showExtrAddDiv() {
-	$('#layer1').css({
-	    "display" : "block"
-	});
-	$('#layerBg').css({
-	    "display" : "block"
-	});
-	return false;
+		$('#addExtractorDiv').css({
+		    "display" : "block"
+		});
+		$('#layerBg').css({
+		    "display" : "block"
+		});
+		return false;
     }
     
     function showAssertAddDiv() {
-	$('#layer2').css({
-	    "display" : "block"
-	});
-	$('#layerBg').css({
-	    "display" : "block"
-	});
-	return false;
+		$('#addAssertDiv').css({
+		    "display" : "block"
+		});
+		$('#layerBg').css({
+		    "display" : "block"
+		});
+		return false;
     }
 
     function cancel() {
-	$('#layer').css({
-	    "display" : "none"
-	});
-	$('#layerBg').css({
-	    "display" : "none"
-	});
-	window.location.reload();
+		$('#addAttributeDiv').css({
+		    "display" : "none"
+		});
+		$('#layerBg').css({
+		    "display" : "none"
+		});
+		window.location.reload();
     }
     
     function doAttrEdit(id){
-	$("#addForm").attr("name","admin_apiAttribute_update");
-	$("#subTitle").html("编辑属性");
-	$.ajax({
-	    type:"post",
-	    dataType:"json",
-	    url:"admin_apiAttribute_edit",
-	    data:{
-			"id":id
-	    },
-	    success:function(data){
-			var attr = data.data;
-			$("#attrId").val(attr.id);
-			$("#attributeName").val(attr.attributeName);
-			$("#attributeValue").val(attr.attributeValue);
-			$("#type").val(attr.type);
-	    },
-	    error:function(data){
-			alert("系统错误");
-	    }
-	});
-	$('#layer').css({
-	    "display" : "block"
-	});
-	$('#layerBg').css({
-	    "display" : "block"
-	});	
-	return false;
+		$("#addAttributeForm").attr("name","admin_apiAttribute_update");
+		$("#addAttributeTitle").html("编辑属性");
+		$.ajax({
+		    type:"post",
+		    dataType:"json",
+		    url:"admin_apiAttribute_edit",
+		    data:{
+				"id":id
+		    },
+		    success:function(data){
+				var attr = data.data;
+				$("#attrId").val(attr.id);
+				$("#attributeName").val(attr.attributeName);
+				$("#attributeValue").val(attr.attributeValue);
+				$("#type").val(attr.type);
+				$('#addAttributeDiv').css({
+				    "display" : "block"
+				});
+				$('#layerBg').css({
+				    "display" : "block"
+				});	
+		    },
+		    error:function(data){
+				alert("系统错误");
+		    }
+		});
+		return false;
     }   
     
     function doExtrEdit(id){
-	$("#addForm1").attr("name","admin_extractor_update");
-	$("#subTitle1").html("编辑提取器");
-	$.ajax({
-	    type:"post",
-	    dataType:"json",
-	    url:"admin_extractor_edit",
-	    data:{
-			"id":id
-	    },
-	    success:function(data){
-			var extr = data.data;
-			$("#extrId").val(extr.id);
-			$("#variableName").val(extr.name);
-			$("#expression").val(extr.expression);
-	    },
-	    error:function(data){
-			alert("系统错误");
-	    }
-	});
-	$('#layer1').css({
-	    "display" : "block"
-	});
-	$('#layerBg').css({
-	    "display" : "block"
-	});	
-	return false;
+		$("#addExtractorForm").attr("name","admin_extractor_update");
+		$("#addExtractorTitle").html("编辑提取器");
+		$.ajax({
+		    type:"post",
+		    dataType:"json",
+		    url:"admin_extractor_edit",
+		    data:{
+				"id":id
+		    },
+		    success:function(data){
+				var extr = data.data;
+				$("#extrId").val(extr.id);
+				$("#variableName").val(extr.name);
+				$("#expression").val(extr.expression);
+				$('#addExtractorDiv').css({
+				    "display" : "block"
+				});
+				$('#layerBg').css({
+				    "display" : "block"
+				});	
+		    },
+		    error:function(data){
+				alert("系统错误");
+		    }
+		});
+		return false;
     } 
     
     function doAssertEdit(id){
-	$("#addForm2").attr("name","admin_assert_update");
-	$("#subTitle2").html("编辑断言");
-	$.ajax({
-	    type:"post",
-	    dataType:"json",
-	    url:"admin_assert_edit",
-	    data:{
-			"id":id
-	    },
-	    success:function(data){
-			var ass = data.data;
-			$("#assertId").val(ass.id);
-			$("#assertExpress").val(ass.assertExpress);
-			$("#assertExpect").val(ass.assertExpect);
-	    },
-	    error:function(data){
-			alert("系统错误");
-	    }
-	});
-	$('#layer2').css({
-	    "display" : "block"
-	});
-	$('#layerBg').css({
-	    "display" : "block"
-	});	
-	return false;
+		$("#addAssertForm").attr("name","admin_assert_update");
+		$("#addAssertTitle").html("编辑断言");
+		$.ajax({
+		    type:"post",
+		    dataType:"json",
+		    url:"admin_assert_edit",
+		    data:{
+				"id":id
+		    },
+		    success:function(data){
+				var ass = data.data;
+				$("#assertId").val(ass.id);
+				$("#assertExpress").val(ass.assertExpress);
+				$("#assertExpect").val(ass.assertExpect);
+				$('#addAssertDiv').css({
+				    "display" : "block"
+				});
+				$('#layerBg').css({
+				    "display" : "block"
+				});	
+		    },
+		    error:function(data){
+				alert("系统错误");
+		    }
+		});
+		
+		return false;
     } 
     
     function doAttrDelete(id){
@@ -207,12 +210,12 @@
 			return false;
 	    if (!checkEmpty("type","属性类型"))
 			return false;
-		var targetUrl = $("#addForm").attr("name");
+		var targetUrl = $("#addAttributeForm").attr("name");
 	    $.ajax({
 			type:"post",
 		    dataType:"json",
 	        url:targetUrl,
-	        data: $("#addForm").serialize(),
+	        data: $("#addAttributeForm").serialize(),
 	        success:function(data){
 	            alert(data.msg);
 	            window.location.href="admin_apiAttribute_list?aid="+aid;
@@ -227,12 +230,12 @@
 			return false;
 	    if (!checkEmpty("expression","提取正则"))
 			return false;
-		var targetUrl = $("#addForm1").attr("name");
+		var targetUrl = $("#addExtractorForm").attr("name");
 	    $.ajax({
 			type:"post",
 		    dataType:"json",
 	        url:targetUrl,
-	        data: $("#addForm1").serialize(),
+	        data: $("#addExtractorForm").serialize(),
 	        success:function(data){
 	            alert(data.msg);
 	            window.location.href="admin_apiAttribute_list?aid="+aid;
@@ -247,12 +250,12 @@
 			return false;
 	    if (!checkEmpty("assertExpect","期望结果"))
 			return false;
-		var targetUrl = $("#addForm2").attr("name");
+		var targetUrl = $("#addAssertForm").attr("name");
 	    $.ajax({
 			type:"post",
 		    dataType:"json",
 	        url:targetUrl,
-	        data: $("#addForm2").serialize(),
+	        data: $("#addAssertForm").serialize(),
 	        success:function(data){
 	            alert(data.msg);
 	            window.location.href="admin_apiAttribute_list?aid="+aid;
@@ -262,8 +265,8 @@
 	        }
 	    });	
 	} 
-    function s_click(obj){
-		var num = $("#pageselect").val();
+    function selectClick(obj){
+		var num = $("#pageSelect").val();
 		if(num == -1){
 		    window.location.href="admin_apiAttribute_list?aid="+aid;
 		}
@@ -324,16 +327,18 @@
 <div id="layerBg"></div>
 
 <div class="workingArea">
-    <ol class="breadcrumb">
-		<li><a href="admin_project_list">所有项目</a></li>
-		<li><a href="admin_projectVariable_list?pid=${api.project.id}">当前项目：${api.project.name}</a></li>
-		<li><a href="admin_apiInfo_list?pid=${api.project.id}">当前接口：${api.apiName }</a></li>
-		<li class="active">接口配置</li>
-	</ol>
+	<div id="workNav">
+		<ol>
+		    <li><a href="admin_project_list">所有项目</a></li>
+			<li><a href="admin_projectVariable_list?pid=${api.project.id}">${api.project.name}</a></li>
+			<li><a href="admin_apiInfo_list?pid=${api.project.id}">${api.apiName }</a></li>
+			<li class="active">接口配置</li>
+	    </ol>
+	</div>
     <div id="listTitle">
 		<span>
 			接口属性列表 &nbsp;&nbsp;&nbsp;&nbsp;查询:
-			<select id="pageselect" onchange="s_click(this)" > 
+			<select id="pageSelect" onchange="selectClick(this)" > 
 	   			<OPTION value="-1">全部</OPTION> 
 				<OPTION value="0">请求头</OPTION> 
 				<OPTION value="1">参数</OPTION> 
@@ -341,10 +346,10 @@
 			<button type="button" class="btn btn-success" onclick="showAttrAddDiv()">新增属性</button> 	
 		</span>				
 	</div>
-    <div id="layer" class="panel panel-warning addApiDiv">
-		<div class="panel-heading" id="subTitle">新增属性</div>
+    <div id="addAttributeDiv" class="panel panel-warning">
+		<div class="panel-heading" id="addAttributeTitle">新增属性</div>
 		<div class="panel-body">
-			<form id="addForm" name= "admin_apiAttribute_add" action="">
+			<form id="addAttributeForm" name= "admin_apiAttribute_add" action="">
 				<table class="addTable">
 					<tr>
 						<td>属性名</td>
@@ -381,7 +386,7 @@
 		</div>
 	</div>
     
-    <div class="listDataTableDiv1 panel-warning">
+    <div class="listDataTableDiv panel-warning">
         <table
             class="table table-striped table-bordered table-hover  table-condensed">
             <thead>
@@ -428,10 +433,10 @@
 			<button type="button" class="btn btn-success" onclick="showExtrAddDiv()">新增提取器</button> 	
 		</span>				
 	</div>
-	 <div id="layer1" class="panel panel-warning addApiDiv">
-		<div class="panel-heading" id="subTitle1">新增提取器</div>
+	 <div id="addExtractorDiv" class="panel panel-warning ">
+		<div class="panel-heading" id="addExtractorTitle">新增提取器</div>
 		<div class="panel-body">
-			<form id="addForm1" name= "admin_extractor_add" action="">
+			<form id="addExtractorForm" name= "admin_extractor_add" action="">
 				<table class="addTable">
 					<tr>
 						<td>变量名称</td>
@@ -458,7 +463,7 @@
 			</form>
 		</div>
 	</div>
-	<div class="listDataTableDiv1 panel-warning">
+	<div class="listDataTableDiv panel-warning">
         <table
             class="table table-striped table-bordered table-hover  table-condensed">
             <thead>
@@ -497,10 +502,10 @@
 			<button type="button" class="btn btn-success" onclick="showAssertAddDiv()">新增断言</button> 	
 		</span>				
 	</div>
-	 <div id="layer2" class="panel panel-warning addApiDiv">
-		<div class="panel-heading" id="subTitle2">新增断言</div>
+	 <div id="addAssertDiv" class="panel panel-warning">
+		<div class="panel-heading" id="addAssertTitle">新增断言</div>
 		<div class="panel-body">
-			<form id="addForm2" name= "admin_assert_add" action="">
+			<form id="addAssertForm" name= "admin_assert_add" action="">
 				<table class="addTable">
 					<tr>
 						<td>断言正则</td>
@@ -527,7 +532,7 @@
 			</form>
 		</div>
 	</div>
-	<div class="listDataTableDiv1 panel-warning">
+	<div class="listDataTableDiv panel-warning">
         <table
             class="table table-striped table-bordered table-hover  table-condensed">
             <thead>
@@ -567,7 +572,7 @@
 			<button type="button" class="btn btn-success" onclick="deleteDebugResult()">清空调试结果</button>	
 		</span>				
 	</div>
-	<div id="layer3" class="listDataTableDiv1 panel-warning">
+	<div id="debugResult" class="listDataTableDiv panel-warning">
         <table class="table table-striped table-bordered table-hover table-condensed">
             <thead>
                 <tr class="success">

@@ -9,7 +9,7 @@
 var pid = ${p.id};
 
 function showApiLayer(gid) {
-	$('#layer').css({
+	$('#addAPIDiv').css({
 	    "display" : "block"
 	});
 	$('#layerBg').css({
@@ -20,7 +20,7 @@ function showApiLayer(gid) {
 }
 
 function showGroupLayer() {
-	$('#layer2').css({
+	$('#addGroupDiv').css({
 	    "display" : "block"
 	});
 	$('#layerBg').css({
@@ -30,10 +30,10 @@ function showGroupLayer() {
 }
 
 function cancel() {
-	$('#layer').css({
+	$('#addAPIDiv').css({
 	    "display" : "none"
 	});
-	$('#layer2').css({
+	$('#addGroupDiv').css({
 	    "display" : "none"
 	});
 	$('#layerBg').css({
@@ -43,8 +43,8 @@ function cancel() {
 }
 
 function doGroupEdit(id){
-	$("#addForm2").attr("name","admin_group_update");
-	$("#subTitle2").html("编辑分组");
+	$("#addGroupForm").attr("name","admin_group_update");
+	$("#addGroupTitle").html("编辑分组");
 	$.ajax({
 	    type:"post",
 	    dataType:"json",
@@ -57,17 +57,18 @@ function doGroupEdit(id){
 			$("#gid").val(g.id);
 			$("#group_pid").val(pid);
 			$("#groupName").val(g.name);
+			$('#addGroupDiv').css({
+			    "display" : "block"
+			});
+			$('#layerBg').css({
+			    "display" : "block"
+			});	
 	    },
 	    error:function(data){
 			alert("系统错误");
 	    }
 	});
-	$('#layer2').css({
-	    "display" : "block"
-	});
-	$('#layerBg').css({
-	    "display" : "block"
-	});	
+	
 	return false;
 }   
 
@@ -75,12 +76,12 @@ function submitGroupForm(){
     if (!checkEmpty("groupName","分组名称"))
 		return false;
     
-	var targetUrl = $("#addForm2").attr("name");
+	var targetUrl = $("#addGroupForm").attr("name");
 	$.ajax({
 			type:"post",
 		    dataType:"json",
 	    url:targetUrl,
-	    data: $("#addForm2").serialize(),
+	    data: $("#addGroupForm").serialize(),
 	    success:function(data){
 	        alert(data.msg);
 	        window.location.href="admin_apiInfo_list?pid="+pid;
@@ -113,7 +114,7 @@ function doGroupDelete(id){
 }
  
 function doApiEdit(id){
-	$("#addForm").attr("name","admin_apiInfo_update");
+	$("#addAPIForm").attr("name","admin_apiInfo_update");
 	$("#subTitle").html("编辑接口");
 	$.ajax({
 	    type:"post",
@@ -130,17 +131,18 @@ function doApiEdit(id){
 			$("#url").val(api.url);
 			$("#method").val(api.method);
 			$("#dataType").val(api.dataType);
+			$('#addAPIDiv').css({
+			    "display" : "block"
+			});
+			$('#layerBg').css({
+			    "display" : "block"
+			});	
 	    },
 	    error:function(data){
 			alert("系统错误");
 	    }
 	});
-	$('#layer').css({
-	    "display" : "block"
-	});
-	$('#layerBg').css({
-	    "display" : "block"
-	});	
+	
 	return false;
 }   
 
@@ -154,8 +156,8 @@ function submitApiForm(){
     if (!checkEmpty("dataType","数据类型"))
 		return false;
     
-	var targetUrl = $("#addForm").attr("name");
-	var formData = $("#addForm").serialize();
+	var targetUrl = $("#addAPIForm").attr("name");
+	var formData = $("#addAPIForm").serialize();
 	$.ajax({
 		type:"post",
 		dataType:"json",
@@ -199,15 +201,42 @@ function doApiDelete(id){
 <div id="layerBg"></div>
 
 <div class="workingArea">
-	<ol class="breadcrumb">
-		<li><a href="admin_project_list">所有项目</a></li>
-		<li><a href="admin_projectVariable_list?pid=${p.id}">当前项目：${p.name}</a></li>
-		<li class="active">接口管理</li>
-	</ol>
-	<div id="layer" class="panel panel-warning addApiDiv">
+	<div id="workNav">
+		<ol>
+	     	<li><a href="admin_project_list">所有项目</a></li>
+			<li><a href="admin_projectVariable_list?pid=${p.id}">${p.name}</a></li>
+			<li class="active">接口管理</li>
+	    </ol>
+	</div>
+	<div id="addGroupDiv" class="panel panel-warning">
+		<div class="panel-heading" id="addGroupTitle">新增分组</div>
+		<div class="panel-body">
+			<form id="addGroupForm" name="admin_group_add" action="">
+				<table class="addTable">
+					<tr>
+						<td>分组名称</td>
+						<td>
+							<input id="gid" name="gid" type="hidden">
+							<input id="group_pid" name="pid" type="hidden" value="${p.id }">
+							<input id="groupName" name="groupName" type="text"
+							class="form-control"></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<button type="button" class="btn btn-success"
+								onclick="submitGroupForm()">提 交</button>
+							<button type="button" class="btn" onclick="cancel()">取 消</button>
+						</td>
+					</tr>
+
+				</table>
+			</form>
+		</div>
+	</div>
+	<div id="addAPIDiv" class="panel panel-warning">
 		<div class="panel-heading" id="subTitle">新增接口</div>
 		<div class="panel-body">
-			<form id="addForm" name="admin_apiInfo_add" action="">
+			<form id="addAPIForm" name="admin_apiInfo_add" action="">
 				<table class="addTable">
 					<tr>
 						<td>接口名称</td>
@@ -238,32 +267,6 @@ function doApiDelete(id){
 						<td colspan="2" align="center">
 							<button type="button" class="btn btn-success"
 								onclick="submitApiForm()">提 交</button>
-							<button type="button" class="btn" onclick="cancel()">取 消</button>
-						</td>
-					</tr>
-
-				</table>
-			</form>
-		</div>
-	</div>
-
-	<div id="layer2" class="panel panel-warning addGroupDiv">
-		<div class="panel-heading" id="subTitle2">新增分组</div>
-		<div class="panel-body">
-			<form id="addForm2" name="admin_group_add" action="">
-				<table class="addTable">
-					<tr>
-						<td>分组名称</td>
-						<td>
-							<input id="gid" name="gid" type="hidden">
-							<input id="group_pid" name="pid" type="hidden" value="${p.id }">
-							<input id="groupName" name="groupName" type="text"
-							class="form-control"></td>
-					</tr>
-					<tr>
-						<td colspan="2" align="center">
-							<button type="button" class="btn btn-success"
-								onclick="submitGroupForm()">提 交</button>
 							<button type="button" class="btn" onclick="cancel()">取 消</button>
 						</td>
 					</tr>

@@ -5,13 +5,25 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alibaba.fastjson.JSONObject;
 
 import api.bean.Project;
 import api.util.Page;
 
+/**
+ * 
+ * @ClassName:  ProjectServlet   
+ * @Description:继承抽象类并实现抽象方法  
+ * @author: Durant2035
+ * @date:   2020年4月15日 下午8:39:30      
+ * @Copyright:
+ */
 @SuppressWarnings("serial")
 public class ProjectServlet extends BaseBackServlet{
+	private static final Logger logger = LoggerFactory.getLogger(ProjectServlet.class);
 
 	@Override
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
@@ -23,7 +35,7 @@ public class ProjectServlet extends BaseBackServlet{
 		bean.setName(name);
 		bean.setIsSign(isSign);
 		bean.setIsEncript(isEncript);
-		
+		logger.debug("新增的对象是>>>"+bean.toString());
 		JSONObject json = new JSONObject();		
 		if (pDAO.add(bean)) {
 			json.put("msg", "sucess");

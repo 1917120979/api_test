@@ -7,62 +7,60 @@
 <%@include file="../include/admin/adminNavigator.jsp"%>
 <script>
 	var pid = ${p.id};
-    $(function() {
-	$("#addForm").submit(function() {
-	    
-	});
 	var type = ${type};
-	$("#pageselect").val(type);
-    });
-    
-    function showAddDiv() {
-	$('#layer').css({
-	    "display" : "block"
+	
+	$(function(){
+	    $("#pageSelect").val(type);	    
 	});
-	$('#layerBg').css({
-	    "display" : "block"
-	});
-	return false;
+	
+    function showAddVarDiv() {
+		$('#addVarDiv').css({
+		    "display" : "block"
+		});
+		$('#layerBg').css({
+		    "display" : "block"
+		});
+		return false;
     }
 
     function cancel() {
-	$('#layer').css({
-	    "display" : "none"
-	});
-	$('#layerBg').css({
-	    "display" : "none"
-	});
+		$('#addVarDiv').css({
+		    "display" : "none"
+		});
+		$('#layerBg').css({
+		    "display" : "none"
+		});
 	window.location.reload();
     }
     
     function doEdit(id){
-	$("#addForm").attr("name","admin_projectVariable_update");
-	$("#subTitle").html("编辑项变量");
-	$.ajax({
-	    type:"post",
-	    dataType:"json",
-	    url:"admin_projectVariable_edit",
-	    data:{
-			"id":id
-	    },
-	    success:function(data){
-			var pv = data.data;
-			$("#id").val(pv.id);
-			$("#variableName").val(pv.variableName);
-			$("#variableValue").val(pv.variableValue);
-			$("#type").val(pv.type);
-	    },
-	    error:function(data){
-			alert("系统错误");
-	    }
-	});
-	$('#layer').css({
-	    "display" : "block"
-	});
-	$('#layerBg').css({
-	    "display" : "block"
-	});	
-	return false;
+		$("#addForm").attr("name","admin_projectVariable_update");
+		$("#subTitle").html("编辑变量");
+		$.ajax({
+		    type:"post",
+		    dataType:"json",
+		    url:"admin_projectVariable_edit",
+		    data:{
+				"id":id
+		    },
+		    success:function(data){
+				var pv = data.data;
+				$("#id").val(pv.id);
+				$("#variableName").val(pv.variableName);
+				$("#variableValue").val(pv.variableValue);
+				$("#type").val(pv.type);
+				$('#addVarDiv').css({
+				    "display" : "block"
+				});
+				$('#layerBg').css({
+				    "display" : "block"
+				});
+		    },
+		    error:function(data){
+				alert("系统错误");
+		    }
+		});		
+		return false;
     }   
     
     function doDelete(id){
@@ -108,8 +106,9 @@
 	        }
 	    });	
     }  
-    function s_click(obj){
-		var num = $("#pageselect").val();
+    
+    function selectClick(obj){
+		var num = $("#pageSelect").val();
 		if(num == 0){
 		    window.location.href="admin_projectVariable_list?pid="+pid;
 		}
@@ -121,51 +120,52 @@
 		}
 		if(num == 3){
 		    window.location.href="admin_projectVariable_list?pid="+pid+"&type=3";
-		}
-		    
+		}		    
     }
+    
     function groupManagement(){
 		window.location.href="admin_group_list?pid="+pid;
     }
-    function apiManagement(){
-	window.location.href="admin_apiInfo_list?pid="+pid;
+    function managementAPI(){
+		window.location.href="admin_apiInfo_list?pid="+pid;
 	}
-    function apiExecute(){
-	window.location.href="admin_apiExecute_add?pid="+pid;
+    function executeAPI(){
+		window.location.href="admin_apiExecute_add?pid="+pid;
 	}
     function viewResult(){
-	window.location.href="admin_projectResult_list?pid="+pid;
+		window.location.href="admin_projectResult_list?pid="+pid;
 	}
 </script>
 
 <title>项目配置</title>
 
 <div id="layerBg"></div>
-
 <div class="workingArea">
-	<ol class="breadcrumb">
-      <li><a href="admin_project_list">所有项目</a></li>
-      <li class="active">当前项目名称：${p.name}</li>
-    </ol>
+	<div id="workNav">
+		<ol>
+	      <li><a href="admin_project_list">所有项目</a></li>
+     	  <li class="active">${p.name}</li>
+	    </ol>
+	</div>
 	<div id="listTitle">
 		<span>
 			项目变量列表 &nbsp;&nbsp;&nbsp;&nbsp;查询:
-			<select id="pageselect" onchange="s_click(this,${p.id})" > 
+			<select id="pageSelect" onchange="selectClick(this)" > 
 	   			<OPTION value="0">全部</OPTION> 
 				<OPTION value="1">项目配置</OPTION> 
 				<OPTION value="2">公共参数</OPTION> 
 				<OPTION value="3">接口关联</OPTION> 
 			</select>
-			<button type="button" class="btn btn-success" onclick="showAddDiv()">新增变量</button> 	
+			<button type="button" class="btn btn-success" onclick="showAddVarDiv()">新增变量</button> 	
 		</span>				
 		<span class="rightSpan">
-			<button type="button" class="btn btn-success" onclick="apiManagement()">接口管理</button>
-			<button type="button" class="btn btn-success" onclick="apiExecute(}">接口执行</button>
+			<button type="button" class="btn btn-success" onclick="managementAPI()">接口管理</button>
+			<button type="button" class="btn btn-success" onclick="executeAPI()">接口执行</button>
 			<button type="button" class="btn btn-success" onclick="viewResult()">查看结果</button>
 		</span>	
 	</div>
-	<div id="layer" class="panel panel-warning addProjDiv">
-		<div class="panel-heading" id="subTitle">新增属性</div>
+	<div id="addVarDiv" class="panel panel-warning">
+		<div class="panel-heading" id="subTitle">新增变量</div>
 		<div class="panel-body">
 			<form id="addForm" name="admin_projectVariable_add" action="">
 				<table class="addTable">
@@ -175,15 +175,13 @@
 							<input id="id" name="id" type="hidden">
 							<input id="pid" name="pid" value = "${p.id }" type="hidden">
 							<input id="variableName" name="variableName" type="text" class="form-control">							
-						</td>
-							
+						</td>							
 					</tr>
 					<tr>
 						<td>变量值</td>
 						<td>
 							<input id="variableValue" name="variableValue" type="text" class="form-control">					
-						</td>
-							
+						</td>							
 					</tr>
 					<tr>
 						<td>类型</td>
@@ -192,22 +190,20 @@
 								<option value="1">项目配置</option>
 								<option value="2">公共参数-请求头</option>								
 							</select>					
-						</td>
-							
+						</td>							
 					</tr>
 					<tr>
 						<td colspan="2" align="center">
 							<button type="button" class="btn btn-success" onclick="submitForm()">提 交</button>
 							<button type="button" class="btn" onclick="cancel()">取 消</button>
 						</td>
-					</tr>
-					
+					</tr>				
 				</table>
 			</form>
 		</div>
 	</div>
 
-	<div class="listDataTableDiv1">
+	<div class="listDataTableDiv">
 		<table
 			class="table table-striped table-bordered table-hover  table-condensed">
 			<thead>

@@ -1,10 +1,7 @@
 package api.servlet;
 
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +28,14 @@ import api.dao.ProjectVariableDAO;
 import api.dao.GroupDAO;
 import api.util.Page;
 
+/**
+ * 
+ * @ClassName:  BaseBackServlet   
+ * @Description:抽象类继承httpservlet,处理过滤器转发的请求 ，定义抽象方法
+ * @author: Durant2035
+ * @date:   2020年4月15日 下午8:38:08      
+ * @Copyright:
+ */
 @SuppressWarnings("serial")
 public abstract class BaseBackServlet extends HttpServlet{
 	private static final Logger logger = LoggerFactory.getLogger(BaseBackServlet.class);
@@ -69,7 +74,7 @@ public abstract class BaseBackServlet extends HttpServlet{
 			String method = (String) request.getAttribute("method");
 			Method m = this.getClass().getMethod(method, HttpServletRequest.class, HttpServletResponse.class, Page.class);
 			String redirect = m.invoke(this, request, response,page).toString();
-			
+			logger.debug("跳转的目标是>>>"+redirect);
 			if (redirect.startsWith("@")) {
 				response.sendRedirect(redirect.substring(1));
 			}else if(redirect.startsWith("%")) {
@@ -81,44 +86,6 @@ public abstract class BaseBackServlet extends HttpServlet{
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-	}
-	
-	public Map<String, Object> parseParam(HttpServletRequest request) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		try {
-			Enumeration<String> paramNames = request.getParameterNames();
-			while (paramNames.hasMoreElements()) {
-				String name = paramNames.nextElement();
-				String value = request.getParameter(name);
-				params.put(name, value);		
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		logger.info(params.toString());
-		return params;
-		
-	}
-	
-	public <T> T parseClass(Map<String, Object>  params, Class<T> clazz) {
-		
-		try {
-			T t = clazz.newInstance();
-			for (String key : params.keySet()) {
-				Object value = params.get(key);						
-				if (value != null) {
-					Field field = clazz.getDeclaredField(key);
-					field.setAccessible(true);
-					field.set(t, value);
-				}
-			}
-			return t;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		return null;				
 	}
 	
 	public InputStream parseUplooad(HttpServletRequest request, Map<String, String> params) {
@@ -149,10 +116,11 @@ public abstract class BaseBackServlet extends HttpServlet{
 	public String getExtractorValue(String str, String regex) {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(str);
+		String value = "";
 		if (matcher.find()) {
-			return matcher.group(1);
-		}else {
-			return "";
-		}	
+			value =  matcher.group(1);
+		}
+		logger.debug("表达式是>>>"+regex+"；提取到的内容是>>>"+value);
+		return value;
 	}
 }

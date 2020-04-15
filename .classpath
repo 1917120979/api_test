@@ -13,7 +13,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/log4j-slf4j-impl-2.11.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/velocity-dep-1.4.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/slf4j-api-1.7.25.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-fileupload-1.2.2.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-io-1.4.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-lang-2.5.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jstl.jar"/>
@@ -21,6 +20,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/spring-core-3.2.0.M1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/spring-web-3.2.0.M1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/standard.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-fileupload-1.2.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

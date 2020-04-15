@@ -7,6 +7,14 @@ import java.util.List;
 
 import api.bean.Project;
 
+/**
+ * 
+ * @ClassName:  ProjectDAO   
+ * @Description:和数据库交互的DAO类  
+ * @author: Durant2035
+ * @date:   2020年4月15日 下午8:33:28      
+ * @Copyright:
+ */
 public class ProjectDAO extends BaseDao{
 	public boolean add(Project bean) {
 		String sql = "insert into project values(null,?,?,?)";
@@ -26,6 +34,15 @@ public class ProjectDAO extends BaseDao{
 		return super.update(sql, params);
 	}
 	
+	/**
+	 * 
+	 * @Title: get   
+	 * @Description: 获取指定id的Project对象  
+	 * @param: @param id
+	 * @param: @return      
+	 * @return: Project      
+	 * @throws
+	 */
 	public Project get(int id) {
 		String sql = "select * from project where id = ?";
 		Object[] params = {id};
@@ -46,6 +63,16 @@ public class ProjectDAO extends BaseDao{
 		return bean;
 	}
 	
+	/**
+	 * 
+	 * @Title: list   
+	 * @Description: 获取指定行数的Project对象列表  
+	 * @param: @param start
+	 * @param: @param count
+	 * @param: @return      
+	 * @return: List<Project>      
+	 * @throws
+	 */
 	public List<Project> list(int start, int count) {
 		String sql = "select * from project limit ?,?";
 		Object[] params = {start, count};

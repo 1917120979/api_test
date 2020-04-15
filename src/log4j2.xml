@@ -20,7 +20,7 @@
                      filepattern="${logPath}/%d{YYYYMMdd}-%i-info.log.zip">
             <!--设置日志级别-->
             <Filters>
-                <ThresholdFilter level="INFO"/>
+                <ThresholdFilter level="DEBUG"/>
             </Filters>
             <!--输出日志的格式-->
             <PatternLayout pattern="[ %-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t] %c{1}:%L - %msg%n" />
