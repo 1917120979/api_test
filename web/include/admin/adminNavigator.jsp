@@ -2,10 +2,15 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 
 <div class="navitagorDiv">
-	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-		<a class="navbar-brand" href="#nowhere">接口测试</a>
-		
-		<a class="navbar-brand" href="admin_project_list">项目管理</a>
-		<a class="navbar-brand" href="admin_relation_list">关联管理</a>
-	</nav>
+	<div class="left_nav">
+		<ul>
+			<li><a href="admin_project_list">接口测试平台</a></li>
+		</ul>
+	</div>
+	<div class="right_nav">
+		<ul>
+			<li>用户1</li>
+			<li><span>更多</span></li>
+		</ul>
+	</div>
 </div>
