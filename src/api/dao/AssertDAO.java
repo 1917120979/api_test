@@ -7,7 +7,7 @@ import java.util.List;
 
 import api.bean.Assert;
 
-public class AssertDAO extends BaseDao{
+public class AssertDAO extends BaseDAO{
 	public boolean add(Assert bean) {
 		String sql = "insert into api_assert values(null,?,?,?)";
 		Object[] params = {bean.getApiInfo().getId(), bean.getAssertExpress(), bean.getAssertExpect()};

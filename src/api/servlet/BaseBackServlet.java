@@ -22,7 +22,7 @@ import api.dao.ApiAttributeDAO;
 import api.dao.ApiInfoDAO;
 import api.dao.AssertDAO;
 import api.dao.DebugResultDAO;
-import api.dao.ExtractorDAO;
+import api.dao.RegularExtractorDAO;
 import api.dao.ProjectDAO;
 import api.dao.ProjectVariableDAO;
 import api.dao.GroupDAO;
@@ -51,7 +51,7 @@ public abstract class BaseBackServlet extends HttpServlet{
 	protected ProjectDAO pDAO = new ProjectDAO();
 	protected ProjectVariableDAO pvDAO = new ProjectVariableDAO();
 	protected GroupDAO gDAO = new GroupDAO();
-	protected ExtractorDAO eDAO = new ExtractorDAO();
+	protected RegularExtractorDAO reDAO = new RegularExtractorDAO();
 	protected AssertDAO assertDAO = new AssertDAO();
 	protected DebugResultDAO drDAO = new DebugResultDAO();
 	

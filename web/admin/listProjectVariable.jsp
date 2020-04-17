@@ -158,7 +158,7 @@
 			</select>
 			<button type="button" class="btn btn-success" onclick="showAddVarDiv()">新增变量</button> 	
 		</span>				
-		<span class="rightSpan">
+		<span class="floatRight">
 			<button type="button" class="btn btn-success" onclick="managementAPI()">接口管理</button>
 			<button type="button" class="btn btn-success" onclick="executeAPI()">接口执行</button>
 			<button type="button" class="btn btn-success" onclick="viewResult()">查看结果</button>
@@ -235,9 +235,9 @@
 						</td>
 						<td>
 							<c:if test="${pv.type == 1 }">
-								<a onclick="doEdit(${pv.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
+								<a onclick="doEdit(${pv.id});return false;">编辑<span class="glyphicon glyphicon-edit"></span></a>
 							</c:if>						
-							<a onclick="doDelete(${pv.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
+							<a onclick="doDelete(${pv.id});return false;">删除<span class="glyphicon glyphicon-trash"></span></a>
 						</td>
 					</tr>
 				</c:forEach>

@@ -21,52 +21,15 @@ div.pageDiv{
 	text-align: center;
 }
 
-#layer {
-	display: none;
-	position: absolute;
-	left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-	z-index: 11;
+#groupTitle a{
+	margin-left: 50px;
 }
 
-#layer1 {
-	display: none;
-	position: absolute;
-	left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-	z-index: 11;
+div td a{
+	margin-left: 15px;
 }
 
-#layer2 {
-	display: none;
-	position: absolute;
-	left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-	z-index: 11;
-}
-
-#debugResult {
-	display: none;
-}
-
-
-
-
-
-
-.tda{
-	margin-left: 40px;
-}
-.rightSpan{
+.floatRight{
 	float:right;
 }
 
@@ -117,11 +80,11 @@ div.right_nav{
 }
 
 #workNav{
-	background-color: #add8a3;
+	background-color: #aad0a1;
 	font-size: 16px;
 	color:#000000;
-	margin:2px 0px; 
-	padding: 8px 15px;
+	margin:1px 0px; 
+	padding: 5px 15px;
 }
 
 #workNav ol,li{
@@ -146,10 +109,9 @@ div.right_nav{
 }
 
 #listTitle{
-	padding: 8px 15px;
-    margin-bottom: 2px;
+	padding: 5px 15px;
+    margin: 1px 0px;
     background-color: #c3e2b3;
-    border-radius: 4px;
 }
 
 #listTitle button{
@@ -186,14 +148,13 @@ div.right_nav{
 }
 
 div.listDataTableDiv {
-	min-height: 150px;	
+	min-height: 220px;	
 }
 
 #groupTitle{
 	padding: 8px 15px;
 	height:43px;
-    background-color: #cee6c0;
-    border-radius: 4px;
+    background-color: #d4eac8;
 }
 
 #addGroupDiv{
@@ -220,4 +181,13 @@ div.listDataTableDiv {
 	z-index: 11;
 	width: 340px;
     height: 320px;
+}
+.editTable{
+	width:100%;
+}
+.editTable tr,td{
+	padding: 5px 5px;
+}
+#apiInfo,#editButton{
+	background-color: #dff0d8;
 }

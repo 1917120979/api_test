@@ -11,6 +11,10 @@ public class ApiInfo {
 	private int hasExtractor;
 	private int hasAssert;
 	
+	@Override
+	public String toString() {
+		return String.format("project[id:%d, name:%s, method:%s, dataType:%d, hasExtractor:%d, hasAssert:%d]",id,apiName,method,dataType,hasExtractor,hasAssert);
+	}
 	public int getId() {
 		return id;
 	}

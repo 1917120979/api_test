@@ -7,19 +7,22 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alibaba.fastjson.JSONObject;
 
 import api.bean.ApiInfo;
 import api.bean.Assert;
 import api.bean.DebugResult;
-import api.bean.Extractor;
+import api.bean.RegularExtractor;
 import api.bean.Project;
 import api.util.HttpClientUtil;
 import api.util.Page;
 
 @SuppressWarnings("serial")
 public class DebugResultServlet extends BaseBackServlet{
-	
+	private static final Logger logger = LoggerFactory.getLogger(DebugResultServlet.class);
 	/**
 	 * 
 	 * <p>Title: add</p>   
@@ -34,6 +37,9 @@ public class DebugResultServlet extends BaseBackServlet{
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int aid = Integer.parseInt(request.getParameter("aid"));
 		ApiInfo apiInfo = apiDAO.get(aid);
+		
+		logger.debug("调试接口是>>>"+apiInfo.toString());
+		
 		Project project = apiInfo.getProject();
 		int isSgin = project.getIsSign();
 		int isEncript = project.getIsEncript();
@@ -60,12 +66,11 @@ public class DebugResultServlet extends BaseBackServlet{
 					
 				}else {
 					if (method.toUpperCase().equals("POST")) {
-						debugResp = HttpClientUtil.doPost(url, requestMap, headerMap);
-						debugReq = url+"\r\n"+requestMap.toString()+"\r\n"+headerMap.toString();
+						debugResp = HttpClientUtil.doPost(url, requestMap, headerMap);					
 					}else if (method.toUpperCase().equals("GET")) {
 						debugResp = HttpClientUtil.doGet(url, requestMap, headerMap);
-						debugReq = url+"\r\n"+requestMap.toString()+"\r\n"+headerMap.toString();
-					}					
+					}	
+					debugReq = String.format("请求地址：%s，请求数据是：%s，请求头是：%s", url,requestMap.toString(), headerMap.toString());
 				}
 			}
 			if (isSgin == 1) {
@@ -85,7 +90,7 @@ public class DebugResultServlet extends BaseBackServlet{
 			}	
 			
 			if (apiInfo.getHasExtractor() == 1) {
-				List<Extractor> extractors = eDAO.list(aid);
+				List<RegularExtractor> extractors = eDAO.list(aid);
 				for (int i = 0; i < extractors.size(); i++) {
 					String regex = extractors.get(i).getExpression();
 					debugExtractor += super.getExtractorValue(debugResp, regex)+",";
@@ -112,7 +117,10 @@ public class DebugResultServlet extends BaseBackServlet{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		logger.debug("调试请求是>>>"+debugReq);
+		logger.debug("调试响应是>>>"+debugResp);
+		logger.debug("调试提取器是>>>"+debugExtractor);
+		logger.debug("调试断言是>>>"+debugAssert);
 		bean.setDate(new Date());
 		bean.setApiInfo(apiInfo);
 		bean.setDebugReq(debugReq);

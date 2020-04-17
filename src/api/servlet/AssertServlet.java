@@ -3,6 +3,9 @@ package api.servlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alibaba.fastjson.JSONObject;
 
 import api.bean.ApiInfo;
@@ -11,7 +14,7 @@ import api.util.Page;
 
 @SuppressWarnings("serial")
 public class AssertServlet extends BaseBackServlet{
-
+	private static final Logger logger = LoggerFactory.getLogger(AssertServlet.class);
 	@Override
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int aid = Integer.parseInt(request.getParameter("ass_aid"));
@@ -27,7 +30,8 @@ public class AssertServlet extends BaseBackServlet{
 			json.put("msg", "success");
 			json.put("data", "null");
 			apiInfo.setHasAssert(1);
-			apiDAO.update(apiInfo);
+			logger.debug("断言关联的接口是>>>"+apiInfo.toString());
+			apiDAO.updateFlag(apiInfo);			
 		}else {
 			json.put("code", "401");
 			json.put("msg", "fail");
@@ -47,7 +51,7 @@ public class AssertServlet extends BaseBackServlet{
 			json.put("msg", "success");
 			json.put("data", "null");
 			apiInfo.setHasExtractor(0);
-			apiDAO.update(apiInfo);
+			apiDAO.updateFlag(apiInfo);
 		}else {
 			json.put("code", "401");
 			json.put("msg", "fail");

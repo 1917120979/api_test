@@ -103,16 +103,15 @@
 <title>项目管理</title>
 
 <div id="layerBg"></div>
-
 <div class="workingArea">
 	<div id="workNav">
-		<ol class="">
-	      <li class="">所有项目</li>
+		<ol>
+	      <li class="active">所有项目</li>
 	    </ol>
 	</div>
     <div id="listTitle">
     	<span>项目列表</span>
-    	<span><button type="button" class="btn btn-success" onclick="showAddProjectDiv()">新增项目</button></span>
+    	<button type="button" class="btn btn-success" onclick="showAddProjectDiv()">新增项目</button>
     </div>	
 	<div id="addProjectDiv" class="panel panel-warning">
 		<div class="panel-heading" id="subTitle">新增项目</div>
@@ -199,9 +198,9 @@
 							</c:choose>
 						</td>
 						<td>
-							<a href="admin_projectVariable_list?pid=${p.id}" class="tda"><span class="glyphicon glyphicon-cog"></span></a>
-							<a onclick="doProjectEdit(${p.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
-							<a onclick="doProjectDel(${p.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
+							<a href="admin_projectVariable_list?pid=${p.id}">配置<span class="glyphicon glyphicon-cog"></span></a>
+							<a onclick="doProjectEdit(${p.id});return false;">编辑<span class="glyphicon glyphicon-edit"></span></a>
+							<a onclick="doProjectDel(${p.id});return false;">删除<span class="glyphicon glyphicon-trash"></span></a>
 						</td>
 					</tr>
 				</c:forEach>

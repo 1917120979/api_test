@@ -284,18 +284,13 @@ function doApiDelete(id){
 	</c:if>
 	<c:forEach items="${gs}" var="g">
 		<div id="groupTitle">
-			<span>
-				分组：${g.name}&nbsp;&nbsp;&nbsp;&nbsp;
-				<a onclick="doGroupEdit(${g.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
-				<a onclick="doGroupDelete(${g.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
-			</span> 				
-			<span class="rightSpan">
-				<button type="button" class="btn btn-success" onclick="showApiLayer(${g.id})">新增接口</button>
-			</span>	
+			<span><strong>分组：${g.name}</strong></span> 
+			<a onclick="doGroupEdit(${g.id});return false;">编辑<span class="glyphicon glyphicon-edit"></span></a>
+			<a onclick="doGroupDelete(${g.id});return false;">删除<span class="glyphicon glyphicon-trash"></span></a>
+			<button type="button" class="btn btn-success floatRight" onclick="showApiLayer(${g.id})">新增接口</button>							
 		</div>
 		<div class="listDataTableDiv1">		
-			<table
-				class="table table-striped table-bordered table-hover  table-condensed">
+			<table class="table table-striped table-bordered table-hover  table-condensed">
 				<thead>
 					<tr class="success">
 						<th>ID</th>
@@ -328,9 +323,9 @@ function doApiDelete(id){
 									<c:when test="${api.hasAssert == 1}">有</c:when>
 								</c:choose></td>
 							<td>
-								<a href="admin_apiAttribute_list?aid=${api.id }" class="tda"><span class="glyphicon glyphicon-cog"></span></a> 
-								<a onclick="doApiEdit(${api.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a> 
-								<a onclick="doApiDelete(${api.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
+								<a href="admin_apiAttribute_list?aid=${api.id}">配置<span class="glyphicon glyphicon-cog"></span></a> 
+								<a onclick="doApiEdit(${api.id});return false;">编辑<span class="glyphicon glyphicon-edit"></span></a> 
+								<a onclick="doApiDelete(${api.id});return false;">删除<span class="glyphicon glyphicon-trash"></span></a>
 							</td>
 
 						</tr>

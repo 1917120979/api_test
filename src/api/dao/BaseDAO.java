@@ -7,7 +7,7 @@ import com.mysql.jdbc.Statement;
 
 import api.util.DBUtil;
 
-public class BaseDao {
+public class BaseDAO {
 
 	private Connection conn;
 	private PreparedStatement pst;
@@ -47,6 +47,10 @@ public class BaseDao {
 		return rs;
 	}
 	
+	public ResultSet query(String sql) {
+		return query(sql, null);
+	}
+	
 	public Boolean update(String sql, Object[] params) {
 		try {
 			conn = DBUtil.getConnection();
@@ -64,6 +68,10 @@ public class BaseDao {
 		}finally {
 			close();
 		}
+	}
+	
+	public Boolean update(String sql) {
+		return update(sql, null);
 	}
 	
 	public ResultSet insert(String sql, Object[] params) {

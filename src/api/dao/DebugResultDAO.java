@@ -8,7 +8,7 @@ import java.util.List;
 import api.bean.DebugResult;
 import api.util.DateUtil;
 
-public class DebugResultDAO extends BaseDao{
+public class DebugResultDAO extends BaseDAO{
 	
 	/**
 	 * 
@@ -20,7 +20,7 @@ public class DebugResultDAO extends BaseDao{
 	 * @throws
 	 */
 	public boolean add(DebugResult bean) {
-		String sql = "insert into api_debug_result values(null,?.?.?.?.?.?)";
+		String sql = "insert into api_debug_result values(null,?,?,?,?,?,?)";
 		Object[] params = {bean.getApiInfo().getId(), bean.getDebugReq(),bean.getDebugResp(),bean.getDebugExtractor(),bean.getDebugAssert(),DateUtil.d2t(bean.getDate())};
 		return super.update(sql, params);
 	}

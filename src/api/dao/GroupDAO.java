@@ -7,7 +7,7 @@ import java.util.List;
 
 import api.bean.Group;
 
-public class GroupDAO extends BaseDao{
+public class GroupDAO extends BaseDAO{
 	public boolean add(Group bean) {
 		String sql = "insert into project_group value(null,?,?)";
 		Object[] params = {bean.getProject().getId(), bean.getName()};

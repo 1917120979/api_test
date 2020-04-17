@@ -11,7 +11,7 @@ import api.bean.ApiAttribute;
 import api.bean.ApiInfo;
 import api.bean.Assert;
 import api.bean.DebugResult;
-import api.bean.Extractor;
+import api.bean.RegularExtractor;
 import api.util.Page;
 
 @SuppressWarnings("serial")
@@ -110,7 +110,7 @@ public class ApiAttributeServlet extends BaseBackServlet{
 		int aid = Integer.parseInt(request.getParameter("aid"));
 		ApiInfo api = apiDAO.get(aid);
 		
-		List<Extractor> extrs = eDAO.list(aid);
+		List<RegularExtractor> extrs = eDAO.list(aid);
 		List<Assert> asserts = assertDAO.list(aid);
 		List<DebugResult> drs = drDAO.list(aid);
 		List<ApiAttribute> attrs = null;

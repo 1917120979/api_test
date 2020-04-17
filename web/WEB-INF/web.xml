@@ -73,13 +73,13 @@
 	
 	
 	<servlet>
-		<servlet-name>ExtractorServlet</servlet-name>
-		<servlet-class>api.servlet.ExtractorServlet</servlet-class>
+		<servlet-name>RegularExtractorServlet</servlet-name>
+		<servlet-class>api.servlet.RegularExtractorServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>ExtractorServlet</servlet-name>
-		<url-pattern>/extractorServlet</url-pattern>
+		<servlet-name>RegularExtractorServlet</servlet-name>
+		<url-pattern>/regularExtractorServlet</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

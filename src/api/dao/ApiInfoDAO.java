@@ -8,7 +8,7 @@ import java.util.List;
 import api.bean.ApiInfo;
 import api.bean.Group;
 
-public class ApiInfoDAO extends BaseDao{
+public class ApiInfoDAO extends BaseDAO{
 	/**
 	 * 
 	 * @Title: add   
@@ -55,8 +55,14 @@ public class ApiInfoDAO extends BaseDao{
 	}
 	
 	public boolean update(ApiInfo bean) {
-		String sql = "update api_info set api_name = ?,url = ?,method=?, data_type = ? where id = ?";
+		String sql = "update api_info set api_name = ?,url = ?,method=?, data_type = ?,has_extractor=? where id = ?";
 		Object[]  params= {bean.getApiName(),bean.getUrl(),bean.getMethod(),bean.getDataType(),bean.getId()};
+		return super.update(sql, params);
+	}
+	
+	public boolean updateFlag(ApiInfo bean) {
+		String sql = "update api_info set has_extractor=? ,has_assert= ? where id = ?";
+		Object[]  params= {bean.getHasExtractor(),bean.getHasAssert(),bean.getId()};
 		return super.update(sql, params);
 	}
 	

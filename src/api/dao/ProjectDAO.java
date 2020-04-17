@@ -15,7 +15,7 @@ import api.bean.Project;
  * @date:   2020年4月15日 下午8:33:28      
  * @Copyright:
  */
-public class ProjectDAO extends BaseDao{
+public class ProjectDAO extends BaseDAO{
 	public boolean add(Project bean) {
 		String sql = "insert into project values(null,?,?,?)";
 		Object[] params = {bean.getName(), bean.getIsSign(), bean.getIsEncript()};

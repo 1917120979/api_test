@@ -7,7 +7,7 @@ import java.util.List;
 
 import api.bean.ProjectVariable;
 
-public class ProjectVariableDAO extends BaseDao{
+public class ProjectVariableDAO extends BaseDAO{
 	
 	public boolean add(ProjectVariable bean) {	
 		String sql = "insert into project_variable values(null,?,?,?,?)";
@@ -84,6 +84,29 @@ public class ProjectVariableDAO extends BaseDao{
 			}
 		}
 		return bean;
+	}
+	
+	public String getString(String key) {
+		String sql = "select variable_value from project_variable where variable_name = ?";
+		Object[] params = {key};
+		ResultSet rs = super.query(sql, params);
+		try {
+			while (rs.next()) {
+				return rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			super.close();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return "";
 	}
 	
 	public List<ProjectVariable> listAll(int pid, int start, int count){
