@@ -35,7 +35,7 @@ public class RegularExtractorDAO extends BaseDAO{
 	 * @throws
 	 */
 	public RegularExtractor get(int id) {
-		String sql = "select * from api_extractor where id = ?"+id;
+		String sql = "select * from api_extractor where id = "+id;
 		ResultSet rs = super.query(sql, null);		
 		try {
 			while(rs.next()) {
@@ -73,7 +73,7 @@ public class RegularExtractorDAO extends BaseDAO{
 	 * @throws
 	 */
 	public List<RegularExtractor> list(int aid) {
-		String sql = "select * from api_extractor where aid = ?"+aid;
+		String sql = "select * from api_extractor where aid = "+aid;
 		List<RegularExtractor> beans = new ArrayList<RegularExtractor>();		
 		ResultSet rs = super.query(sql);
 		try {
@@ -103,7 +103,7 @@ public class RegularExtractorDAO extends BaseDAO{
 	}
 	
 	public int getTotal(int aid) {
-		String sql = "select count(*) from api_extractor where aid = ?"+aid;
+		String sql = "select count(*) from api_extractor where aid = "+aid;
 		return super.getTotal(sql);
 		
 	}
