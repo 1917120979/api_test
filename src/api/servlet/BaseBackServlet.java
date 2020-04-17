@@ -1,13 +1,12 @@
 package api.servlet;
 
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,15 +18,25 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import api.bean.ApiAttribute;
-import api.bean.ApiResult;
 import api.dao.ApiAttributeDAO;
 import api.dao.ApiInfoDAO;
-import api.dao.ApiProectDAO;
-import api.dao.ApiResultDAO;
-import api.dao.RelationDAO;
+import api.dao.AssertDAO;
+import api.dao.DebugResultDAO;
+import api.dao.RegularExtractorDAO;
+import api.dao.ProjectDAO;
+import api.dao.ProjectVariableDAO;
+import api.dao.GroupDAO;
 import api.util.Page;
 
+/**
+ * 
+ * @ClassName:  BaseBackServlet   
+ * @Description:抽象类继承httpservlet,处理过滤器转发的请求 ，定义抽象方法
+ * @author: Durant2035
+ * @date:   2020年4月15日 下午8:38:08      
+ * @Copyright:
+ */
+@SuppressWarnings("serial")
 public abstract class BaseBackServlet extends HttpServlet{
 	private static final Logger logger = LoggerFactory.getLogger(BaseBackServlet.class);
 	 
@@ -37,11 +46,14 @@ public abstract class BaseBackServlet extends HttpServlet{
 	public abstract String update(HttpServletRequest request, HttpServletResponse response,Page page);
 	public abstract String list(HttpServletRequest request, HttpServletResponse response,Page page);
 	
-	protected ApiInfoDAO aiDAO = new ApiInfoDAO();
-	protected ApiAttributeDAO aattDAO = new ApiAttributeDAO();
-	protected ApiResultDAO arDAO = new ApiResultDAO();
-	protected RelationDAO rDAO = new RelationDAO();
-	protected ApiProectDAO apDAO = new ApiProectDAO();
+	protected ApiInfoDAO apiDAO = new ApiInfoDAO();
+	protected ApiAttributeDAO attrDAO = new ApiAttributeDAO();
+	protected ProjectDAO pDAO = new ProjectDAO();
+	protected ProjectVariableDAO pvDAO = new ProjectVariableDAO();
+	protected GroupDAO gDAO = new GroupDAO();
+	protected RegularExtractorDAO reDAO = new RegularExtractorDAO();
+	protected AssertDAO assertDAO = new AssertDAO();
+	protected DebugResultDAO drDAO = new DebugResultDAO();
 	
 	public void service(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -62,7 +74,7 @@ public abstract class BaseBackServlet extends HttpServlet{
 			String method = (String) request.getAttribute("method");
 			Method m = this.getClass().getMethod(method, HttpServletRequest.class, HttpServletResponse.class, Page.class);
 			String redirect = m.invoke(this, request, response,page).toString();
-			
+			logger.debug("跳转的目标是>>>"+redirect);
 			if (redirect.startsWith("@")) {
 				response.sendRedirect(redirect.substring(1));
 			}else if(redirect.startsWith("%")) {
@@ -74,60 +86,6 @@ public abstract class BaseBackServlet extends HttpServlet{
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-	}
-	
-	public Map<String, String> parseParam(HttpServletRequest request) {
-		Map<String, String> params = new HashMap<String, String>();
-		try {
-			Enumeration<String> paramNames = request.getParameterNames();
-			while (paramNames.hasMoreElements()) {
-				String name = paramNames.nextElement();
-				String value = request.getParameter(name);
-				params.put(name, value);		
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		logger.info(params.toString());
-		return params;
-		
-	}
-	
-	public <T> T parseClass(HttpServletRequest request, Class<T> clazz) {
-		Map<String, String> params = parseParam(request);
-		try {
-			T t = clazz.newInstance();
-			for (String key : params.keySet()) {
-				Object attValue = null;
-				if (key.contains("id")) {
-					String value = params.get(key);
-					if (value.equals("")) {
-						continue;
-					}else {
-						attValue = Integer.parseInt(value);
-					}					
-				}else {
-					attValue = params.get(key);
-				}				
-				if (attValue != null) {
-					Field field = clazz.getDeclaredField(key);
-					field.setAccessible(true);
-					field.set(t, attValue);
-				}
-			}
-			return t;
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		}
-		return null;				
 	}
 	
 	public InputStream parseUplooad(HttpServletRequest request, Map<String, String> params) {
@@ -153,5 +111,16 @@ public abstract class BaseBackServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 		return is;
+	}
+	
+	public String getExtractorValue(String str, String regex) {
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(str);
+		String value = "";
+		if (matcher.find()) {
+			value =  matcher.group(1);
+		}
+		logger.debug("表达式是>>>"+regex+"；提取到的内容是>>>"+value);
+		return value;
 	}
 }

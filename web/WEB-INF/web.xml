@@ -21,6 +21,26 @@
 	</filter-mapping>
 	
 	<servlet>
+		<servlet-name>ProjectServlet</servlet-name>
+		<servlet-class>api.servlet.ProjectServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ProjectServlet</servlet-name>
+		<url-pattern>/projectServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProjectVariableServlet</servlet-name>
+		<servlet-class>api.servlet.ProjectVariableServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ProjectVariableServlet</servlet-name>
+		<url-pattern>/projectVariableServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>ApiInfoServlet</servlet-name>
 		<servlet-class>api.servlet.ApiInfoServlet</servlet-class>
 	</servlet>
@@ -29,6 +49,17 @@
 		<servlet-name>ApiInfoServlet</servlet-name>
 		<url-pattern>/apiInfoServlet</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GroupServlet</servlet-name>
+		<servlet-class>api.servlet.GroupServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>GroupServlet</servlet-name>
+		<url-pattern>/groupServlet</url-pattern>
+	</servlet-mapping>
+	
 	
 	<servlet>
 		<servlet-name>ApiAttributeServlet</servlet-name>
@@ -40,33 +71,38 @@
 		<url-pattern>/apiAttributeServlet</url-pattern>
 	</servlet-mapping>
 	
+	
 	<servlet>
-		<servlet-name>ApiResultServlet</servlet-name>
-		<servlet-class>api.servlet.ApiResultServlet</servlet-class>
+		<servlet-name>RegularExtractorServlet</servlet-name>
+		<servlet-class>api.servlet.RegularExtractorServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>ApiResultServlet</servlet-name>
-		<url-pattern>/apiResultServlet</url-pattern>
+		<servlet-name>RegularExtractorServlet</servlet-name>
+		<url-pattern>/regularExtractorServlet</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>ApiProjectServlet</servlet-name>
-		<servlet-class>api.servlet.ApiProjectServlet</servlet-class>
+		<servlet-name>AssertServlet</servlet-name>
+		<servlet-class>api.servlet.AssertServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>ApiProjectServlet</servlet-name>
-		<url-pattern>/apiProjectServlet</url-pattern>
+		<servlet-name>AssertServlet</servlet-name>
+		<url-pattern>/assertServlet</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>RelationServlet</servlet-name>
-		<servlet-class>api.servlet.RelationServlet</servlet-class>
+		<servlet-name>DebugResultServlet</servlet-name>
+		<servlet-class>api.servlet.DebugResultServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>RelationServlet</servlet-name>
-		<url-pattern>/relationServlet</url-pattern>
+		<servlet-name>DebugResultServlet</servlet-name>
+		<url-pattern>/debugResultServlet</url-pattern>
 	</servlet-mapping>
+	
+
+
+	
 </web-app>

@@ -9,73 +9,129 @@ import com.alibaba.fastjson.JSONObject;
 
 import api.bean.ApiAttribute;
 import api.bean.ApiInfo;
-import api.bean.ApiResult;
+import api.bean.Assert;
+import api.bean.DebugResult;
+import api.bean.RegularExtractor;
 import api.util.Page;
 
+@SuppressWarnings("serial")
 public class ApiAttributeServlet extends BaseBackServlet{
 
 	@Override
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int apiId = Integer.parseInt(request.getParameter("apiId"));
+		int aid = Integer.parseInt(request.getParameter("aid"));
 		int type = Integer.parseInt(request.getParameter("type"));
+		
 		ApiAttribute bean = new ApiAttribute();
-		bean.setApiId(apiId);
-		bean.setPropName(request.getParameter("propName"));
-		bean.setPropValue(request.getParameter("propValue"));
+		bean.setApiInfo(apiDAO.get(aid));
+		bean.setAttributeName(request.getParameter("attributeName"));
+		bean.setAttributeValue(request.getParameter("attributeValue"));
 		bean.setType(type);
-		aattDAO.add(bean);
-		return "@admin_apiAttribute_list?apiId="+apiId;
+		JSONObject json = new JSONObject();
+		if (attrDAO.add(bean)) {
+			json.put("code", "0");
+			json.put("msg", "success");
+			json.put("data", "null");
+		}else {
+			json.put("code", "401");
+			json.put("msg", "fail");
+			json.put("data", "null");
+		}
+		response.setContentType("text/html;charset=UTF-8");
+		return "%"+json.toJSONString();
+
 	}
 
 	@Override
 	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int id = Integer.parseInt(request.getParameter("id"));
-		ApiAttribute bean = aattDAO.get(id);
-		aattDAO.delete(id);
-		return "@admin_apiAttribute_list?apiId="+bean.getApiId();
+		JSONObject json = new JSONObject();
+		
+		if (attrDAO.delete(id)) {
+			json.put("code", "0");
+			json.put("msg", "success");
+			json.put("data", "null");
+		}else {
+			json.put("code", "401");
+			json.put("msg", "fail");
+			json.put("data", "null");
+		}
+		response.setContentType("text/html;charset=UTF-8");
+		return "%"+json.toJSONString();
 	}
 
 	@Override
 	public String edit(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int id = Integer.parseInt(request.getParameter("id"));
-		ApiAttribute bean = aattDAO.get(id);
+		ApiAttribute attr = attrDAO.get(id);
+		
 		JSONObject json = new JSONObject();
-		json.put("aattr", bean);
+		if (null != attr) {
+			json.put("code", "0");
+			json.put("msg", "success");
+			json.put("data", attr);
+		}else {
+			json.put("code", "401");
+			json.put("msg", "fail");
+			json.put("data", "null");
+		}
 		response.setContentType("text/html;charset=UTF-8");
 		return "%"+json.toJSONString();
 	}
 
 	@Override
 	public String update(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int apiId = Integer.parseInt(request.getParameter("apiId"));
-		int id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter("attrId"));
 		int type = Integer.parseInt(request.getParameter("type"));
+		
 		ApiAttribute bean = new ApiAttribute();
+		
 		bean.setId(id);
-		bean.setPropName(request.getParameter("propName"));
-		bean.setPropValue(request.getParameter("propValue"));
+		bean.setAttributeName(request.getParameter("attributeName"));
+		bean.setAttributeValue(request.getParameter("attributeValue"));
 		bean.setType(type);
-		aattDAO.update(bean);
-		return "@admin_apiAttribute_list?apiId="+apiId;
+		JSONObject json = new JSONObject();
+		if (attrDAO.update(bean)) {
+			json.put("code", "0");
+			json.put("msg", "success");
+			json.put("data", "null");
+		}else {
+			json.put("code", "401");
+			json.put("msg", "fail");
+			json.put("data", "null");
+		}
+		response.setContentType("text/html;charset=UTF-8");
+		return "%"+json.toJSONString();
 	}
 
 	@Override
 	public String list(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int apiId = Integer.parseInt(request.getParameter("apiId"));
-		ApiInfo api = aiDAO.get(apiId);
-		List<ApiAttribute> aatts0 = aattDAO.list(apiId, 0, page.getStart(), page.getCount());
-		List<ApiAttribute> aatts1 = aattDAO.list(apiId, 1, page.getStart(), page.getCount());
+		String type = request.getParameter("type");
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		ApiInfo api = apiDAO.get(aid);
 		
-		List<ApiResult> ars = arDAO.list(apiId, page.getStart(), page.getCount());
-		page.setTotal(arDAO.getTotal(apiId));
-		
+		List<RegularExtractor> extrs = reDAO.list(aid);
+		List<Assert> asserts = assertDAO.list(aid);
+		List<DebugResult> drs = drDAO.list(aid);
+		List<ApiAttribute> attrs = null;
+		if (null == type) {
+			type = "-1";
+			attrs = attrDAO.list(aid);
+		}else {
+			if (type.equals("0")) {
+				attrs = attrDAO.list(aid, 0);
+			}
+			if (type.equals("1")) {
+				attrs = attrDAO.list(aid, 1);
+			}	
+		}
 		request.setAttribute("api", api);
-		request.setAttribute("aatts0", aatts0);
-		request.setAttribute("aatts1", aatts1);
-		request.setAttribute("ars", ars);
-		request.setAttribute("page", page);
-		
-		return "admin/listAttribute.jsp";
+		request.setAttribute("attrs", attrs);
+		request.setAttribute("type", type);
+		request.setAttribute("extrs", extrs);
+		request.setAttribute("asserts", asserts);
+		request.setAttribute("drs", drs);
+		return "admin/listApiAttribute.jsp";
 	}
 
 }
