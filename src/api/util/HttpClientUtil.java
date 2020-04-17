@@ -58,7 +58,7 @@ public class HttpClientUtil {
 			// 判断返回状态是否为200
 			if (response.getStatusLine().getStatusCode() == 200) {
 				result = EntityUtils.toString(response.getEntity(), "UTF-8");
-				logger.info("请求成功！，返回数据：" + result);
+				logger.debug("请求成功！，返回数据：" + result);
 			}else {
 				logger.error("请求失败!");
 			}
@@ -132,11 +132,11 @@ public class HttpClientUtil {
 		return doPost(url, null);
 	}
 	
-	public static String doPostJson(String url, String json) throws Exception {
+	public static String doPostJson(String url, String json)  {
 		return doPostJson(url, json, null);
 	}
 	
-    public static String doPostJson(String url, String json , Map<String, String> header) throws Exception {
+    public static String doPostJson(String url, String json , Map<String, String> header) {
         // 创建Httpclient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse response = null;
@@ -156,7 +156,7 @@ public class HttpClientUtil {
             response = httpClient.execute(httpPost);
             resultString = EntityUtils.toString(response.getEntity(), "utf-8");
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
             
         } finally {
             try {
