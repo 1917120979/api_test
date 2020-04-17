@@ -9,7 +9,8 @@
 	var aid = ${api.id};
 	var type = ${type};
 	$(function(){
-	    $("#pageSelect").val(type);	    
+	    $("#pageSelect").val(type);	
+	    $("#dataType").val(${api.dataType});	
 	});
 	   
     function showAttrAddDiv() {
@@ -287,10 +288,7 @@
     			"aid":aid
     	    },
     	    success:function(data){
-    	    	alert(data.msg);
-    	    	$('#layer3').css({
-    	    	    "display" : "block"
-    	    	});  	    	
+    	    	alert(data.msg); 	    	 	    	
 	            window.location.href="admin_apiAttribute_list?aid="+aid;
     	    },
     	    error:function(data){
@@ -320,9 +318,36 @@
 			});
 		}
     }
+    
+    function submitApiForm(){
+        if (!checkEmpty("apiName","接口名称"))
+    		return false;
+        if (!checkEmpty("url","请求地址"))
+    		return false;
+        if (!checkEmpty("method","方法"))
+    		return false;
+        if (!checkEmpty("dataType","数据类型"))
+    		return false;
+        
+    	var targetUrl = $("#editAPIForm").attr("name");
+    	var formData = $("#editAPIForm").serialize();
+    	$.ajax({
+    		type:"post",
+    		dataType:"json",
+    		url:targetUrl,
+    		data:formData,
+    		success:function(data){
+    	    alert(data.msg);
+    	    window.location.href="admin_apiAttribute_list?aid="+aid;
+    	},
+    	error:function(e){
+    	    alert("错误！！");
+    	}
+    	});	
+    }  
 </script>
 
-<title>属性管理</title>
+<title>接口配置和调试</title>
 
 <div id="layerBg"></div>
 
@@ -335,6 +360,44 @@
 			<li class="active">接口配置</li>
 	    </ol>
 	</div>
+	
+	<div class="editAPIDiv">
+			<form id="editAPIForm" name="admin_apiInfo_update" action="">
+				<table class="editTable">
+					<tr>
+						<td rowspan="2" id="apiInfo">接口信息</td>
+						<td>接口名称</td>
+						<td>
+							<input id="aid" name="aid" type="hidden" value="${api.id}">
+							<input id="api_pid" name="pid" type="hidden" value="${api.project.id}">
+							<input id="api_gid" name="gid" type="hidden" value="${api.group.id}">
+							<input id="apiName" name="apiName" type="text" class="form-control" value="${api.apiName}">
+						</td>
+						<td>方法</td>
+						<td><input id="method" name="method" type="text"
+							class="form-control" value="${api.method}">
+						</td>
+						<td>数据类型</td>
+						<td>
+							<select id="dataType" name="dataType">
+								<option value="0">其他</option>
+								<option value="1">json</option>
+							</select>
+						</td>
+						<td rowspan="2" align="center" id="editButton">
+							<button type="button" class="btn btn-success"
+								onclick="submitApiForm()">修改</button>
+						</td>
+					</tr>
+					<tr>
+						<td>服务地址</td>
+						<td colspan="5" ><input id="url" name="url" type="text"
+							class="form-control" value="${api.url}"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	
     <div id="listTitle">
 		<span>
 			接口属性列表 &nbsp;&nbsp;&nbsp;&nbsp;查询:
@@ -343,8 +406,14 @@
 				<OPTION value="0">请求头</OPTION> 
 				<OPTION value="1">参数</OPTION> 
 			</select>
-			<button type="button" class="btn btn-success" onclick="showAttrAddDiv()">新增属性</button> 	
-		</span>				
+			<button type="button" class="btn btn-success" onclick="showAttrAddDiv()">新增属性</button>
+			<button type="button" class="btn btn-success" onclick="showExtrAddDiv()">新增提取器</button> 
+			<button type="button" class="btn btn-success" onclick="showAssertAddDiv()">新增断言</button>	
+		</span>	
+		<span class="floatRight">		
+			<button type="button" class="btn btn-success" onclick="apiDebug()">接口调试</button> 
+			<button type="button" class="btn btn-success" onclick="deleteDebugResult()">清空调试结果</button>	
+		</span>			
 	</div>
     <div id="addAttributeDiv" class="panel panel-warning">
 		<div class="panel-heading" id="addAttributeTitle">新增属性</div>
@@ -385,7 +454,67 @@
 			</form>
 		</div>
 	</div>
-    
+    <div id="addExtractorDiv" class="panel panel-warning ">
+		<div class="panel-heading" id="addExtractorTitle">新增提取器</div>
+		<div class="panel-body">
+			<form id="addExtractorForm" name= "admin_extractor_add" action="">
+				<table class="addTable">
+					<tr>
+						<td>变量名称</td>
+						<td>
+							<input id="extrId" name="extrId" type="hidden">
+							<input id="extr_aid" name="extr_aid" type="hidden" value="${api.id }">
+							<input id="variableName" name="variableName" type="text"
+							class="form-control"></td>
+					</tr>
+					<tr>
+						<td>提取正则</td>
+						<td><input id="expression" name="expression" type="text"
+							class="form-control">
+							
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<button type="button" class="btn btn-success" onclick="submitExtrForm()">提 交</button>
+							<button type="button" class="btn" onclick="cancel()">取 消</button>
+						</td>
+					</tr>					
+				</table>
+			</form>
+		</div>
+	</div>
+	<div id="addAssertDiv" class="panel panel-warning">
+		<div class="panel-heading" id="addAssertTitle">新增断言</div>
+		<div class="panel-body">
+			<form id="addAssertForm" name= "admin_assert_add" action="">
+				<table class="addTable">
+					<tr>
+						<td>断言正则</td>
+						<td>
+							<input id="assertId" name="assertId" type="hidden">
+							<input id="ass_aid" name="ass_aid" type="hidden" value="${api.id }">
+							<input id="assertExpress" name="assertExpress" type="text"
+							class="form-control"></td>
+					</tr>
+					<tr>
+						<td>期望结果</td>
+						<td><input id="assertExpect" name="assertExpect" type="text"
+							class="form-control">
+							
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<button type="button" class="btn btn-success" onclick="submitAssertForm()">提 交</button>
+							<button type="button" class="btn" onclick="cancel()">取 消</button>
+						</td>
+					</tr>					
+				</table>
+			</form>
+		</div>
+	</div>
+	
     <div class="listDataTableDiv panel-warning">
         <table
             class="table table-striped table-bordered table-hover  table-condensed">
@@ -418,8 +547,8 @@
                         </td>
                         
                         <td>
-							<a onclick="doAttrEdit(${attr.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
-							<a onclick="doAttrDelete(${attr.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
+							<a onclick="doAttrEdit(${attr.id});return false;">编辑<span class="glyphicon glyphicon-edit"></span></a>
+							<a onclick="doAttrDelete(${attr.id});return false;">删除<span class="glyphicon glyphicon-trash"></span></a>
 						</td>
                     </tr>
                 </c:forEach>
@@ -427,178 +556,115 @@
         </table>
     </div>
     
-    <div id="listTitle">
-		<span>
-			提取器列表 		
-			<button type="button" class="btn btn-success" onclick="showExtrAddDiv()">新增提取器</button> 	
-		</span>				
-	</div>
-	 <div id="addExtractorDiv" class="panel panel-warning ">
-		<div class="panel-heading" id="addExtractorTitle">新增提取器</div>
-		<div class="panel-body">
-			<form id="addExtractorForm" name= "admin_extractor_add" action="">
-				<table class="addTable">
-					<tr>
-						<td>变量名称</td>
-						<td>
-							<input id="extrId" name="extrId" type="hidden">
-							<input id="extr_aid" name="extr_aid" type="hidden" value="${api.id }">
-							<input id="variableName" name="variableName" type="text"
-							class="form-control"></td>
-					</tr>
-					<tr>
-						<td>提取正则</td>
-						<td><input id="expression" name="expression" type="text"
-							class="form-control">
-							
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2" align="center">
-							<button type="button" class="btn btn-success" onclick="submitExtrForm()">提 交</button>
-							<button type="button" class="btn" onclick="cancel()">取 消</button>
-						</td>
-					</tr>					
-				</table>
-			</form>
+    <c:if test="${fn:length(extrs) >0}">
+		<div>
+			<div id="listTitle">
+				<span>
+					提取器列表 				 	
+				</span>				
+			</div>	 
+			<div class="panel-warning">
+		        <table
+		            class="table table-striped table-bordered table-hover  table-condensed">
+		            <thead>
+		                <tr class="success">
+		                	<th>编号</th>
+		                    <th>变量名称</th>
+		                    <th>提取正则</th>
+		                    <th>操作</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <c:forEach items="${extrs}" var="e">
+		 
+		                    <tr>
+		                    	<td>${e.id}</td>
+		                        <td>${e.name}</td>
+		                        <td>${e.expression}</td>                  
+		                        <td>
+									<a onclick="doExtrEdit(${e.id});return false;">编辑<span class="glyphicon glyphicon-edit"></span></a>
+									<a onclick="doExtrDelete(${e.id});return false;">删除<span class="glyphicon glyphicon-trash"></span></a>
+								</td>
+		                    </tr>
+		                </c:forEach>
+		            </tbody>
+		        </table>
+		    </div>
 		</div>
-	</div>
-	<div class="listDataTableDiv panel-warning">
-        <table
-            class="table table-striped table-bordered table-hover  table-condensed">
-            <thead>
-                <tr class="success">
-                	<th>编号</th>
-                    <th>变量名称</th>
-                    <th>提取正则</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-           		 <c:if test="${fn:length(extrs) <1}">
-						<tr>
-							<td colspan="5" align="center">没有数据</td>
-						</tr>
-				</c:if>
-                <c:forEach items="${extrs}" var="e">
- 
-                    <tr>
-                    	<td>${e.id}</td>
-                        <td>${e.name}</td>
-                        <td>${e.expression}</td>                  
-                        <td>
-							<a onclick="doExtrEdit(${e.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
-							<a onclick="doExtrDelete(${e.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
-						</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-    </div>
+	</c:if>
     
-    <div id="listTitle">
-		<span>
-			断言列表 		
-			<button type="button" class="btn btn-success" onclick="showAssertAddDiv()">新增断言</button> 	
-		</span>				
-	</div>
-	 <div id="addAssertDiv" class="panel panel-warning">
-		<div class="panel-heading" id="addAssertTitle">新增断言</div>
-		<div class="panel-body">
-			<form id="addAssertForm" name= "admin_assert_add" action="">
-				<table class="addTable">
-					<tr>
-						<td>断言正则</td>
-						<td>
-							<input id="assertId" name="assertId" type="hidden">
-							<input id="ass_aid" name="ass_aid" type="hidden" value="${api.id }">
-							<input id="assertExpress" name="assertExpress" type="text"
-							class="form-control"></td>
-					</tr>
-					<tr>
-						<td>期望结果</td>
-						<td><input id="assertExpect" name="assertExpect" type="text"
-							class="form-control">
-							
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2" align="center">
-							<button type="button" class="btn btn-success" onclick="submitAssertForm()">提 交</button>
-							<button type="button" class="btn" onclick="cancel()">取 消</button>
-						</td>
-					</tr>					
-				</table>
-			</form>
+    <c:if test="${fn:length(asserts) >0}">
+		<div>
+			<div id="listTitle">
+				<span>
+					断言列表 				 	
+				</span>				
+			</div>	 
+			<div class="panel-warning">
+		        <table
+		            class="table table-striped table-bordered table-hover  table-condensed">
+		            <thead>
+		                <tr class="success">
+		                	<th>编号</th>
+		                    <th>断言正则</th>
+		                    <th>期望结果</th>
+		                    <th>操作</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		    
+		                <c:forEach items="${asserts}" var="ass">
+		 
+		                    <tr>
+		                    	<td>${ass.id}</td>
+		                        <td>${ass.assertExpress}</td>
+		                        <td>${ass.assertExpect}</td>                  
+		                        <td>
+									<a onclick="doAssertEdit(${ass.id});return false;">编辑<span class="glyphicon glyphicon-edit"></span></a>
+									<a onclick="doAssertDelete(${ass.id});return false;">删除<span class="glyphicon glyphicon-trash"></span></a>
+								</td>
+		                    </tr>
+		                </c:forEach>
+		            </tbody>
+		        </table>
+		    </div>
 		</div>
-	</div>
-	<div class="listDataTableDiv panel-warning">
-        <table
-            class="table table-striped table-bordered table-hover  table-condensed">
-            <thead>
-                <tr class="success">
-                	<th>编号</th>
-                    <th>断言正则</th>
-                    <th>期望结果</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-           		<c:if test="${fn:length(asserts) <1}">
-						<tr>
-							<td colspan="5" align="center">没有数据</td>
-						</tr>
-				</c:if>
-                <c:forEach items="${asserts}" var="ass">
- 
-                    <tr>
-                    	<td>${ass.id}</td>
-                        <td>${ass.assertExpress}</td>
-                        <td>${ass.assertExpect}</td>                  
-                        <td>
-							<a onclick="doAssertEdit(${ass.id});return false;" class="tda"><span class="glyphicon glyphicon-edit"></span></a>
-							<a onclick="doAssertDelete(${ass.id});return false;" class="tda"><span class="glyphicon glyphicon-trash"></span></a>
-						</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-    </div>
+	</c:if>
     
-    <div id="listTitle">
-		<span>
-			接口调试		
-			<button type="button" class="btn btn-success" onclick="apiDebug()">调试</button> 
-			<button type="button" class="btn btn-success" onclick="deleteDebugResult()">清空调试结果</button>	
-		</span>				
-	</div>
-	<div id="debugResult" class="listDataTableDiv panel-warning">
-        <table class="table table-striped table-bordered table-hover table-condensed">
-            <thead>
-                <tr class="success">
-                	<th>时间</th>
-                    <th>接口请求</th>
-                    <th>接口返回</th>
-                    <th>提取器</th>
-                    <th>断言</th>
-                </tr>
-            </thead>
-            <tbody>
-            	<c:if test="${fn:length(drs) <1}">
-						<tr>
-							<td colspan="5" align="center">没有数据</td>
-						</tr>
-				</c:if>
-				<c:forEach items="${drs}" var="d">
-                    <tr>
-                    	<td>${d.date}</td>
-                        <td>${d.debugReq}</td>
-                        <td>${d.debugResp}</td>                  
-                        <td>${d.debugExtractor}</td>
-                        <td>${d.debugAssert}</td>
-                    </tr>
-               	</c:forEach>
-            </tbody>
-        </table>
-    </div>
+    <c:if test="${fn:length(drs) >0}">
+		<div>
+			<div id="listTitle">
+				<span>
+					调试结果列表 				 	
+				</span>				
+			</div>
+			<div id="debugResult" class="listDataTableDiv panel-warning">
+		        <table class="table table-striped table-bordered table-hover table-condensed">
+		            <thead>
+		                <tr class="success">
+		                	<th>时间</th>
+		                    <th>接口请求</th>
+		                    <th>接口返回</th>
+		                    <th>提取器</th>
+		                    <th>断言</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		
+						<c:forEach items="${drs}" var="d">
+		                    <tr>
+		                    	<td>${d.date}</td>
+		                        <td>${d.debugReq}</td>
+		                        <td>${d.debugResp}</td>                  
+		                        <td>${d.debugExtractor}</td>
+		                        <td>${d.debugAssert}</td>
+		                    </tr>
+		               	</c:forEach>
+		            </tbody>
+		        </table>
+		    </div>	
+		</div>
+	</c:if>
+    
+	
 </div>
