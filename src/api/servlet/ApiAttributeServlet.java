@@ -110,7 +110,7 @@ public class ApiAttributeServlet extends BaseBackServlet{
 		int aid = Integer.parseInt(request.getParameter("aid"));
 		ApiInfo api = apiDAO.get(aid);
 		
-		List<RegularExtractor> extrs = eDAO.list(aid);
+		List<RegularExtractor> extrs = reDAO.list(aid);
 		List<Assert> asserts = assertDAO.list(aid);
 		List<DebugResult> drs = drDAO.list(aid);
 		List<ApiAttribute> attrs = null;
