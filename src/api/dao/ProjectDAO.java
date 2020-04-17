@@ -18,7 +18,7 @@ import api.bean.Project;
 public class ProjectDAO extends BaseDAO{
 	public boolean add(Project bean) {
 		String sql = "insert into project values(null,?,?,?)";
-		Object[] params = {bean.getName(), bean.getIsSign(), bean.getIsEncript()};
+		Object[] params = {bean.getName(), bean.getIsSign(), bean.getIsEncrypt()};
 		return super.update(sql, params);
 	}
 	
@@ -29,8 +29,8 @@ public class ProjectDAO extends BaseDAO{
 	}
 	
 	public boolean update(Project bean) {
-		String sql = "update project set project_name = ? ,isSign = ?,isEncript = ? where id=?";
-		Object[] params = {bean.getName(), bean.getIsSign(), bean.getIsEncript(),bean.getId()};
+		String sql = "update project set project_name = ? ,isSign = ?,isEncrypt = ? where id=?";
+		Object[] params = {bean.getName(), bean.getIsSign(), bean.getIsEncrypt(),bean.getId()};
 		return super.update(sql, params);
 	}
 	
@@ -53,7 +53,7 @@ public class ProjectDAO extends BaseDAO{
 				bean.setId(id);
 				bean.setName(rs.getString("project_name"));
 				bean.setIsSign(rs.getInt("isSign"));
-				bean.setIsEncript(rs.getInt("isEncript"));
+				bean.setIsEncrypt(rs.getInt("isEncrypt"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -85,7 +85,7 @@ public class ProjectDAO extends BaseDAO{
 				bean.setId(rs.getInt("id"));
 				bean.setName(rs.getString("project_name"));
 				bean.setIsSign(rs.getInt("isSign"));
-				bean.setIsEncript(rs.getInt("isEncript"));
+				bean.setIsEncrypt(rs.getInt("isEncrypt"));
 				beans.add(bean);
 			}
 		} catch (SQLException e) {
