@@ -37,7 +37,7 @@ public class HttpClientUtil {
 		try {
 			// 创建uri
 			URIBuilder builder = new URIBuilder(url);
-			if (param != null) {
+			if (null != param  ) {
 				for (String key : param.keySet()) {
 					builder.addParameter(key, param.get(key));
 				}
@@ -47,7 +47,7 @@ public class HttpClientUtil {
 			// 创建http GET请求
 			HttpGet httpGet = new HttpGet(uri);
 			
-			if (header != null) {
+			if (null != header) {
 				for (String key : header.keySet()) {
 					httpGet.setHeader(key, header.get(key));
 				}

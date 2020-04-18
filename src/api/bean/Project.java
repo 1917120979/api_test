@@ -12,7 +12,7 @@ public class Project {
 	private int id;
 	private String name;
 	private int isSign;
-	private int isEncript;
+	private int isEncrypt;
 
 	public int getId() {
 		return id;
@@ -30,12 +30,12 @@ public class Project {
 		this.isSign = isSign;
 	}
 
-	public int getIsEncript() {
-		return isEncript;
+	public int getIsEncrypt() {
+		return isEncrypt;
 	}
 
-	public void setIsEncript(int isEncript) {
-		this.isEncript = isEncript;
+	public void setIsEncrypt(int isEncrypt) {
+		this.isEncrypt = isEncrypt;
 	}
 
 	public String getName() {
@@ -48,7 +48,7 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return String.format("project[id:%d, name:%s, isSign:%d, isEncript:%d]", id, name, isSign, isEncript);
+		return String.format("project[id:%d, name:%s, isSign:%d, isEncrypt:%d]", id, name, isSign, isEncrypt);
 	}
 
 }

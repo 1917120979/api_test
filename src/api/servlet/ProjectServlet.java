@@ -34,7 +34,7 @@ public class ProjectServlet extends BaseBackServlet{
 		Project bean = new Project();
 		bean.setName(name);
 		bean.setIsSign(isSign);
-		bean.setIsEncript(isEncript);
+		bean.setIsEncrypt(isEncript);
 		logger.debug("新增的对象是>>>"+bean.toString());
 		JSONObject json = new JSONObject();		
 		if (pDAO.add(bean)) {
@@ -100,7 +100,7 @@ public class ProjectServlet extends BaseBackServlet{
 		bean.setId(id);
 		bean.setName(name);
 		bean.setIsSign(isSign);
-		bean.setIsEncript(isEncript);
+		bean.setIsEncrypt(isEncript);
 		
 		JSONObject json = new JSONObject();		
 		if (pDAO.update(bean)) {

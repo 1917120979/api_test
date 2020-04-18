@@ -3,6 +3,7 @@ package api.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import api.bean.DebugResult;
@@ -21,7 +22,7 @@ public class DebugResultDAO extends BaseDAO{
 	 */
 	public boolean add(DebugResult bean) {
 		String sql = "insert into api_debug_result values(null,?,?,?,?,?,?)";
-		Object[] params = {bean.getApiInfo().getId(), bean.getDebugReq(),bean.getDebugResp(),bean.getDebugExtractor(),bean.getDebugAssert(),DateUtil.d2t(bean.getDate())};
+		Object[] params = {bean.getApiInfo().getId(), bean.getDebugReq(),bean.getDebugResp(),bean.getDebugExtractor(),bean.getDebugAssert(),DateUtil.d2t(new Date())};
 		return super.update(sql, params);
 	}
 	

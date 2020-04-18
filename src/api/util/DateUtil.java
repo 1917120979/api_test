@@ -1,9 +1,12 @@
 package api.util;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateUtil {
+public class DateUtil {	
+	public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	/**
 	 * 
 	 * @Title: d2t   
@@ -16,7 +19,7 @@ public class DateUtil {
 	public static Timestamp d2t(Date date) {
 		if(null == date)
 			return null;
-		return new Timestamp(date.getTime());
+		return Timestamp.valueOf(format.format(date));
 	}
 	
 	/**
@@ -28,9 +31,18 @@ public class DateUtil {
 	 * @return: Date      
 	 * @throws
 	 */
-	public static Date t2d(Timestamp time) {
+	public static String t2d(Timestamp time) {
 		if(null == time)
 			return null;
-		return new Date(time.getTime());
+		return time.toString();
+	}
+	
+	public static void main(String[] args) {
+		try {
+			System.out.println(format.parse("2020-04-17 14:58:06"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

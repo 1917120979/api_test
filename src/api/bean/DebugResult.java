@@ -1,11 +1,9 @@
 package api.bean;
 
-import java.util.Date;
-
 public class DebugResult {
 	private int id;
 	private ApiInfo apiInfo;
-	private Date date;
+	private String date;
 	private String debugReq;
 	private String debugResp;
 	private String debugExtractor;
@@ -22,10 +20,10 @@ public class DebugResult {
 	public void setApiInfo(ApiInfo apiInfo) {
 		this.apiInfo = apiInfo;
 	}
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	public String getDebugReq() {

@@ -15,10 +15,11 @@ import com.alibaba.fastjson.JSONObject;
 import api.bean.ApiInfo;
 import api.bean.Assert;
 import api.bean.DebugResult;
-import api.bean.RegularExtractor;
 import api.bean.Project;
+import api.bean.RegularExtractor;
 import api.util.HttpClientUtil;
 import api.util.Page;
+import api.util.SignAndEncriptUtil;
 
 @SuppressWarnings("serial")
 public class DebugResultServlet extends BaseBackServlet{
@@ -42,7 +43,7 @@ public class DebugResultServlet extends BaseBackServlet{
 		
 		Project project = apiInfo.getProject();
 		int isSgin = project.getIsSign();
-		int isEncript = project.getIsEncript();
+		int isEncrypt = project.getIsEncrypt();
 		int dataType = apiInfo.getDataType();
 		String url = apiInfo.getUrl();
 		String method = apiInfo.getMethod();
@@ -51,49 +52,61 @@ public class DebugResultServlet extends BaseBackServlet{
 		Map<String, String> requestMap = attrDAO.getRequestMap(aid);
 		String requestJson = attrDAO.getRequestJson(aid);
 		
-		String debugReq = "";
-		String debugResp = "";
+		String debugRequest = "";
+		String debugResponse = "";
 		String debugExtractor = "";
 		String debugAssert = "";
 		
 		DebugResult bean = new DebugResult();
 		
 		try {	
-			if (isSgin == 0) {
+			
+			if (isSgin == 0) {				
 				if (dataType == 1 && method.toUpperCase().equals("POST")) {
-					debugResp = HttpClientUtil.doPostJson(url, requestJson, headerMap);
-					debugReq = url+"\r\n"+requestJson+"\r\n"+headerMap.toString();
-					
+					debugResponse = HttpClientUtil.doPostJson(url, requestJson, headerMap);					
 				}else {
 					if (method.toUpperCase().equals("POST")) {
-						debugResp = HttpClientUtil.doPost(url, requestMap, headerMap);					
+						debugResponse = HttpClientUtil.doPost(url, headerMap, requestMap);					
 					}else if (method.toUpperCase().equals("GET")) {
-						debugResp = HttpClientUtil.doGet(url, requestMap, headerMap);
-					}	
-					debugReq = String.format("请求地址：%s，请求数据是：%s，请求头是：%s", url,requestMap.toString(), headerMap.toString());
+						debugResponse = HttpClientUtil.doGet(url, headerMap, requestMap);
+					}						
 				}
 			}
 			if (isSgin == 1) {
-				
-				if (isEncript == 1) {
-					
+				if (isEncrypt == 1) {
+					String appsecret = pvDAO.getString("appsecret");
+					if (appsecret.length() > 0) {
+						if (dataType == 1) {
+							if (method.toUpperCase().equals("GET")) {
+								debugResponse = SignAndEncriptUtil.getGetGatewayResponse(url, headerMap, appsecret);
+							}else if (method.toUpperCase().equals("POST")) {
+								debugResponse = SignAndEncriptUtil.getPostGatewayResponse(url, headerMap, requestJson, appsecret);
+							} else {
+								debugResponse = "method方法不支持";
+							}
+						}else {
+							debugResponse = "数据类型必须是json";
+						}
+					}else {
+						debugResponse = "未配置appsecret";
+					}
 				}else {
-					
-				}
-						
+					debugResponse = "需要选择加密类型";
+				}		
 			}
 			if (isSgin == 2) {
-				
+				debugResponse = "目前不支持";
 			}
 			if (isSgin == 3) {
-				
-			}	
+				debugResponse = "目前不支持";
+			}
 			
+			debugRequest = String.format("请求地址：%s，请求头是：%s，请求数据是：%s", url, headerMap.toString(), requestMap.toString());
 			if (apiInfo.getHasExtractor() == 1) {
-				List<RegularExtractor> extractors = eDAO.list(aid);
+				List<RegularExtractor> extractors = reDAO.list(aid);
 				for (int i = 0; i < extractors.size(); i++) {
-					String regex = extractors.get(i).getExpression();
-					debugExtractor += super.getExtractorValue(debugResp, regex)+",";
+					String regex = extractors.get(i).getRegularExpression();
+					debugExtractor += super.getExtractorValue(debugResponse, regex)+",";
 				}
 			}
 			if (apiInfo.getHasAssert() == 1) {
@@ -101,7 +114,7 @@ public class DebugResultServlet extends BaseBackServlet{
 				List<Assert> asserts = assertDAO.list(aid);
 				for (int i = 0; i < asserts.size(); i++) {
 					String regex = asserts.get(i).getAssertExpress();
-					String actual = super.getExtractorValue(debugResp, regex);
+					String actual = super.getExtractorValue(debugResponse, regex);
 					if (actual.equals(asserts.get(i).getAssertExpect())) {
 						flag *= 1;
 					}else {
@@ -117,14 +130,14 @@ public class DebugResultServlet extends BaseBackServlet{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		logger.debug("调试请求是>>>"+debugReq);
-		logger.debug("调试响应是>>>"+debugResp);
+		logger.debug("调试请求是>>>"+debugRequest);
+		logger.debug("调试响应是>>>"+debugResponse);
 		logger.debug("调试提取器是>>>"+debugExtractor);
 		logger.debug("调试断言是>>>"+debugAssert);
-		bean.setDate(new Date());
+
 		bean.setApiInfo(apiInfo);
-		bean.setDebugReq(debugReq);
-		bean.setDebugResp(debugResp);
+		bean.setDebugReq(debugRequest);
+		bean.setDebugResp(debugResponse);
 		bean.setDebugExtractor(debugExtractor);
 		bean.setDebugAssert(debugAssert);			
 
