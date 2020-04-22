@@ -40,8 +40,8 @@
 				var p = data.data;
 				$("#id").val(p.id);
 				$("#name").val(p.name);			
-				$("#isSign").val(p.isSign);
-				$("#isEncript").val(p.isEncript);
+				$("#sign").val(p.sign);
+				$("#encrypt").val(p.encrypt);
 				$('#addProjectDiv').css({
 				    "display" : "block"
 				});
@@ -79,9 +79,9 @@
     function submitProjectForm(){
 		if (!checkEmpty("name","项目 名称"))
 			return false;
-		if (!checkEmpty("isSign","是否签名"))
+		if (!checkEmpty("sign","是否签名"))
 				return false;
-		if (!checkEmpty("isEncript","是否加密"))
+		if (!checkEmpty("encrypt","是否加密"))
 			return false;
 		var targetUrl = $("#addProjectForm").attr("name");
 	    $.ajax({
@@ -129,7 +129,7 @@
 					<tr>
 						<td>签名</td>
 						<td>
-							<select id="isSign" name="isSign">
+							<select id="sign" name="sign">
 								<option value="0">不签名</option>
 								<option value="1" >签名：网关</option>
 								<option value="2" >签名：平台</option>
@@ -141,7 +141,7 @@
 					<tr>
 						<td>加密</td>
 						<td>
-							<select id="isEncript" name="isEncript">
+							<select id="encrypt" name="encrypt">
 								<option value="0">不加密</option>
 								<option value="1">加密</option>								
 							</select>							
@@ -185,16 +185,16 @@
 						<td>${p.name}</td>
 						<td>
 							<c:choose>
-								<c:when test="${p.isSign == 0}">不签名</c:when>
-								<c:when test="${p.isSign == 1}">签名：网关</c:when>
-								<c:when test="${p.isSign == 2}">签名：平台</c:when>
-								<c:when test="${p.isSign == 3}">签名：APP</c:when>
+								<c:when test="${p.sign == 0}">不签名</c:when>
+								<c:when test="${p.sign == 1}">签名：网关</c:when>
+								<c:when test="${p.sign == 2}">签名：平台</c:when>
+								<c:when test="${p.sign == 3}">签名：APP</c:when>
 							</c:choose>
 						</td>
 						<td>
 							<c:choose>
-								<c:when test="${p.isEncript == 0}">不加密</c:when>
-								<c:when test="${p.isEncript == 1}">加密</c:when>
+								<c:when test="${p.encrypt == 0}">不加密</c:when>
+								<c:when test="${p.encrypt == 1}">加密</c:when>
 							</c:choose>
 						</td>
 						<td>

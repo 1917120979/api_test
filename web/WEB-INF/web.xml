@@ -21,6 +21,26 @@
 	</filter-mapping>
 	
 	<servlet>
+		<servlet-name>UserServlet</servlet-name>
+		<servlet-class>api.servlet.UserServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/userServlet</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>HomeServlet</servlet-name>
+		<servlet-class>api.servlet.HomeServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>HomeServlet</servlet-name>
+		<url-pattern>/homeServlet</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
 		<servlet-name>ProjectServlet</servlet-name>
 		<servlet-class>api.servlet.ProjectServlet</servlet-class>
 	</servlet>

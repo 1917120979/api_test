@@ -11,8 +11,10 @@ package api.bean;
 public class Project {
 	private int id;
 	private String name;
-	private int isSign;
-	private int isEncrypt;
+	private int sign;
+	private int encrypt;
+	private User user;
+	private String createDate;
 
 	public int getId() {
 		return id;
@@ -22,20 +24,20 @@ public class Project {
 		this.id = id;
 	}
 
-	public int getIsSign() {
-		return isSign;
+	public int getSign() {
+		return sign;
 	}
 
-	public void setIsSign(int isSign) {
-		this.isSign = isSign;
+	public void setSign(int sign) {
+		this.sign = sign;
 	}
 
-	public int getIsEncrypt() {
-		return isEncrypt;
+	public int getEncrypt() {
+		return encrypt;
 	}
 
-	public void setIsEncrypt(int isEncrypt) {
-		this.isEncrypt = isEncrypt;
+	public void setEncrypt(int encrypt) {
+		this.encrypt = encrypt;
 	}
 
 	public String getName() {
@@ -46,9 +48,26 @@ public class Project {
 		this.name = name;
 	}
 
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+	
 	@Override
 	public String toString() {
-		return String.format("project[id:%d, name:%s, isSign:%d, isEncrypt:%d]", id, name, isSign, isEncrypt);
+		return String.format("project[id:%d, name:%s, sign:%d, encrypt:%d, createDate:%s]", id, name, sign, encrypt,createDate);
 	}
 
 }

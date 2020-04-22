@@ -39,7 +39,7 @@ public class BackServletFilter implements Filter{
 		String contextPath = request.getServletContext().getContextPath();
 		String uri = request.getRequestURI();
 		uri = StringUtils.remove(uri, contextPath);
-		logger.debug("本次的requestUri是>>>"+uri);
+		logger.debug("本次的requestUri----->>>"+uri);
 		if (uri.startsWith("/admin_")) {
 			String servletPath = StringUtils.substringBetween(uri, "_","_")+"Servlet";
 			String method = StringUtils.substringAfterLast(uri, "_");

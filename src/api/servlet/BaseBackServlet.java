@@ -18,15 +18,18 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSONObject;
+
+import api.bean.User;
 import api.dao.ApiAttributeDAO;
 import api.dao.ApiInfoDAO;
 import api.dao.AssertDAO;
 import api.dao.DebugResultDAO;
 import api.dao.RegularExtractorDAO;
+import api.dao.UserDAO;
 import api.dao.ProjectDAO;
 import api.dao.ProjectVariableDAO;
 import api.dao.GroupDAO;
-import api.util.Page;
 
 /**
  * 
@@ -40,11 +43,11 @@ import api.util.Page;
 public abstract class BaseBackServlet extends HttpServlet{
 	private static final Logger logger = LoggerFactory.getLogger(BaseBackServlet.class);
 	 
-	public abstract String add(HttpServletRequest request, HttpServletResponse response,Page page);
-	public abstract String delete(HttpServletRequest request, HttpServletResponse response,Page page);
-	public abstract String edit(HttpServletRequest request, HttpServletResponse response,Page page);
-	public abstract String update(HttpServletRequest request, HttpServletResponse response,Page page);
-	public abstract String list(HttpServletRequest request, HttpServletResponse response,Page page);
+	public abstract String add(HttpServletRequest request, HttpServletResponse response);
+	public abstract String delete(HttpServletRequest request, HttpServletResponse response);
+	public abstract String edit(HttpServletRequest request, HttpServletResponse response);
+	public abstract String update(HttpServletRequest request, HttpServletResponse response);
+	public abstract String list(HttpServletRequest request, HttpServletResponse response);
 	
 	protected ApiInfoDAO apiDAO = new ApiInfoDAO();
 	protected ApiAttributeDAO attrDAO = new ApiAttributeDAO();
@@ -54,34 +57,26 @@ public abstract class BaseBackServlet extends HttpServlet{
 	protected RegularExtractorDAO reDAO = new RegularExtractorDAO();
 	protected AssertDAO assertDAO = new AssertDAO();
 	protected DebugResultDAO drDAO = new DebugResultDAO();
+	protected UserDAO uDAO = new UserDAO();
 	
 	public void service(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			int start = 0;
-			int count = 10;
-			try {
-				start = Integer.parseInt(request.getParameter("page.start"));
-			} catch (Exception e) {
-
-			}
-			try {
-				count = Integer.parseInt(request.getParameter("page.count"));
-			} catch (Exception e) {
-				
-			}
-			
-			Page page = new Page(start, count);
-			String method = (String) request.getAttribute("method");
-			Method m = this.getClass().getMethod(method, HttpServletRequest.class, HttpServletResponse.class, Page.class);
-			String redirect = m.invoke(this, request, response,page).toString();
-			logger.debug("跳转的目标是>>>"+redirect);
-			if (redirect.startsWith("@")) {
-				response.sendRedirect(redirect.substring(1));
-			}else if(redirect.startsWith("%")) {
-				response.getWriter().print(redirect.substring(1));
+			User user = (User) request.getSession().getAttribute("user");
+			if (null == user) {
+				response.sendRedirect("admin_user_loginPage");
 			}else {
-				request.getRequestDispatcher(redirect).forward(request, response);
-			}
+				String method = (String) request.getAttribute("method");
+				Method m = this.getClass().getMethod(method, HttpServletRequest.class, HttpServletResponse.class);
+				String redirect = m.invoke(this, request, response).toString();
+				logger.debug("跳转的目标是>>>"+redirect);
+				if (redirect.startsWith("@")) {
+					response.sendRedirect(redirect.substring(1));
+				}else if(redirect.startsWith("%")) {
+					response.getWriter().print(redirect.substring(1));
+				}else {
+					request.getRequestDispatcher(redirect).forward(request, response);
+				}
+			}		
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);

@@ -3,9 +3,11 @@ package api.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import api.bean.Project;
+import api.util.DateUtil;
 
 /**
  * 
@@ -17,20 +19,19 @@ import api.bean.Project;
  */
 public class ProjectDAO extends BaseDAO{
 	public boolean add(Project bean) {
-		String sql = "insert into project values(null,?,?,?)";
-		Object[] params = {bean.getName(), bean.getIsSign(), bean.getIsEncrypt()};
+		String sql = "insert into project_info values(null,?,?,?,null,?)";
+		Object[] params = {bean.getName(), bean.getSign(), bean.getEncrypt(), DateUtil.d2t(new Date())};
 		return super.update(sql, params);
 	}
 	
 	public boolean delete(int id) {
-		String sql = "delete from project where id = ?";
-		Object[] params = {id};
-		return super.update(sql, params);
+		String sql = "delete from project_info where id ="+id;
+		return super.update(sql);
 	}
 	
 	public boolean update(Project bean) {
-		String sql = "update project set project_name = ? ,isSign = ?,isEncrypt = ? where id=?";
-		Object[] params = {bean.getName(), bean.getIsSign(), bean.getIsEncrypt(),bean.getId()};
+		String sql = "update project_info set name = ? ,sign = ?,encrypt = ? where id=?";
+		Object[] params = {bean.getName(), bean.getSign(), bean.getEncrypt(),bean.getId()};
 		return super.update(sql, params);
 	}
 	
@@ -44,23 +45,31 @@ public class ProjectDAO extends BaseDAO{
 	 * @throws
 	 */
 	public Project get(int id) {
-		String sql = "select * from project where id = ?";
-		Object[] params = {id};
-		ResultSet rs = super.query(sql, params);
-		Project bean = new Project();
+		String sql = "select * from project_info where id ="+id;
+		ResultSet rs = super.query(sql);		
 		try {
 			while (rs.next()) {
+				Project bean = new Project();
 				bean.setId(id);
-				bean.setName(rs.getString("project_name"));
-				bean.setIsSign(rs.getInt("isSign"));
-				bean.setIsEncrypt(rs.getInt("isEncrypt"));
+				bean.setName(rs.getString("name"));
+				bean.setSign(rs.getInt("sign"));
+				bean.setEncrypt(rs.getInt("encrypt"));
+				bean.setCreateDate(rs.getTimestamp("create_date").toString());
+				return bean;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			super.close();
+			if (null != rs) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		return bean;
+		return null;
 	}
 	
 	/**
@@ -74,7 +83,7 @@ public class ProjectDAO extends BaseDAO{
 	 * @throws
 	 */
 	public List<Project> list(int start, int count) {
-		String sql = "select * from project limit ?,?";
+		String sql = "select * from project_info limit ?,?";
 		Object[] params = {start, count};
 		List<Project> beans = new ArrayList<Project>();
 		
@@ -83,21 +92,33 @@ public class ProjectDAO extends BaseDAO{
 			while (rs.next()) {
 				Project bean = new Project();
 				bean.setId(rs.getInt("id"));
-				bean.setName(rs.getString("project_name"));
-				bean.setIsSign(rs.getInt("isSign"));
-				bean.setIsEncrypt(rs.getInt("isEncrypt"));
+				bean.setName(rs.getString("name"));
+				bean.setSign(rs.getInt("sign"));
+				bean.setEncrypt(rs.getInt("encrypt"));
+				bean.setCreateDate(rs.getTimestamp("create_date").toString());
 				beans.add(bean);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			super.close();
+			if (null != rs) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return beans;
 	}
 	
+	public List<Project> list() {
+		return list(0, Short.MAX_VALUE);
+	}
+	
 	public int getTotal() {
-		String sql = "select count(*) from project";
+		String sql = "select count(*) from project_info";
 		return super.getTotal(sql);
 	}
 }

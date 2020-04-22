@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSONObject;
 
 import api.bean.Project;
-import api.util.Page;
 
 /**
  * 
@@ -26,25 +25,26 @@ public class ProjectServlet extends BaseBackServlet{
 	private static final Logger logger = LoggerFactory.getLogger(ProjectServlet.class);
 
 	@Override
-	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int isSign = Integer.parseInt(request.getParameter("isSign"));
-		int isEncript = Integer.parseInt(request.getParameter("isEncript"));
+	public String add(HttpServletRequest request, HttpServletResponse response) {		
 		String name = request.getParameter("name");
+		int sign = Integer.parseInt(request.getParameter("sign"));
+		int encrypt = Integer.parseInt(request.getParameter("encrypt"));
 				
 		Project bean = new Project();
 		bean.setName(name);
-		bean.setIsSign(isSign);
-		bean.setIsEncrypt(isEncript);
-		logger.debug("新增的对象是>>>"+bean.toString());
+		bean.setSign(sign);
+		bean.setEncrypt(encrypt);
 		JSONObject json = new JSONObject();		
 		if (pDAO.add(bean)) {
 			json.put("msg", "sucess");
 			json.put("code", 0);
-			json.put("data", "null");
+			json.put("data", bean);
+			logger.debug(String.format("添加成功:%s, bean是%s--->>>", json.toJSONString(), bean.toString()));
 		}else {
 			json.put("msg", "fail");
 			json.put("code", 401);
 			json.put("data", "null");
+			logger.debug(String.format("添加失败:%s", json.toJSONString()));
 		}
 		
 		response.setContentType("text/html;charset=UTF-8");
@@ -52,7 +52,7 @@ public class ProjectServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String delete(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 		JSONObject json = new JSONObject();		
@@ -71,7 +71,7 @@ public class ProjectServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String edit(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String edit(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Project p = pDAO.get(id);
 		
@@ -90,17 +90,17 @@ public class ProjectServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String update(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String update(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
-		int isSign = Integer.parseInt(request.getParameter("isSign"));
-		int isEncript = Integer.parseInt(request.getParameter("isEncript"));
+		int sign = Integer.parseInt(request.getParameter("sign"));
+		int encrypt = Integer.parseInt(request.getParameter("encrypt"));
 		String name = request.getParameter("name");
 			
 		Project bean = new Project();
 		bean.setId(id);
 		bean.setName(name);
-		bean.setIsSign(isSign);
-		bean.setIsEncrypt(isEncript);
+		bean.setSign(sign);
+		bean.setEncrypt(encrypt);
 		
 		JSONObject json = new JSONObject();		
 		if (pDAO.update(bean)) {
@@ -118,14 +118,11 @@ public class ProjectServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String list(HttpServletRequest request, HttpServletResponse response, Page page) {
-		List<Project> ps = pDAO.list(page.getStart(), page.getCount());
-		int total = pDAO.getTotal();
-		page.setTotal(total);
-		
-		request.setAttribute("page", page);
+	public String list(HttpServletRequest request, HttpServletResponse response) {
+		List<Project> ps = pDAO.list();
+
 		request.setAttribute("ps", ps);
-		return "admin/listProject.jsp";
+		return "pages/listProject.jsp";
 	}
 
 }
