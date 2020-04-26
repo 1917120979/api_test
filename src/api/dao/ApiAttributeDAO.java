@@ -12,7 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 
 import api.bean.ApiAttribute;
-import api.bean.ProjectVariable;
+import api.bean.Variable;
 
 public class ApiAttributeDAO extends BaseDAO{
 	public boolean add(ApiAttribute bean) {
@@ -21,7 +21,7 @@ public class ApiAttributeDAO extends BaseDAO{
 		return super.update(sql, params);
 	}
 	
-	public boolean add(ProjectVariable bean, int aid) {
+	public boolean add(Variable bean, int aid) {
 		String sql = "insert into api_attribute values(null,?,?,?,?)";	
 		Object[] params = {aid,bean.getVariableName(),bean.getVariableValue(),0};
 		return super.update(sql, params);
@@ -137,7 +137,7 @@ public class ApiAttributeDAO extends BaseDAO{
 				String value = rs.getString("attribute_value");
 				if (value.startsWith("${")) {
 					value = StringUtils.substringBetween(value, "{","}");
-					ProjectVariableDAO pvDAO = new ProjectVariableDAO();
+					VariableDAO pvDAO = new VariableDAO();
 					value = pvDAO.getString(value);
 				}
 				map.put(key, value);
@@ -168,7 +168,7 @@ public class ApiAttributeDAO extends BaseDAO{
 				String value = rs.getString("attribute_value");
 				if (value.startsWith("${")) {
 					value = StringUtils.substringBetween(value, "{","}");
-					ProjectVariableDAO pvDAO = new ProjectVariableDAO();
+					VariableDAO pvDAO = new VariableDAO();
 					value = pvDAO.getString(value);
 				}
 				json.put(key, value);

@@ -18,8 +18,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSONObject;
-
 import api.bean.User;
 import api.dao.ApiAttributeDAO;
 import api.dao.ApiInfoDAO;
@@ -28,7 +26,7 @@ import api.dao.DebugResultDAO;
 import api.dao.RegularExtractorDAO;
 import api.dao.UserDAO;
 import api.dao.ProjectDAO;
-import api.dao.ProjectVariableDAO;
+import api.dao.VariableDAO;
 import api.dao.GroupDAO;
 
 /**
@@ -51,13 +49,16 @@ public abstract class BaseBackServlet extends HttpServlet{
 	
 	protected ApiInfoDAO apiDAO = new ApiInfoDAO();
 	protected ApiAttributeDAO attrDAO = new ApiAttributeDAO();
-	protected ProjectDAO pDAO = new ProjectDAO();
-	protected ProjectVariableDAO pvDAO = new ProjectVariableDAO();
+	
+	
 	protected GroupDAO gDAO = new GroupDAO();
 	protected RegularExtractorDAO reDAO = new RegularExtractorDAO();
 	protected AssertDAO assertDAO = new AssertDAO();
 	protected DebugResultDAO drDAO = new DebugResultDAO();
+	
+	protected ProjectDAO pDAO = new ProjectDAO();
 	protected UserDAO uDAO = new UserDAO();
+	protected VariableDAO vDAO = new VariableDAO();
 	
 	public void service(HttpServletRequest request, HttpServletResponse response) {
 		try {

@@ -18,9 +18,11 @@ import api.util.DateUtil;
  * @Copyright:
  */
 public class ProjectDAO extends BaseDAO{
+	private UserDAO uDAO = new UserDAO();
+
 	public boolean add(Project bean) {
-		String sql = "insert into project_info values(null,?,?,?,null,?)";
-		Object[] params = {bean.getName(), bean.getSign(), bean.getEncrypt(), DateUtil.d2t(new Date())};
+		String sql = "insert into project_info values(null,?,?,?,?,?)";
+		Object[] params = {bean.getName(), bean.getSign(), bean.getEncrypt(), bean.getUser().getId(), DateUtil.d2t(new Date())};
 		return super.update(sql, params);
 	}
 	
@@ -54,6 +56,7 @@ public class ProjectDAO extends BaseDAO{
 				bean.setName(rs.getString("name"));
 				bean.setSign(rs.getInt("sign"));
 				bean.setEncrypt(rs.getInt("encrypt"));
+				bean.setUser(uDAO .get(rs.getInt("uid")));
 				bean.setCreateDate(rs.getTimestamp("create_date").toString());
 				return bean;
 			}
@@ -82,12 +85,11 @@ public class ProjectDAO extends BaseDAO{
 	 * @return: List<Project>      
 	 * @throws
 	 */
-	public List<Project> list(int start, int count) {
-		String sql = "select * from project_info limit ?,?";
-		Object[] params = {start, count};
+	public List<Project> list() {
+		String sql = "select * from project_info";
 		List<Project> beans = new ArrayList<Project>();
 		
-		ResultSet rs = super.query(sql, params);
+		ResultSet rs = super.query(sql);
 		try {
 			while (rs.next()) {
 				Project bean = new Project();
@@ -95,6 +97,7 @@ public class ProjectDAO extends BaseDAO{
 				bean.setName(rs.getString("name"));
 				bean.setSign(rs.getInt("sign"));
 				bean.setEncrypt(rs.getInt("encrypt"));
+				bean.setUser(uDAO.get(rs.getInt("uid")));
 				bean.setCreateDate(rs.getTimestamp("create_date").toString());
 				beans.add(bean);
 			}
@@ -111,10 +114,6 @@ public class ProjectDAO extends BaseDAO{
 			}
 		}
 		return beans;
-	}
-	
-	public List<Project> list() {
-		return list(0, Short.MAX_VALUE);
 	}
 	
 	public int getTotal() {

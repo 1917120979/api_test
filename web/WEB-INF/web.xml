@@ -51,78 +51,13 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>ProjectVariableServlet</servlet-name>
-		<servlet-class>api.servlet.ProjectVariableServlet</servlet-class>
+		<servlet-name>ProjectDetailsServlet</servlet-name>
+		<servlet-class>api.servlet.ProjectDetailsServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>ProjectVariableServlet</servlet-name>
-		<url-pattern>/projectVariableServlet</url-pattern>
+		<servlet-name>ProjectDetailsServlet</servlet-name>
+		<url-pattern>/projectDetailsServlet</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>ApiInfoServlet</servlet-name>
-		<servlet-class>api.servlet.ApiInfoServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>ApiInfoServlet</servlet-name>
-		<url-pattern>/apiInfoServlet</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>GroupServlet</servlet-name>
-		<servlet-class>api.servlet.GroupServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>GroupServlet</servlet-name>
-		<url-pattern>/groupServlet</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>ApiAttributeServlet</servlet-name>
-		<servlet-class>api.servlet.ApiAttributeServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>ApiAttributeServlet</servlet-name>
-		<url-pattern>/apiAttributeServlet</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>RegularExtractorServlet</servlet-name>
-		<servlet-class>api.servlet.RegularExtractorServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>RegularExtractorServlet</servlet-name>
-		<url-pattern>/regularExtractorServlet</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>AssertServlet</servlet-name>
-		<servlet-class>api.servlet.AssertServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>AssertServlet</servlet-name>
-		<url-pattern>/assertServlet</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>DebugResultServlet</servlet-name>
-		<servlet-class>api.servlet.DebugResultServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>DebugResultServlet</servlet-name>
-		<url-pattern>/debugResultServlet</url-pattern>
-	</servlet-mapping>
-	
-
-
-	
+		
 </web-app>

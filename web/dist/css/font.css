@@ -34,7 +34,7 @@ table.listTable{
     margin: auto;
 	z-index: 1002;
 	width: 500px;
-    height: 280px;
+    height: 380px;
 }
 
 form button{
@@ -42,5 +42,12 @@ form button{
 }
 
 #dataTables-example a{
+	margin-left:20px;
+}
+
+.button-left{
+	margin-left:40px;
+}
+table tr td a{
 	margin-left:20px;
 }
