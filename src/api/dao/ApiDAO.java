@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import api.bean.ApiInfo;
+import api.bean.Api;
 import api.bean.Group;
 
-public class ApiInfoDAO extends BaseDAO{
+public class ApiDAO extends BaseDAO{
 	/**
 	 * 
 	 * @Title: add   
@@ -18,9 +18,9 @@ public class ApiInfoDAO extends BaseDAO{
 	 * @return: boolean      
 	 * @throws
 	 */
-	public boolean add(ApiInfo bean) {
+	public boolean add(Api bean) {
 		String sql = "insert into api_info values(null,?,?,?,?,?,?,?,?)";
-		Object[]  params= {bean.getProject().getId(), bean.getGroup().getId(),bean.getApiName(),bean.getUrl(),bean.getMethod(),bean.getDataType(),bean.getHasExtractor(),bean.getHasAssert()};	
+		Object[]  params= {bean.getProject().getId(), bean.getGroup().getId(),bean.getName(),bean.getUrl(),bean.getMethod(),bean.getDataType(),bean.getHasExtractor(),bean.getHasAssert()};	
 		ResultSet rs = super.insert(sql, params);
 		try {
 			while(rs.next()) {
@@ -54,26 +54,26 @@ public class ApiInfoDAO extends BaseDAO{
 		return super.update(sql, params);
 	}
 	
-	public boolean update(ApiInfo bean) {
-		String sql = "update api_info set api_name = ?,url = ?,method=?, data_type = ?,has_extractor=? where id = ?";
-		Object[]  params= {bean.getApiName(),bean.getUrl(),bean.getMethod(),bean.getDataType(),bean.getId()};
+	public boolean update(Api bean) {
+		String sql = "update api_info set api_name = ?,url = ?,method=?, data_type =? where id = ?";
+		Object[]  params= {bean.getName(),bean.getUrl(),bean.getMethod(),bean.getDataType(),bean.getId()};
 		return super.update(sql, params);
 	}
 	
-	public boolean updateFlag(ApiInfo bean) {
+	public boolean updateFlag(Api bean) {
 		String sql = "update api_info set has_extractor=? ,has_assert= ? where id = ?";
 		Object[]  params= {bean.getHasExtractor(),bean.getHasAssert(),bean.getId()};
 		return super.update(sql, params);
 	}
 	
-	public List<ApiInfo> list(int pid, int start, int count) {
+	public List<Api> list(int pid, int start, int count) {
 		String sql = "select * from api_info where pid = ? and gid = 0 limit ? , ?";
 		Object[] params = {pid, start, count};
 		ResultSet rs = super.query(sql, params);
-		List<ApiInfo> beans = new ArrayList<ApiInfo>();
+		List<Api> beans = new ArrayList<Api>();
 		try {
 			while(rs.next()) {
-				ApiInfo bean = new ApiInfo();
+				Api bean = new Api();
 				ProjectDAO projectDAO = new ProjectDAO();
 				Group group = new Group();
 				group.setId(0);
@@ -81,7 +81,7 @@ public class ApiInfoDAO extends BaseDAO{
 				bean.setId(rs.getInt("id"));
 				bean.setProject(projectDAO.get(pid));
 				bean.setGroup(group);
-				bean.setApiName(rs.getString("api_name"));
+				bean.setName(rs.getString("api_name"));
 				bean.setUrl(rs.getString("url"));			
 				bean.setMethod(rs.getString("method"));
 				bean.setDataType(rs.getInt("data_type"));
@@ -104,19 +104,19 @@ public class ApiInfoDAO extends BaseDAO{
 		return beans;		
 	}
 	
-	public List<ApiInfo> list(int gid) {
+	public List<Api> list(int gid) {
 		String sql = "select * from api_info where gid = ?";
 		Object[] params = {gid};
 		ResultSet rs = super.query(sql, params);
-		List<ApiInfo> beans = new ArrayList<ApiInfo>();
+		List<Api> beans = new ArrayList<Api>();
 		try {
 			while(rs.next()) {
-				ApiInfo bean = new ApiInfo();
+				Api bean = new Api();
 				GroupDAO groupDAO = new GroupDAO();
 				
 				bean.setId(rs.getInt("id"));
 				bean.setGroup(groupDAO.get(gid));
-				bean.setApiName(rs.getString("api_name"));
+				bean.setName(rs.getString("api_name"));
 				bean.setUrl(rs.getString("url"));			
 				bean.setMethod(rs.getString("method"));
 				bean.setDataType(rs.getInt("data_type"));
@@ -145,11 +145,11 @@ public class ApiInfoDAO extends BaseDAO{
 		return super.getTotal(sql, params);
 	}
 
-	public ApiInfo get(int id) {
+	public Api get(int id) {
 		String sql = "select * from api_info where id = ?";
 		Object[] params = {id};
 		ResultSet rs = super.query(sql, params);
-		ApiInfo bean = new ApiInfo();
+		Api bean = new Api();
 		try {
 			while(rs.next()) {
 				
@@ -159,7 +159,7 @@ public class ApiInfoDAO extends BaseDAO{
 				bean.setId(rs.getInt("id"));
 				bean.setProject(projectDAO.get(rs.getInt("pid")));
 				bean.setGroup(groupDAO.get(rs.getInt("gid")));
-				bean.setApiName(rs.getString("api_name"));
+				bean.setName(rs.getString("api_name"));
 				bean.setUrl(rs.getString("url"));			
 				bean.setMethod(rs.getString("method"));
 				bean.setDataType(rs.getInt("data_type"));

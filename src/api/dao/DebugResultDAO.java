@@ -49,7 +49,7 @@ public class DebugResultDAO extends BaseDAO{
 		try {
 			while(rs.next()) {
 				DebugResult bean = new DebugResult();
-				ApiInfoDAO apiInfoDAO =  new ApiInfoDAO();
+				ApiDAO apiInfoDAO =  new ApiDAO();
 				bean.setId(rs.getInt("id"));
 				bean.setApiInfo(apiInfoDAO.get(aid));
 				bean.setDebugReq(rs.getString("debug_request"));

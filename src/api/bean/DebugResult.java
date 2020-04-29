@@ -2,7 +2,7 @@ package api.bean;
 
 public class DebugResult {
 	private int id;
-	private ApiInfo apiInfo;
+	private Api apiInfo;
 	private String date;
 	private String debugReq;
 	private String debugResp;
@@ -14,10 +14,10 @@ public class DebugResult {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public ApiInfo getApiInfo() {
+	public Api getApiInfo() {
 		return apiInfo;
 	}
-	public void setApiInfo(ApiInfo apiInfo) {
+	public void setApiInfo(Api apiInfo) {
 		this.apiInfo = apiInfo;
 	}
 	public String getDate() {

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 
-import api.bean.ApiInfo;
+import api.bean.Api;
 import api.bean.RegularExtractor;
 import api.util.Page;
 
@@ -37,7 +37,7 @@ public class RegularExtractorServlet extends BaseBackServlet{
 	@Override
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int aid = Integer.parseInt(request.getParameter("aid"));
-		ApiInfo apiInfo = apiDAO.get(aid);
+		Api apiInfo = apiDAO.get(aid);
 		
 		RegularExtractor bean = new RegularExtractor();		
 		bean.setApiInfo(apiInfo);
@@ -76,7 +76,7 @@ public class RegularExtractorServlet extends BaseBackServlet{
 	@Override
 	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int id = Integer.parseInt(request.getParameter("id"));
-		ApiInfo apiInfo = reDAO.get(id).getApiInfo();
+		Api apiInfo = reDAO.get(id).getApiInfo();
 		
 		JSONObject json = new JSONObject();
 		if (reDAO.delete(id)) {

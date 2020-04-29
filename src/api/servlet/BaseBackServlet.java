@@ -19,8 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import api.bean.User;
-import api.dao.ApiAttributeDAO;
-import api.dao.ApiInfoDAO;
+import api.dao.AttributeDAO;
+import api.dao.ApiDAO;
 import api.dao.AssertDAO;
 import api.dao.DebugResultDAO;
 import api.dao.RegularExtractorDAO;
@@ -47,8 +47,8 @@ public abstract class BaseBackServlet extends HttpServlet{
 	public abstract String update(HttpServletRequest request, HttpServletResponse response);
 	public abstract String list(HttpServletRequest request, HttpServletResponse response);
 	
-	protected ApiInfoDAO apiDAO = new ApiInfoDAO();
-	protected ApiAttributeDAO attrDAO = new ApiAttributeDAO();
+	protected ApiDAO apiDAO = new ApiDAO();
+	protected AttributeDAO attrDAO = new AttributeDAO();
 	
 	
 	protected GroupDAO gDAO = new GroupDAO();
@@ -59,10 +59,11 @@ public abstract class BaseBackServlet extends HttpServlet{
 	protected ProjectDAO pDAO = new ProjectDAO();
 	protected UserDAO uDAO = new UserDAO();
 	protected VariableDAO vDAO = new VariableDAO();
+	protected User user = null;
 	
 	public void service(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			User user = (User) request.getSession().getAttribute("user");
+			user = (User) request.getSession().getAttribute("user");
 			if (null == user) {
 				response.sendRedirect("admin_user_loginPage");
 			}else {

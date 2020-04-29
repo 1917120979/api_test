@@ -6,7 +6,7 @@ public class Group {
 	private int id;
 	private Project project;
 	private String name;
-	private List<ApiInfo> apiByGroup;
+	private List<Api> apiByGroup;
 
 	public int getId() {
 		return id;
@@ -25,11 +25,11 @@ public class Group {
 		this.name = name;
 	}
 
-	public List<ApiInfo> getApiByGroup() {
+	public List<Api> getApiByGroup() {
 		return apiByGroup;
 	}
 
-	public void setApiByGroup(List<ApiInfo> apiByGroup) {
+	public void setApiByGroup(List<Api> apiByGroup) {
 		this.apiByGroup = apiByGroup;
 	}
 
@@ -39,5 +39,10 @@ public class Group {
 
 	public void setProject(Project project) {
 		this.project = project;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("group[id:%d, name:%s]", id, name);
 	}
 }

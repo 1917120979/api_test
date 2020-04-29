@@ -33,13 +33,13 @@
 		</ul>
 		<!-- /.breadcrumb -->
 	</div>
-	<div id="addProjectDiv" class="panel panel-primary">
+	<div id="addProjectDiv" class="panel panel-primary addDiv addDiv-size-2">
 		<div id="projectPanelHead" class="panel-heading">新增项目</div>
 		<div class="panel-body">
 			<form action="" id="addProjectForm" name="admin_project_add"
 				class="form-horizontal">
 				<div class="form-group">
-					<label for="name" class="col-sm-2 control-label">项目名</label>
+					<label for="name" class="col-sm-2 control-label">名称</label>
 					<div class="col-sm-10">
 						<input id="id" name="id" type="hidden"> <input type="text"
 							class="form-control" id="name" name="name" placeholder="请输入项目名称">
@@ -66,9 +66,9 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="describe" class="col-sm-2 control-label">描述</label>
+					<label for="description" class="col-sm-2 control-label">描述</label>
 					<div class="col-sm-10">
-						<textarea class="form-control" rows="3" name="describe"></textarea>
+						<textarea class="form-control" rows="3" name="description" id="description"></textarea>
 					</div>
 				</div>
 				<div class="form-group">
@@ -87,7 +87,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					项目列表
-					<button type="button" class="btn btn-primary btn-xs button-left"
+					<button type="button" class="btn btn-primary btn-xs margin-left"
 						onclick="addProject()">新增项目</button>
 				</div>
 				<!-- /.panel-heading -->
@@ -101,7 +101,6 @@
 							id="dataTable-project">
 							<thead>
 								<tr>
-									<th>编号</th>
 									<th>项目名称</th>
 									<th>签名</th>
 									<th>加密</th>
@@ -114,13 +113,12 @@
 
 								<c:forEach items="${ps}" var="p">
 									<tr class="odd gradeX">
-										<td>${p.id}</td>
 										<td>${p.name}</td>
 										<td><c:choose>
 												<c:when test="${p.sign == 0}">不签名</c:when>
-												<c:when test="${p.sign == 1}">签名：网关</c:when>
-												<c:when test="${p.sign == 2}">签名：平台</c:when>
-												<c:when test="${p.sign == 3}">签名：APP</c:when>
+												<c:when test="${p.sign == 1}">网关</c:when>
+												<c:when test="${p.sign == 2}">平台</c:when>
+												<c:when test="${p.sign == 3}">APP</c:when>
 											</c:choose></td>
 										<td><c:choose>
 												<c:when test="${p.encrypt == 0}">不加密</c:when>
@@ -128,11 +126,11 @@
 											</c:choose></td>
 										<td>${p.user.username}</td>
 										<td>${p.createDate}</td>
-										<td><a href="admin_projectDetails_list?pid=${p.id}">配置<span
+										<td><a href="admin_projectInfo_list?pid=${p.id}">配置<span
 												class="glyphicon glyphicon-cog"></span></a> <a
-											onclick="doProjectEdit(${p.id});return false;">编辑<span
+											onclick="editProject(${p.id});return false;">编辑<span
 												class="glyphicon glyphicon-edit"></span></a> <a
-											onclick="doProjectDel(${p.id});return false;">删除<span
+											onclick="delProject(${p.id});return false;">删除<span
 												class="glyphicon glyphicon-trash"></span></a></td>
 									</tr>
 								</c:forEach>

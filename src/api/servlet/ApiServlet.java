@@ -6,30 +6,26 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 
-import api.bean.ApiInfo;
+import api.bean.Api;
 import api.bean.Group;
 import api.bean.Project;
 import api.bean.Variable;
-import api.util.Page;
 
 @SuppressWarnings("serial")
-public class ApiInfoServlet extends BaseBackServlet{
+public class ApiServlet extends BaseBackServlet{
 
 	@Override
-	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {		
+	public String add(HttpServletRequest request, HttpServletResponse response) {		
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		int gid = Integer.parseInt(request.getParameter("gid"));
 		int dataType = Integer.parseInt(request.getParameter("dataType"));
 		Project project = pDAO.get(pid);
 		Group group = gDAO.get(gid);
-		
-		
-		
-		ApiInfo bean = new ApiInfo();
-		
+						
+		Api bean = new Api();		
 		bean.setProject(project);
 		bean.setGroup(group);
-		bean.setApiName(request.getParameter("apiName"));
+		bean.setName(request.getParameter("name"));
 		bean.setUrl(request.getParameter("url"));			
 		bean.setMethod(request.getParameter("method"));
 		bean.setDataType(dataType);
@@ -41,10 +37,16 @@ public class ApiInfoServlet extends BaseBackServlet{
 			json.put("msg", "sucess");
 			json.put("code", 0);
 			json.put("data", "null");
-			List<Variable> pvs = pvDAO.list(pid, 2);
+			List<Variable> hvs = vDAO.list(pid, 2);
+			List<Variable> pvs = vDAO.list(pid, 3);
 			if (pvs != null && pvs.size() > 0) {
 				for (Variable pv : pvs) {
-					attrDAO.add(pv, bean.getId());
+					attrDAO.addPublicVar(pv, bean.getId());
+				}			
+			}
+			if (hvs != null && hvs.size() > 0) {
+				for (Variable hv : hvs) {
+					attrDAO.addPublicVar(hv, bean.getId());
 				}			
 			}
 		}else {
@@ -58,7 +60,7 @@ public class ApiInfoServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String delete(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 		JSONObject json = new JSONObject();		
@@ -77,9 +79,9 @@ public class ApiInfoServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String edit(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String edit(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
-		ApiInfo bean = apiDAO.get(id);
+		Api bean = apiDAO.get(id);
 
 		JSONObject json = new JSONObject();		
 		if (bean != null) {
@@ -97,20 +99,16 @@ public class ApiInfoServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String update(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int id = Integer.parseInt(request.getParameter("aid"));
-		//int pid = Integer.parseInt(request.getParameter("pid"));
+	public String update(HttpServletRequest request, HttpServletResponse response) {
+		int id = Integer.parseInt(request.getParameter("id"));
 		//int gid = Integer.parseInt(request.getParameter("gid"));
 		int dataType = Integer.parseInt(request.getParameter("dataType"));
-		//Project project = pDAO.get(pid);
 		//Group group = gDAO.get(gid);
-		
-		
-		ApiInfo bean = new ApiInfo();
+				
+		Api bean = new Api();
 		bean.setId(id);
-		//bean.setProject(project);
 		//bean.setGroup(group);
-		bean.setApiName(request.getParameter("apiName"));
+		bean.setName(request.getParameter("name"));
 		bean.setUrl(request.getParameter("url"));			
 		bean.setMethod(request.getParameter("method"));
 		bean.setDataType(dataType);
@@ -131,16 +129,15 @@ public class ApiInfoServlet extends BaseBackServlet{
 	}
 	
 	@Override
-	public String list(HttpServletRequest request, HttpServletResponse response, Page page) {		
+	public String list(HttpServletRequest request, HttpServletResponse response) {		
 		int pid = Integer.parseInt(request.getParameter("pid"));
-		List<Group> gs = gDAO.list(pid);
-		
+		List<Group> gs = gDAO.list(pid);	
 		Project p = pDAO.get(pid);
 			
 		request.setAttribute("p", p);
 		request.setAttribute("gs", gs);
 
-		return "admin/listApiInfo.jsp";
+		return "pages/listApi.jsp";
 	}
 
 }

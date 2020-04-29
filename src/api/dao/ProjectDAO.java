@@ -21,8 +21,8 @@ public class ProjectDAO extends BaseDAO{
 	private UserDAO uDAO = new UserDAO();
 
 	public boolean add(Project bean) {
-		String sql = "insert into project_info values(null,?,?,?,?,?)";
-		Object[] params = {bean.getName(), bean.getSign(), bean.getEncrypt(), bean.getUser().getId(), DateUtil.d2t(new Date())};
+		String sql = "insert into project_info values(null,?,?,?,?,?,?)";
+		Object[] params = {bean.getName(), bean.getSign(), bean.getEncrypt(), bean.getUser().getId(), DateUtil.d2t(new Date()), bean.getDescription()};
 		return super.update(sql, params);
 	}
 	
@@ -32,8 +32,8 @@ public class ProjectDAO extends BaseDAO{
 	}
 	
 	public boolean update(Project bean) {
-		String sql = "update project_info set name = ? ,sign = ?,encrypt = ? where id=?";
-		Object[] params = {bean.getName(), bean.getSign(), bean.getEncrypt(),bean.getId()};
+		String sql = "update project_info set name = ? ,sign = ?,encrypt = ?, description=? where id=?";
+		Object[] params = {bean.getName(), bean.getSign(), bean.getEncrypt(), bean.getDescription(), bean.getId()};
 		return super.update(sql, params);
 	}
 	
@@ -58,6 +58,7 @@ public class ProjectDAO extends BaseDAO{
 				bean.setEncrypt(rs.getInt("encrypt"));
 				bean.setUser(uDAO .get(rs.getInt("uid")));
 				bean.setCreateDate(rs.getTimestamp("create_date").toString());
+				bean.setDescription(rs.getString("description"));
 				return bean;
 			}
 		} catch (SQLException e) {
@@ -99,6 +100,7 @@ public class ProjectDAO extends BaseDAO{
 				bean.setEncrypt(rs.getInt("encrypt"));
 				bean.setUser(uDAO.get(rs.getInt("uid")));
 				bean.setCreateDate(rs.getTimestamp("create_date").toString());
+				bean.setDescription(rs.getString("description"));
 				beans.add(bean);
 			}
 		} catch (SQLException e) {

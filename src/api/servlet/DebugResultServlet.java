@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 
-import api.bean.ApiInfo;
+import api.bean.Api;
 import api.bean.Assert;
 import api.bean.DebugResult;
 import api.bean.Project;
@@ -37,7 +37,7 @@ public class DebugResultServlet extends BaseBackServlet{
 	@Override
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int aid = Integer.parseInt(request.getParameter("aid"));
-		ApiInfo apiInfo = apiDAO.get(aid);
+		Api apiInfo = apiDAO.get(aid);
 		
 		logger.debug("调试接口是>>>"+apiInfo.toString());
 		

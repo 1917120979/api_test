@@ -40,7 +40,7 @@ public class RegularExtractorDAO extends BaseDAO{
 		try {
 			while(rs.next()) {
 				RegularExtractor bean = new RegularExtractor();
-				ApiInfoDAO apiInfoDAO = new ApiInfoDAO();
+				ApiDAO apiInfoDAO = new ApiDAO();
 				
 				bean.setId(id);
 				bean.setApiInfo(apiInfoDAO.get(rs.getInt("aid")));
@@ -79,7 +79,7 @@ public class RegularExtractorDAO extends BaseDAO{
 		try {
 			while(rs.next()) {
 				RegularExtractor bean = new RegularExtractor();
-				ApiInfoDAO apiInfoDAO = new ApiInfoDAO();
+				ApiDAO apiInfoDAO = new ApiDAO();
 				
 				bean.setId(rs.getInt("id"));
 				bean.setApiInfo(apiInfoDAO.get(rs.getInt("aid")));

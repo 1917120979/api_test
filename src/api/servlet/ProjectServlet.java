@@ -29,11 +29,15 @@ public class ProjectServlet extends BaseBackServlet{
 		String name = request.getParameter("name");
 		int sign = Integer.parseInt(request.getParameter("sign"));
 		int encrypt = Integer.parseInt(request.getParameter("encrypt"));
+		String description = request.getParameter("description");
 				
 		Project bean = new Project();
 		bean.setName(name);
 		bean.setSign(sign);
 		bean.setEncrypt(encrypt);
+		bean.setUser(super.user);
+		bean.setDescription(description);
+		
 		JSONObject json = new JSONObject();		
 		if (pDAO.add(bean)) {
 			json.put("msg", "sucess");
@@ -44,7 +48,6 @@ public class ProjectServlet extends BaseBackServlet{
 			json.put("msg", "fail");
 			json.put("code", 401);
 			json.put("data", "null");
-			logger.debug(String.format("添加失败:%s", json.toJSONString()));
 		}
 		
 		response.setContentType("text/html;charset=UTF-8");
@@ -95,12 +98,14 @@ public class ProjectServlet extends BaseBackServlet{
 		int sign = Integer.parseInt(request.getParameter("sign"));
 		int encrypt = Integer.parseInt(request.getParameter("encrypt"));
 		String name = request.getParameter("name");
+		String description = request.getParameter("description");
 			
 		Project bean = new Project();
 		bean.setId(id);
 		bean.setName(name);
 		bean.setSign(sign);
 		bean.setEncrypt(encrypt);
+		bean.setDescription(description);
 		
 		JSONObject json = new JSONObject();		
 		if (pDAO.update(bean)) {

@@ -1,36 +1,20 @@
 package api.servlet;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 
-import api.bean.Project;
 import api.bean.Variable;
 
 @SuppressWarnings("serial")
-public class ProjectDetailsServlet extends BaseBackServlet{
+public class VariableServlet extends BaseBackServlet{
 
 
 
 	@Override
 	public String list(HttpServletRequest request, HttpServletResponse response) {	
-		int pid = Integer.parseInt(request.getParameter("pid"));
-		Project p = pDAO.get(pid);
-		List<Variable> uvs = vDAO.list(pid, 1);
-		List<Variable> hvs = vDAO.list(pid, 2);
-		List<Variable> pvs = vDAO.list(pid, 3);
-		List<Variable> avs = vDAO.list(pid, 4);
-		
-		request.setAttribute("p", p);
-		request.setAttribute("uvs", uvs);
-		request.setAttribute("hvs", hvs);
-		request.setAttribute("pvs", pvs);
-		request.setAttribute("avs", avs);
-
-		return "pages/projectDetails.jsp";
+		return null;
 	}
 
 	@Override
@@ -38,14 +22,16 @@ public class ProjectDetailsServlet extends BaseBackServlet{
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		int type = Integer.parseInt(request.getParameter("type"));
 	
-		String variableName = request.getParameter("variableName");
-		String variableValue = request.getParameter("variableValue");
+		String name = request.getParameter("name");
+		String value = request.getParameter("value");
+		String description =request.getParameter("description");
 		
 		Variable bean = new Variable();
 		bean.setProject(pDAO.get(pid));
 		bean.setType(type);
-		bean.setName(variableName);
-		bean.setValue(variableValue);
+		bean.setName(name);
+		bean.setValue(value);
+		bean.setDescription(description);
 		
 		JSONObject json = new JSONObject();
 		
@@ -104,14 +90,17 @@ public class ProjectDetailsServlet extends BaseBackServlet{
 	public String update(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		int type = Integer.parseInt(request.getParameter("type"));
-		String variableName = request.getParameter("variableName");
-		String variableValue = request.getParameter("variableValue");
+		String name = request.getParameter("name");
+		String value = request.getParameter("value");
+		String description =request.getParameter("description");
 		
 		Variable bean = new Variable();
 		bean.setId(id);
-		bean.setName(variableName);
-		bean.setValue(variableValue);
+		bean.setName(name);
+		bean.setValue(value);
 		bean.setType(type);
+		bean.setDescription(description);
+		
 		JSONObject json = new JSONObject();
 		
 		if (vDAO.update(bean)) {

@@ -33,7 +33,7 @@ public class AssertDAO extends BaseDAO{
 		Assert bean = new Assert();
 		try {
 			while(rs.next()) {
-				ApiInfoDAO apiInfoDAO = new ApiInfoDAO();
+				ApiDAO apiInfoDAO = new ApiDAO();
 				
 				bean.setId(id);
 				bean.setApiInfo(apiInfoDAO.get(rs.getInt("aid")));
@@ -64,7 +64,7 @@ public class AssertDAO extends BaseDAO{
 		try {
 			while(rs.next()) {
 				Assert bean = new Assert();
-				ApiInfoDAO apiInfoDAO = new ApiInfoDAO();
+				ApiDAO apiInfoDAO = new ApiDAO();
 				
 				bean.setId(rs.getInt("id"));
 				bean.setApiInfo(apiInfoDAO.get(rs.getInt("aid")));

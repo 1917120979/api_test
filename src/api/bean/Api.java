@@ -1,10 +1,10 @@
 package api.bean;
 
-public class ApiInfo {
+public class Api {
 	private int id;
 	private Project project;
 	private Group group;
-	private String apiName;
+	private String name;
 	private String url;
 	private String method;
 	private int dataType;
@@ -13,7 +13,7 @@ public class ApiInfo {
 	
 	@Override
 	public String toString() {
-		return String.format("project[id:%d, name:%s, method:%s, dataType:%d, hasExtractor:%d, hasAssert:%d]",id,apiName,method,dataType,hasExtractor,hasAssert);
+		return String.format("project[id:%d, name:%s, method:%s, dataType:%d, hasExtractor:%d, hasAssert:%d]",id,name,method,dataType,hasExtractor,hasAssert);
 	}
 	public int getId() {
 		return id;
@@ -62,14 +62,6 @@ public class ApiInfo {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getApiName() {
-		return apiName;
-	}
-
-	public void setApiName(String apiName) {
-		this.apiName = apiName;
-	}
 	
 	public String getMethod() {
 		return method;
@@ -85,6 +77,13 @@ public class ApiInfo {
 
 	public void setProject(Project project) {
 		this.project = project;
+	}
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

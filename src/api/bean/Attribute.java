@@ -1,35 +1,24 @@
 package api.bean;
 
-/**
- * 
- * @ClassName:  Variable   
- * @Description:TODO(描述这个类的作用)   
- * @author: liuyang
- * @date:   2020年4月23日 下午10:26:32      
- * @Copyright:
- * type:1 用户自定义变量；2 接口关联 ；3 公共-header ；4 公共-参数
- */
-public class Variable {
+public class Attribute {
 	private int id;
-	private Project project;
+	private Api api;
 	private String name;
 	private String value;
 	private int type;
 	private String description;
-	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Project getProject() {
-		return project;
+	public Api getApi() {
+		return api;
 	}
-	public void setProject(Project project) {
-		this.project = project;
+	public void setApi(Api api) {
+		this.api = api;
 	}
-	
 	public String getName() {
 		return name;
 	}
@@ -54,6 +43,6 @@ public class Variable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
+	
+	
 }

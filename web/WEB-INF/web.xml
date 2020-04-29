@@ -51,13 +51,42 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>ProjectDetailsServlet</servlet-name>
-		<servlet-class>api.servlet.ProjectDetailsServlet</servlet-class>
+		<servlet-name>ProjectInfoServlet</servlet-name>
+		<servlet-class>api.servlet.ProjectInfoServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>ProjectDetailsServlet</servlet-name>
-		<url-pattern>/projectDetailsServlet</url-pattern>
+		<servlet-name>ProjectInfoServlet</servlet-name>
+		<url-pattern>/projectInfoServlet</url-pattern>
 	</servlet-mapping>
-		
+	
+	<servlet>
+		<servlet-name>VariableServlet</servlet-name>
+		<servlet-class>api.servlet.VariableServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>VariableServlet</servlet-name>
+		<url-pattern>/variableServlet</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>ApiServlet</servlet-name>
+		<servlet-class>api.servlet.ApiServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ApiServlet</servlet-name>
+		<url-pattern>/apiServlet</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>GroupServlet</servlet-name>
+		<servlet-class>api.servlet.GroupServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>GroupServlet</servlet-name>
+		<url-pattern>/groupServlet</url-pattern>
+	</servlet-mapping>
 </web-app>

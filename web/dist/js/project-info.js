@@ -1,5 +1,6 @@
-function addProject() {
-    $('#addProjectDiv').css({
+
+function addVariable() {
+    $('#addVariableDiv').css({
 	"display" : "block"
     });
     $('#layerBg').css({
@@ -8,19 +9,15 @@ function addProject() {
     return false;
 }
 
-function submitProject() {
-    if (!checkEmpty("name", "项目名"))
+function submitVariable() {
+    if (!checkEmpty("name", "名称"))
 	return false;
-    if (!checkEmpty("sign", "签名"))
-	return false;
-    if (!checkEmpty("encrypt", "加密"))
-	return false;
-    var targetUrl = $("#addProjectForm").attr("name");
+    var targetUrl = $("#addVariableForm").attr("name");
     $.ajax({
 	type : "post",
 	dataType : "json",
 	url : targetUrl,
-	data : $("#addProjectForm").serialize(),
+	data : $("#addVariableForm").serialize(),
 	success : function(data) {
 	    alert(data.msg);
 	    window.location.reload(true);
@@ -32,7 +29,7 @@ function submitProject() {
 }
 
 function cancel() {
-    $('#addProjectDiv').css({
+    $('#addVariableDiv').css({
 	"display" : "none"
     });
     $('#layerBg').css({
@@ -41,25 +38,25 @@ function cancel() {
     window.location.reload();
 }
 
-function editProject(id) {
-    $("#addProjectForm").attr("name", "admin_project_update");
-    $("#projectPanelHead").html("编辑项目");
+function editVariable(id) {
+    $("#addVariableForm").attr("name", "admin_variable_update");
+    $("#varPanelHead").html("编辑变量");
     $.ajax({
 	type : "post",
 	dataType : "json",
-	url : "admin_project_edit",
+	url : "admin_variable_edit",
 	data : {
 	    "id" : id
 	},
 	success : function(data) {
-	    var p = data.data;
-	    $("#id").val(p.id);
-	    $("#name").val(p.name);
-	    $("#sign").val(p.sign);
-	    $("#encrypt").val(p.encrypt);
-	    $("#description").val(p.description);
+	    var v = data.data;
+	    $("#id").val(v.id);
+	    $("#name").val(v.name);
+	    $("#value").val(v.value);
+	    $("#type").val(v.type);
+	    $("#description").val(v.description);
 	    
-	    $('#addProjectDiv').css({
+	    $('#addVariableDiv').css({
 		"display" : "block"
 	    });
 	    $('#layerBg').css({
@@ -72,13 +69,13 @@ function editProject(id) {
     });
 }
 
-function delProject(id) {
+function delVariable(id) {
     var flag = confirm("是否确认删除？");
     if (flag) {
 	$.ajax({
 	    type : "post",
 	    dataType : "json",
-	    url : "admin_project_delete",
+	    url : "admin_variable_delete",
 	    data : {
 		"id" : id
 	    },
@@ -91,5 +88,9 @@ function delProject(id) {
 	    }
 	});
     }
+}
+
+function apiManage(pid){
+    window.location.href="admin_api_list?pid="+pid;
 }
 

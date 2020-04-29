@@ -14,6 +14,7 @@ public class Project {
 	private int sign;
 	private int encrypt;
 	private User user;
+	private String description;
 	private String createDate;
 
 	public int getId() {
@@ -67,7 +68,15 @@ public class Project {
 	
 	@Override
 	public String toString() {
-		return String.format("project[id:%d, name:%s, sign:%d, encrypt:%d, createDate:%s]", id, name, sign, encrypt,createDate);
+		return String.format("project[id:%d, name:%s]", id, name);
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

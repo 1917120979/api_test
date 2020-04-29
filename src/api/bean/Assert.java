@@ -2,7 +2,7 @@ package api.bean;
 
 public class Assert {
 	private int id;
-	private ApiInfo apiInfo;
+	private Api apiInfo;
 	private String assertExpress;
 	private String assertExpect;
 	public int getId() {
@@ -11,10 +11,10 @@ public class Assert {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public ApiInfo getApiInfo() {
+	public Api getApiInfo() {
 		return apiInfo;
 	}
-	public void setApiInfo(ApiInfo apiInfo) {
+	public void setApiInfo(Api apiInfo) {
 		this.apiInfo = apiInfo;
 	}
 	

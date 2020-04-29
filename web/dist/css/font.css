@@ -11,6 +11,14 @@ table.listTable{
 	margin-bottom:10px;
 }
 
+.float-left{
+	float:left;
+}
+
+.float-right{
+	float:right;
+}
+
 #layerBg {
 	display: none;
 	position: absolute;
@@ -24,7 +32,7 @@ table.listTable{
 	top: 0;
 }
 
-#addProjectDiv{
+.addDiv{
 	display: none;
 	position: absolute;
 	left: 0;
@@ -33,21 +41,71 @@ table.listTable{
     bottom: 0;
     margin: auto;
 	z-index: 1002;
+}
+
+.addDiv-size-1{
 	width: 500px;
-    height: 380px;
+    height: 180px;
+}
+
+.addDiv-size-2{
+	width: 500px;
+    height: 360px;
+}
+
+.addDiv-size-3{
+	width: 500px;
+    height: 5400px;
 }
 
 form button{
 	margin:10px 40px;
 }
 
-#dataTables-example a{
-	margin-left:20px;
-}
 
-.button-left{
+.margin-left{
 	margin-left:40px;
 }
+
+.margin-right{
+	margin-right:15px;
+}
+
+.div-bottom{
+	margin:15px 0px;
+	padding-right: 15px;
+    padding-left: 15px;
+}
+
+.div-input{
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.div-textarea{
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.size-2{
+	width:16%;
+}
+
+.size-10{
+	width:91%;
+}
+
 table tr td a{
 	margin-left:20px;
 }

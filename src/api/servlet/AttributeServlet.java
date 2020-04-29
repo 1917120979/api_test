@@ -7,22 +7,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 
-import api.bean.ApiAttribute;
-import api.bean.ApiInfo;
+import api.bean.Attribute;
+import api.bean.Api;
 import api.bean.Assert;
 import api.bean.DebugResult;
 import api.bean.RegularExtractor;
 import api.util.Page;
 
 @SuppressWarnings("serial")
-public class ApiAttributeServlet extends BaseBackServlet{
+public class AttributeServlet extends BaseBackServlet{
 
 	@Override
-	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String add(HttpServletRequest request, HttpServletResponse response) {
 		int aid = Integer.parseInt(request.getParameter("aid"));
 		int type = Integer.parseInt(request.getParameter("type"));
 		
-		ApiAttribute bean = new ApiAttribute();
+		Attribute bean = new Attribute();
 		bean.setApiInfo(apiDAO.get(aid));
 		bean.setAttributeName(request.getParameter("attributeName"));
 		bean.setAttributeValue(request.getParameter("attributeValue"));
@@ -43,7 +43,7 @@ public class ApiAttributeServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String delete(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		JSONObject json = new JSONObject();
 		
@@ -61,9 +61,9 @@ public class ApiAttributeServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String edit(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String edit(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
-		ApiAttribute attr = attrDAO.get(id);
+		Attribute attr = attrDAO.get(id);
 		
 		JSONObject json = new JSONObject();
 		if (null != attr) {
@@ -80,11 +80,11 @@ public class ApiAttributeServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String update(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String update(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("attrId"));
 		int type = Integer.parseInt(request.getParameter("type"));
 		
-		ApiAttribute bean = new ApiAttribute();
+		Attribute bean = new Attribute();
 		
 		bean.setId(id);
 		bean.setAttributeName(request.getParameter("attributeName"));
@@ -105,15 +105,15 @@ public class ApiAttributeServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String list(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String list(HttpServletRequest request, HttpServletResponse response) {
 		String type = request.getParameter("type");
 		int aid = Integer.parseInt(request.getParameter("aid"));
-		ApiInfo api = apiDAO.get(aid);
+		Api api = apiDAO.get(aid);
 		
 		List<RegularExtractor> extrs = reDAO.list(aid);
 		List<Assert> asserts = assertDAO.list(aid);
 		List<DebugResult> drs = drDAO.list(aid);
-		List<ApiAttribute> attrs = null;
+		List<Attribute> attrs = null;
 		if (null == type) {
 			type = "-1";
 			attrs = attrDAO.list(aid);

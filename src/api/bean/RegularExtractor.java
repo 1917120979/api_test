@@ -10,7 +10,7 @@ package api.bean;
  */
 public class RegularExtractor {
 	private int id;
-	private ApiInfo apiInfo;
+	private Api apiInfo;
 	private String extractorName;
 	private String regularExpression;
 	public int getId() {
@@ -19,10 +19,10 @@ public class RegularExtractor {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public ApiInfo getApiInfo() {
+	public Api getApiInfo() {
 		return apiInfo;
 	}
-	public void setApiInfo(ApiInfo apiInfo) {
+	public void setApiInfo(Api apiInfo) {
 		this.apiInfo = apiInfo;
 	}
 	public String getExtractorName() {

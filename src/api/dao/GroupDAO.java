@@ -55,7 +55,7 @@ public class GroupDAO extends BaseDAO{
 		try {
 			while (rs.next()) {
 				Group bean = new Group();
-				ApiInfoDAO apiDAO = new ApiInfoDAO();
+				ApiDAO apiDAO = new ApiDAO();
 				int id = rs.getInt("id");
 				bean.setId(id);
 				bean.setName(rs.getString("group_name"));
