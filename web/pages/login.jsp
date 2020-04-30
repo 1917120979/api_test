@@ -43,7 +43,7 @@
 		    	success : function(data) {
 		    	    if(data.code == 0){
 		    			alert(data.msg);
-		    			window.location.href = "admin_home_list";
+		    			window.location.href = "index_";
 		    			return;
 		    	    }
 		    	    if(data.code == 401){

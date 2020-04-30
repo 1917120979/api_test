@@ -30,7 +30,7 @@ public class HomeServlet extends  BaseBackServlet{
 	public String list(HttpServletRequest request, HttpServletResponse response) {
 		int projectNum = pDAO.getTotal();
 		request.setAttribute("pNum", projectNum);
-		return "pages/home.jsp";
+		return "/pages/homeContent.jsp";
 	}
 
 }

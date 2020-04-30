@@ -42,10 +42,8 @@ public class BackServletFilter implements Filter{
 		String contextPath = request.getServletContext().getContextPath();
 		String uri = request.getRequestURI();
 		uri = StringUtils.remove(uri, contextPath);
-		
-		if (uri.startsWith("/admin_")) {
-			user = (User) request.getSession().getAttribute("user");
-			
+		user = (User) request.getSession().getAttribute("user");
+		if (uri.startsWith("/admin_")) {	
 			String path = StringUtils.substringBetween(uri, "_","_");
 			String servletPath = path +"Servlet";
 			String method = StringUtils.substringAfterLast(uri, "_");
@@ -57,6 +55,14 @@ public class BackServletFilter implements Filter{
 			}
 			logger.debug(String.format("本次请求的uri>>%s,method>>%s,servletPath>>%s", uri, method, servletPath));
 			return;								
+		}
+		if (uri.startsWith("/index")) {
+			if (null == user) {
+				response.sendRedirect("admin_user_loginPage");
+			}else {
+				req.getRequestDispatcher("/pages/index.jsp").forward(request, response);		
+			}
+			return;
 		}
 		chain.doFilter(request, response);
 	}

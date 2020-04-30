@@ -4,9 +4,7 @@ table.listTable{
 }
 #nav-bar{
 	position: inherit;
-    margin: 0 0 0 250px;
-    height:40px;
-    border: 1px solid #e7e7e7;
+    margin: 0 -30px;
 }
 
 #tab-content{

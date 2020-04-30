@@ -4,41 +4,42 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<title>API接口测试平台</title>	  
+<title>API接口测试平台</title>	
+	<link href ="favicon.ico" rel="shortcut icon">  
 	<!-- Bootstrap Core CSS -->
-    <link href="./vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
-    <link href="./vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
     <!-- DataTables CSS -->
-    <link href="./vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
     <!-- DataTables Responsive CSS -->
-    <link href="./vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+    <link href="vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="./dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="./dist/css/font.css" rel="stylesheet">  
+    <link href="dist/css/font.css" rel="stylesheet">  
     <!-- Custom Fonts -->
-    <link href="./vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- jQuery -->
-    <script src="./vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="./vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="vendor/metisMenu/metisMenu.min.js"></script>
     <!-- DataTables JavaScript -->
-    <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="./vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-    <script src="./vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="vendor/datatables-responsive/dataTables.responsive.js"></script>
     <!-- Custom Theme JavaScript -->
-    <script src="./dist/js/sb-admin-2.js"></script>
+    <script src="dist/js/sb-admin-2.js"></script>
     <!-- Custom JavaScript -->
-    <script src="./dist/js/header-check.js"></script>
-    <script src="./dist/js/close-tab-div.js"></script>
+    <script src="dist/js/header-check.js"></script>
+    <script src="dist/js/close-tab-div.js"></script>
 </head>
 <body>
 <script>
 $(function(){
-    var item = {'id':'1','name':'首页','url':'a.html','closable':false};
+    var item = {'id':'1','name':'首页','url':'admin_home_list','closable':false};
     closableTab.addTab(item);
 });
 </script>
@@ -86,11 +87,13 @@ $(function(){
 		</div>
 	</nav>
 </div>
-
-<div class="" id="nav-bar">
-	<ul class="nav nav-tabs" role="tablist"></ul>
-    <div class="tab-content" id="tab-content"></div>
+<div id="page-wrapper">
+	<div class="" id="nav-bar">
+		<ul class="nav nav-tabs" role="tablist"></ul>
+	    <div class="tab-content" id="tab-content"></div>
+	</div>
 </div>
+
 
 </body>
 </html>
