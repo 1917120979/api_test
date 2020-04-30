@@ -115,4 +115,9 @@ public class UserDAO extends BaseDAO{
 		}
 		return beans;
 	}
+	
+	public int getTotal() {
+		String sql = "select count(*) from user_info";
+		return super.getTotal(sql);
+	}
 }

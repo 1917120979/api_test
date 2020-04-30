@@ -35,14 +35,9 @@
     <!-- Custom JavaScript -->
     <script src="dist/js/header-check.js"></script>
     <script src="dist/js/close-tab-div.js"></script>
+    <script src="dist/js/index-min.js"></script>
 </head>
 <body>
-<script>
-$(function(){
-    var item = {'id':'1','name':'首页','url':'admin_home_list','closable':false};
-    closableTab.addTab(item);
-});
-</script>
 <div id="layerBg"></div>
 <div id="wrapper">
 	<!-- Navigation -->
@@ -76,7 +71,7 @@ $(function(){
 							</span>
 						</div>
 					</li>
-					<li><a href="#"><i class="glyphicon glyphicon-book"></i>
+					<li><a href="#" onclick="addProjectTab();return false;"><i class="glyphicon glyphicon-book"></i>
 							项目管理</a></li>
 					<li><a href="#"><i class="glyphicon glyphicon-user"></i>
 							用户管理</a></li>
@@ -87,12 +82,11 @@ $(function(){
 		</div>
 	</nav>
 </div>
-<div id="page-wrapper">
-	<div class="" id="nav-bar">
-		<ul class="nav nav-tabs" role="tablist"></ul>
-	    <div class="tab-content" id="tab-content"></div>
-	</div>
+<div id="nav-bar">
+	<ul class="nav nav-tabs" role="tablist"></ul>
+	<div class="tab-content" id="tab-content"></div>
 </div>
+
 
 
 </body>

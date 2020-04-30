@@ -28,8 +28,13 @@ public class HomeServlet extends  BaseBackServlet{
 
 	@Override
 	public String list(HttpServletRequest request, HttpServletResponse response) {
-		int projectNum = pDAO.getTotal();
-		request.setAttribute("pNum", projectNum);
+		int pNum = pDAO.getTotal();
+		int apiNum = apiDAO.getTotal();
+		int userNum = uDAO.getTotal();
+		
+		request.setAttribute("pNum", pNum);
+		request.setAttribute("apiNum", apiNum);
+		request.setAttribute("userNum", userNum);
 		return "/pages/homeContent.jsp";
 	}
 

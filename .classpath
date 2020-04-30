@@ -16,6 +16,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/standard.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-fileupload-1.2.2.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/uiotencrypt.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

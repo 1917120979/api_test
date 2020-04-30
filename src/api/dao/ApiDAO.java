@@ -139,10 +139,9 @@ public class ApiDAO extends BaseDAO{
 		return beans;		
 	}
 	
-	public int getTotal(int pid) {
-		String sql = "select count(*) from api_info where pid = ?";
-		Object[] params = {pid};
-		return super.getTotal(sql, params);
+	public int getTotal() {
+		String sql = "select count(*) from api_info";
+		return super.getTotal(sql);
 	}
 
 	public Api get(int id) {

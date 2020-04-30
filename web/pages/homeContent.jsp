@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<div id="tab-content-wrapper">
-	<div>
+
+<div>
 	<div class="col-lg-12">
 		<h1 class="page-header">统计</h1>
 	</div>
@@ -38,7 +38,7 @@
 						<i class="fa fa-tasks fa-5x"></i>
 					</div>
 					<div class="col-xs-9 text-right">
-						<div class="huge">12</div>
+						<div class="huge">${apiNum }</div>
 						<div>接口数</div>
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 						<i class="fa fa-user fa-5x"></i>
 					</div>
 					<div class="col-xs-9 text-right">
-						<div class="huge">124</div>
+						<div class="huge">${userNum }</div>
 						<div>用户数</div>
 					</div>
 				</div>
@@ -73,6 +73,6 @@
 		</div>
 	</div>
 </div>
-</div>
+
 
 

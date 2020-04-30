@@ -127,7 +127,7 @@ public class ProjectServlet extends BaseBackServlet{
 		List<Project> ps = pDAO.list();
 
 		request.setAttribute("ps", ps);
-		return "pages/listProject.jsp";
+		return "/pages/listProject.jsp";
 	}
 
 }

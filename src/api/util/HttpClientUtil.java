@@ -27,7 +27,7 @@ public class HttpClientUtil {
 	private HttpClientUtil() {
 	}
 
-	public static String doGet(String url, Map<String, String> param, Map<String, String> header) {
+	public static String doGet(String url, Map<String, String> header, Map<String, String> param) {
 
 		// 创建Httpclient对象
 		CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -86,7 +86,7 @@ public class HttpClientUtil {
 		return doPost(url, param, null);
 	}
 	
-	public static String doPost(String url, Map<String, String> param,  Map<String, String> header) {
+	public static String doPost(String url,  Map<String, String> header, Map<String, String> param) {
 		// 创建Httpclient对象
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		CloseableHttpResponse response = null;
@@ -133,10 +133,10 @@ public class HttpClientUtil {
 	}
 	
 	public static String doPostJson(String url, String json)  {
-		return doPostJson(url, json, null);
+		return doPostJson(url, null, json);
 	}
 	
-    public static String doPostJson(String url, String json , Map<String, String> header) {
+    public static String doPostJson(String url, Map<String, String> header, String json ) {
         // 创建Httpclient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse response = null;
