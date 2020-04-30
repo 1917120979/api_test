@@ -1,3 +1,1 @@
-<% 
-	response.sendRedirect("admin_home_list");
-%>
+<% response.sendRedirect("admin_home_list"); %>

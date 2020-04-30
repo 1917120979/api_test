@@ -3,6 +3,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="../include/header.jsp"%>
 <%@include file="../include/navigator.jsp"%>
+<script>
+$(function(){
+    var item = {'id':'1','name':'首页','url':'a.html','closable':false};
+    closableTab.addTab(item);
+});
+</script>
+
+<div class="" id="nav-bar">
+	<ul class="nav nav-tabs" role="tablist"></ul>
+    <div class="tab-content" id="tab-content"></div>
+</div>
 
 <div id="page-wrapper">
 	<div class="row">

@@ -98,14 +98,14 @@ public class UserServlet extends HttpServlet{
 	
 	public String exit(HttpServletRequest request, HttpServletResponse response) {
 		request.getSession().removeAttribute("user");
-		return "pages/login.jsp";
+		return "/pages/login.jsp";
 	}
 	
 	public String registerPage(HttpServletRequest request, HttpServletResponse response) {
-		return "pages/register.jsp";
+		return "/pages/register.jsp";
 	}
 	
 	public String loginPage(HttpServletRequest request, HttpServletResponse response) {
-		return "pages/login.jsp";
+		return "/pages/login.jsp";
 	}
 }

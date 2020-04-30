@@ -15,6 +15,8 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import api.bean.User;
+
 /**
  * 
  * @ClassName:  BackServletFilter   
@@ -24,7 +26,8 @@ import org.slf4j.LoggerFactory;
  * @Copyright:
  */
 public class BackServletFilter implements Filter{
-	 private static final Logger logger = LoggerFactory.getLogger(BackServletFilter.class);
+	private static final Logger logger = LoggerFactory.getLogger(BackServletFilter.class);
+	private User user;
 
 	@Override
 	public void destroy() {
@@ -39,13 +42,21 @@ public class BackServletFilter implements Filter{
 		String contextPath = request.getServletContext().getContextPath();
 		String uri = request.getRequestURI();
 		uri = StringUtils.remove(uri, contextPath);
-		logger.debug("本次的requestUri----->>>"+uri);
+		
 		if (uri.startsWith("/admin_")) {
-			String servletPath = StringUtils.substringBetween(uri, "_","_")+"Servlet";
+			user = (User) request.getSession().getAttribute("user");
+			
+			String path = StringUtils.substringBetween(uri, "_","_");
+			String servletPath = path +"Servlet";
 			String method = StringUtils.substringAfterLast(uri, "_");
-			request.setAttribute("method", method);
-			req.getRequestDispatcher("/"+servletPath).forward(request, response);
-			return;
+			if (!path.equals("user") && null == user) {
+				response.sendRedirect("admin_user_loginPage");
+			}else {
+				request.setAttribute("method", method);
+				req.getRequestDispatcher("/"+servletPath).forward(request, response);
+			}
+			logger.debug(String.format("本次请求的uri>>%s,method>>%s,servletPath>>%s", uri, method, servletPath));
+			return;								
 		}
 		chain.doFilter(request, response);
 	}
