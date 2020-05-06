@@ -2,15 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@include file="../include/header.jsp"%>
-<%@include file="../include/navigator.jsp"%>
 
 <script src="dist/js/list-api.js"></script>
 
 <script>
     $(document).ready(function() {
 		$('table.listTable').DataTable({
-		    responsive : true,
+		    retrieve: true,
 		    "language" : {
 			"info" : "共 _TOTAL_ 条目",
 			"lengthMenu" : "展示 _MENU_ 个条目",
@@ -23,17 +21,6 @@
 		});
     });
 </script>
-
-<div id="page-wrapper">
-	<div class="breadcrumbs" id="breadcrumbs">
-		<ul class="breadcrumb">
-			<li><i class="ace-icon fa fa-home home-icon"></i> <a
-				href="admin_home_list">首页</a></li>
-			<li><a href="admin_project_list">项目列表</a></li>
-			<li><a href="admin_projectInfo_list?pid=${p.id }">${p.name }</a></li>
-			<li class="active">接口管理</li>
-		</ul>
-	</div>
 
 	<!--新增 编辑分组div  -->
 	<div id="addGroupDiv" class="panel panel-primary addDiv addDiv-size-1">
@@ -151,7 +138,7 @@
 											<c:if test="${fn:length(g.apiByGroup) > 0 }">
 												<table
 													class="table table-striped table-bordered table-hover listTable"
-													id="dataTables-header">
+													id="dataTables-api-${g.id }">
 													<thead>
 														<tr>
 															<th>Name</th>
@@ -193,7 +180,5 @@
 		<!-- /.panel -->
 	</div>
 	<!-- /.col-lg-12 -->
-</div>
-<!-- /.row -->
 
-<%@include file="../include/footer.jsp"%>
+<!-- /.row -->

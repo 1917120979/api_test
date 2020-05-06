@@ -4,22 +4,22 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <script src="dist/js/list-project.js"></script>
-
 <script>
-    $(document).ready(function() {
-	$('#dataTable-project').DataTable({
-	    responsive : true,
-	    "language" : {
-		"info" : "共 _TOTAL_ 条目",
-		"lengthMenu" : "展示 _MENU_ 个条目",
-		"search" : "查询",
-		"paginate" : {
-		    "previous" : "上一页",
-		    "next" : "下一页"
-		}
+$(document).ready(function() {
+    $('table.listTable').DataTable({
+	bPaginate : true,
+	bInfo : false,
+	retrieve: true,
+	"language" : {
+	    "lengthMenu" : "展示 _MENU_ 个条目",
+	    "search" : "查询",
+	    "paginate" : {
+		"previous" : "上一页",
+		"next" : "下一页"
 	    }
-	});
+	}
     });
+});
 </script>
 <div id="addProjectDiv" class="panel panel-primary addDiv addDiv-size-2">
 	<div id="projectPanelHead" class="panel-heading">新增项目</div>
@@ -71,68 +71,72 @@
 	</div>
 </div>
 <!-- /.row -->
-<div class="row">
+<div>
 	<div class="col-lg-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				项目列表
-				<button type="button" class="btn btn-primary btn-xs margin-left"
-					onclick="addProject()">新增项目</button>
-			</div>
-			<!-- /.panel-heading -->
-			<div class="panel-body">
-				<c:if test="${fn:length(ps) <1}">
-					<div align="center">没有数据</div>
-				</c:if>
-				<c:if test="${fn:length(ps) >0}">
-					<table
-						class="table table-striped table-bordered table-hover listTable"
-						id="dataTable-project">
-						<thead>
-							<tr>
-								<th>项目名称</th>
-								<th>签名</th>
-								<th>加密</th>
-								<th>创建人</th>
-								<th>创建日期</th>
-								<th>操作</th>
-							</tr>
-						</thead>
-						<tbody>
-
-							<c:forEach items="${ps}" var="p">
-								<tr class="odd gradeX">
-									<td>${p.name}</td>
-									<td><c:choose>
-											<c:when test="${p.sign == 0}">不签名</c:when>
-											<c:when test="${p.sign == 1}">网关</c:when>
-											<c:when test="${p.sign == 2}">平台</c:when>
-											<c:when test="${p.sign == 3}">APP</c:when>
-										</c:choose></td>
-									<td><c:choose>
-											<c:when test="${p.encrypt == 0}">不加密</c:when>
-											<c:when test="${p.encrypt == 1}">加密</c:when>
-										</c:choose></td>
-									<td>${p.user.username}</td>
-									<td>${p.createDate}</td>
-									<td><a href="admin_projectInfo_list?pid=${p.id}">配置<span
-											class="glyphicon glyphicon-cog"></span></a> <a
-										onclick="editProject(${p.id});return false;">编辑<span
-											class="glyphicon glyphicon-edit"></span></a> <a
-										onclick="delProject(${p.id});return false;">删除<span
-											class="glyphicon glyphicon-trash"></span></a></td>
-								</tr>
-							</c:forEach>
-
-						</tbody>
-					</table>
-				</c:if>
-
-
-			</div>
-			<!-- /.panel-body -->
-		</div>
-		<!-- /.panel -->
+		<h1 class="page-header">项目列表</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
+<div class="col-lg-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<button type="button" class="btn btn-primary btn-sm"
+				onclick="addProject()">新增项目</button>
+		</div>
+		<!-- /.panel-heading -->
+		<div class="panel-body">
+			<c:if test="${fn:length(ps) <1}">
+				<div align="center">没有数据</div>
+			</c:if>
+			<c:if test="${fn:length(ps) >0}">
+				<table
+					class="table table-striped table-bordered table-hover listTable"
+					id="dataTable-project">
+					<thead>
+						<tr>
+							<th>项目名称</th>
+							<th>签名</th>
+							<th>加密</th>
+							<th>创建人</th>
+							<th>创建日期</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<c:forEach items="${ps}" var="p">
+							<tr class="odd gradeX">
+								<td>${p.name}</td>
+								<td><c:choose>
+										<c:when test="${p.sign == 0}">不签名</c:when>
+										<c:when test="${p.sign == 1}">网关</c:when>
+										<c:when test="${p.sign == 2}">平台</c:when>
+										<c:when test="${p.sign == 3}">APP</c:when>
+									</c:choose></td>
+								<td><c:choose>
+										<c:when test="${p.encrypt == 0}">不加密</c:when>
+										<c:when test="${p.encrypt == 1}">加密</c:when>
+									</c:choose></td>
+								<td>${p.user.username}</td>
+								<td>${p.createDate}</td>
+								<td><a href="#" onclick="configProject(${p.id});return false;">配置<span
+										class="glyphicon glyphicon-cog"></span></a> <a
+									onclick="editProject(${p.id});return false;">编辑<span
+										class="glyphicon glyphicon-edit"></span></a> <a
+									onclick="delProject(${p.id});return false;">删除<span
+										class="glyphicon glyphicon-trash"></span></a></td>
+							</tr>
+						</c:forEach>
+
+					</tbody>
+				</table>
+			</c:if>
+
+
+		</div>
+		<!-- /.panel-body -->
+	</div>
+	<!-- /.panel -->
+</div>
+<!-- /.col-lg-12 -->
+

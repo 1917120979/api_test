@@ -61,7 +61,7 @@
 		<div class="navbar-default sidebar" role="navigation">
 			<div class="sidebar-nav navbar-collapse">
 				<ul class="nav" id="side-menu">
-					<li class="sidebar-search">
+					<!-- <li class="sidebar-search">
 						<div class="input-group custom-search-form">
 							<input type="text" class="form-control" placeholder="Search...">
 							<span class="input-group-btn">
@@ -70,7 +70,7 @@
 								</button>
 							</span>
 						</div>
-					</li>
+					</li> -->
 					<li><a href="#" onclick="addProjectTab();return false;"><i class="glyphicon glyphicon-book"></i>
 							项目管理</a></li>
 					<li><a href="#"><i class="glyphicon glyphicon-user"></i>
@@ -87,7 +87,8 @@
 	<div class="tab-content" id="tab-content"></div>
 </div>
 
-
+<!-- 显示的时间弹窗的div -->
+<div id="date"></div>
 
 </body>
 </html>

@@ -10,7 +10,9 @@ function addVariable() {
 }
 
 function submitVariable() {
-    if (!checkEmpty("name", "名称"))
+    if (!checkEmpty("varName", "Name"))
+	return false;
+    if (!checkEmpty("varValue", "Value"))
 	return false;
     var targetUrl = $("#addVariableForm").attr("name");
     $.ajax({
@@ -50,9 +52,9 @@ function editVariable(id) {
 	},
 	success : function(data) {
 	    var v = data.data;
-	    $("#id").val(v.id);
-	    $("#name").val(v.name);
-	    $("#value").val(v.value);
+	    $("#vid").val(v.id);
+	    $("#varName").val(v.name);
+	    $("#varValue").val(v.value);
 	    $("#type").val(v.type);
 	    $("#description").val(v.description);
 	    
@@ -90,7 +92,6 @@ function delVariable(id) {
     }
 }
 
-function apiManage(pid){
-    window.location.href="admin_api_list?pid="+pid;
-}
+
+
 

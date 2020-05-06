@@ -14,21 +14,12 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- MetisMenu CSS -->
-    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="dist/css/sb-admin-2.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <!-- jQuery -->
+    <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="dist/js/sb-admin-2.js"></script>
     <script src="dist/js/header-check.js"></script>
+    <script src="dist/js/popup-div.js"></script>
     <script>
     	function login(){
 	    	if (!checkEmpty("username", "用户名"))
@@ -42,7 +33,6 @@
 		    	data : $("#loginForm").serialize(),
 		    	success : function(data) {
 		    	    if(data.code == 0){
-		    			alert(data.msg);
 		    			window.location.href = "index_";
 		    			return;
 		    	    }
@@ -91,6 +81,8 @@
             </div>
         </div>
     </div>
+    <!-- 显示的时间弹窗的div -->
+	<div id="date"></div>
 </body>
 
 </html>

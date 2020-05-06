@@ -23,7 +23,7 @@
 				</div>
 			</div>
 			<div class="panel-footer">
-				<a href="admin_project_list"> <span class="pull-left">查看详情</span>
+				<a href="#" onclick="addProjectTab();return false;"> <span class="pull-left">查看详情</span>
 					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 				</a>
 				<div class="clearfix"></div>

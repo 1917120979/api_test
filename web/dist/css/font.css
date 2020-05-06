@@ -1,10 +1,14 @@
 @charset "UTF-8";
+html,body{
+	height:100%;
+}
 table.listTable{
 	width: 100% !important;
 }
 #nav-bar{
 	position: inherit;
-	margin: 0 0 0 250px;	
+	margin: 0 0 0 250px;
+	height: 90%;	
 }
 
 #tab-content{
@@ -108,7 +112,12 @@ form button{
 .size-2{
 	width:16%;
 }
-
+.size-3{
+	width:32%;
+}
+.size-4{
+	width:64%;
+}
 .size-10{
 	width:91%;
 }
