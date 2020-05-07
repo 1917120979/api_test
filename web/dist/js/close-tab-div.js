@@ -3,6 +3,7 @@ var closableTab = {
     jsonItems : {},
     // 添加tab
     addTab : function(tabItem) {
+    	
 	var id = "tab_seed_" + tabItem.id;
 	var container = "tab_container_" + tabItem.id;
 
@@ -40,10 +41,12 @@ var closableTab = {
 	}
 	$("#" + id).addClass("active");
 	$("#" + container).addClass("active");
-	this.jsonItems = JSON.parse(localStorage.getItem("jsonItems"));
+	var strItems = localStorage.getItem("jsonItems");
+	if(strItems != null){
+		this.jsonItems = JSON.parse(strItems);
+	}	
 	this.jsonItems[container] = tabItem;
-	var strItems = JSON.stringify(this.jsonItems);
-	localStorage.setItem("jsonItems", strItems);
+	localStorage.setItem("jsonItems", JSON.stringify(this.jsonItems));
     },
     // 关闭tab
     closeTab : function(item) {
@@ -56,9 +59,11 @@ var closableTab = {
 	}
 	$("#" + val).remove();
 	$("#" + containerId).remove();
-	this.jsonItems = JSON.parse(localStorage.getItem("jsonItems"));
+	var strItems = localStorage.getItem("jsonItems");
+	if(strItems != null){
+		this.jsonItems = JSON.parse(strItems);
+	}
 	delete this.jsonItems[containerId];
-	var strItems = JSON.stringify(this.jsonItems);
-	localStorage.setItem("jsonItems", strItems);
+	localStorage.setItem("jsonItems", JSON.stringify(this.jsonItems));
     }
 }
