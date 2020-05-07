@@ -24,14 +24,14 @@ public class VariableServlet extends BaseBackServlet{
 	
 		String name = request.getParameter("name");
 		String value = request.getParameter("value");
-		String description =request.getParameter("description");
+		String comments =request.getParameter("comments");
 		
 		Variable bean = new Variable();
 		bean.setProject(pDAO.get(pid));
 		bean.setType(type);
 		bean.setName(name);
 		bean.setValue(value);
-		bean.setDescription(description);
+		bean.setComments(comments);
 		
 		JSONObject json = new JSONObject();
 		
@@ -92,14 +92,14 @@ public class VariableServlet extends BaseBackServlet{
 		int type = Integer.parseInt(request.getParameter("type"));
 		String name = request.getParameter("name");
 		String value = request.getParameter("value");
-		String description =request.getParameter("description");
+		String comments =request.getParameter("comments");
 		
 		Variable bean = new Variable();
 		bean.setId(id);
 		bean.setName(name);
 		bean.setValue(value);
 		bean.setType(type);
-		bean.setDescription(description);
+		bean.setComments(comments);
 		
 		JSONObject json = new JSONObject();
 		

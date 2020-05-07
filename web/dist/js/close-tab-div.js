@@ -38,6 +38,13 @@ var closableTab = {
 			    $(this).html(response);
 			}
 		    });
+	}else{
+	    $('#' + container).load(tabItem.url,
+		    function(response, status, xhr) {
+			if (status == 'error') {// status的值为success和error，如果error则显示一个错误页面
+			    $(this).html(response);
+			}
+		    });
 	}
 	$("#" + id).addClass("active");
 	$("#" + container).addClass("active");

@@ -14,29 +14,40 @@ import com.alibaba.fastjson.JSONObject;
 import api.bean.Attribute;
 import api.bean.Variable;
 
-public class AttributeDAO extends BaseDAO{
+public class AttributeDAO extends BaseDAO {
 	private VariableDAO pvDAO = new VariableDAO();
+
 	public boolean add(Attribute bean) {
-		String sql = "insert into api_attribute values(null,?,?,?,?,?)";
-		Object[] params = {bean.getApi().getId(),bean.getName(),bean.getValue(),bean.getType(), bean.getDescription()};
-		return super.update(sql, params);
+		if (null != bean.getTestcase() && null == bean.getApi()) {
+			String sql = "insert into api_attribute values(null,null,?,?,?,?,?)";
+			Object[] params = {bean.getTestcase().getId(), bean.getName(), bean.getValue(),
+					bean.getType(), bean.getComments() };
+			return super.update(sql, params);
+		}
+		if (null == bean.getTestcase() && null != bean.getApi()) {
+			String sql = "insert into api_attribute values(null,?,null,?,?,?,?)";
+			Object[] params = {bean.getApi().getId(), bean.getName(), bean.getValue(),
+					bean.getType(), bean.getComments() };
+			return super.update(sql, params);
+		}
+		return false;	
 	}
-			
+
 	public boolean delete(int id) {
 		String sql = "delete from api_attribute where id = ?";
-		Object[] params = {id};
+		Object[] params = { id };
 		return super.update(sql, params);
 	}
-	
+
 	public boolean update(Attribute bean) {
 		String sql = "update api_attribute set name= ?,value =?,type=?,description=? where id = ?";
-		Object[] params = {bean.getName(),bean.getValue(), bean.getType(),bean.getDescription(), bean.getId()};
+		Object[] params = { bean.getName(), bean.getValue(), bean.getType(), bean.getComments(), bean.getId() };
 		return super.update(sql, params);
 	}
-	
-	public List<Attribute> list(int aid, int type){
+
+	public List<Attribute> list(int aid, int type) {
 		String sql = "select * from api_attribute where aid = ? and type = ?";
-		Object[] params = {aid, type};
+		Object[] params = { aid, type };
 		List<Attribute> beans = new ArrayList<Attribute>();
 		ResultSet rs = super.query(sql, params);
 		try {
@@ -46,12 +57,12 @@ public class AttributeDAO extends BaseDAO{
 				bean.setName(rs.getString("name"));
 				bean.setValue(rs.getString("value"));
 				bean.setType(rs.getInt("type"));
-				bean.setDescription(rs.getString("description"));
+				bean.setComments(rs.getString("description"));
 				beans.add(bean);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			super.close();
 			if (rs != null) {
 				try {
@@ -66,9 +77,9 @@ public class AttributeDAO extends BaseDAO{
 
 	public Attribute get(int id) {
 		String sql = "select * from api_attribute where id = ?";
-		Object[] params = {id};
+		Object[] params = { id };
 		ResultSet rs = super.query(sql, params);
-		
+
 		try {
 			while (rs.next()) {
 				Attribute bean = new Attribute();
@@ -76,12 +87,12 @@ public class AttributeDAO extends BaseDAO{
 				bean.setName(rs.getString("name"));
 				bean.setValue(rs.getString("value"));
 				bean.setType(rs.getInt("type"));
-				bean.setDescription(rs.getString("description"));
+				bean.setComments(rs.getString("description"));
 				return bean;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			super.close();
 			if (rs != null) {
 				try {
@@ -93,25 +104,25 @@ public class AttributeDAO extends BaseDAO{
 		}
 		return null;
 	}
-	
-	public Map<String, String> getMap(int aid,int type){
+
+	public Map<String, String> getMap(int aid, int type) {
 		Map<String, String> map = new HashMap<String, String>();
 		String sql = "select name ,value from api_attribute where aid = ? and type = ?";
-		Object[] params = {aid,type};
-		ResultSet rs = super.query(sql, params);	
+		Object[] params = { aid, type };
+		ResultSet rs = super.query(sql, params);
 		try {
 			while (rs.next()) {
 				String key = rs.getString("name");
 				String value = rs.getString("value");
 				if (value.startsWith("$")) {
-					String name = StringUtils.substringBetween(value, "{","}");					
+					String name = StringUtils.substringBetween(value, "{", "}");
 					value = pvDAO.getValue(name);
 				}
 				map.put(key, value);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			super.close();
 			if (rs != null) {
 				try {
@@ -123,25 +134,25 @@ public class AttributeDAO extends BaseDAO{
 		}
 		return map;
 	}
-	
-	public String getJson(int aid, int type){
+
+	public String getJson(int aid, int type) {
 		JSONObject json = new JSONObject();
 		String sql = "select name ,value from api_attribute where aid = ? and type = ?";
-		Object[] params = {aid,type};
-		ResultSet rs = super.query(sql, params);	
+		Object[] params = { aid, type };
+		ResultSet rs = super.query(sql, params);
 		try {
 			while (rs.next()) {
 				String key = rs.getString("name");
 				String value = rs.getString("value");
 				if (value.startsWith("$")) {
-					String name = StringUtils.substringBetween(value, "{","}");					
+					String name = StringUtils.substringBetween(value, "{", "}");
 					value = pvDAO.getValue(name);
 				}
 				json.put(key, value);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			super.close();
 			if (rs != null) {
 				try {
@@ -155,8 +166,8 @@ public class AttributeDAO extends BaseDAO{
 	}
 
 	public boolean addPublicVar(Variable pv, int aid) {
-		String sql = "insert into api_attribute values(null,?,?,?,?,?)";
-		Object[] params = {aid ,pv.getName(),pv.getValue(),pv.getType(), pv.getDescription()};
+		String sql = "insert into api_attribute values(null,?,null,?,?,?,?)";
+		Object[] params = { aid, pv.getName(), pv.getValue(), pv.getType(), pv.getComments() };
 		return super.update(sql, params);
 	}
 }

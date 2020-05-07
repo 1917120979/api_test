@@ -11,11 +11,23 @@ table.listTable{
 	height: 90%;	
 }
 
+.nav-ul{
+	background-color: #e6e6e6;
+}
+
 #tab-content{
 	height: 100%;
 	min-height: 600px;
 	background-color: white;
 	border-left: 1px solid #e7e7e7;
+}
+
+.page-header-p{
+	padding-bottom: 5px;
+    padding-top: 20px;
+    margin-bottom:10px;
+    border-bottom: 1px solid #eee;
+    font-size: 25px;
 }
 
 .buttonRow{
@@ -66,8 +78,14 @@ table.listTable{
 
 .addDiv-size-3{
 	width: 500px;
-    height: 5400px;
+    height: 400px;
 }
+
+.addDiv-size-4{
+	width: 500px;
+    height: 540px;
+}
+
 
 form button{
 	margin:10px 40px;

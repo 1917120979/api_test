@@ -39,6 +39,7 @@ $(document).ready(function() {
 });
 
 </script>
+
 <!--新增 编辑变量 div  -->
 <div id="addVariableDiv"
 	class="panel panel-primary addDiv addDiv-size-2">
@@ -63,10 +64,10 @@ $(document).ready(function() {
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="description" class="col-sm-2 control-label">描述</label>
+				<label for="comments" class="col-sm-2 control-label">描述</label>
 				<div class="col-sm-10">
-					<textarea class="form-control" rows="2" name="description"
-						id="pdescription"></textarea>
+					<textarea class="form-control" rows="2" name="comments"
+						id="vComments"></textarea>
 				</div>
 			</div>
 			<div class="form-group">
@@ -89,259 +90,225 @@ $(document).ready(function() {
 		</form>
 	</div>
 </div>
+<!-- page-header -->
 <div>
 	<div class="col-lg-12">
-		<h1></h1>
+		<div class="page-header-p">${p.name }</div>
 	</div>
-	<!-- /.col-lg-12 -->
 </div>
-<div>
-	<div class="col-lg-12">
-		<div>
-			<!-- .panel-heading -->
-			<div>
-				<div class="panel-group" id="accordion">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#accordion"
-									href="#collapseOne">基本信息</a>
-							</h4>
-						</div>
-						<div id="collapseOne" class="panel-collapse collapse in">
-							<div class="panel-body">
-								<div class="div-bottom">
-									<form class="form-inline">
-										<div class="form-group">
-											<label for="pName">名称</label> <input type="text"
-												class="form-control" id="pName" value="${p.name }" disabled>
-										</div>
-										<div class="form-group">
-											<label for="sign">签名</label> <input type="text"
-												class="form-control" id="pSign" value="" disabled>
-										</div>
-										<div class="form-group">
-											<label for="encrypt">加密</label> <input type="text"
-												class="form-control" id="pEncrypt" value="" disabled>
-										</div>
-									</form>
-								</div>
-								<div class="div-bottom">
-									<div class="form-group">
-											<label for="description">描述</label>
-											<textarea class="div-textarea size-4" rows="2" disabled>${p.description }</textarea>
-										</div>
-								</div>
-							</div>
-						</div>
+<!--详情  -->
+<div class="col-lg-12">
+	<!--描述  -->
+	<div class="panel-group" id="accordion">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion"
+						href="#collapseOne">描述</a>
+				</h4>
+			</div>
+			<div id="collapseOne" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<div class="form-group">
+						<textarea class="form-control" rows="1" disabled>${p.comments }</textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--变量列表  -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion"
+						href="#collapseTwo">变量列表</a>
+					<button type="button" class="btn btn-primary btn-xs margin-left"
+						onclick="addVariable()">新增变量</button>
+				</h4>
+			</div>
+			<div id="collapseTwo" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#userVar" data-toggle="tab">用户变量</a>
+						</li>
+						<li><a href="#header" data-toggle="tab">公共header</a></li>
+						<li><a href="#param" data-toggle="tab">公共param</a></li>
+						<li><a href="#relation" data-toggle="tab">接口关联</a></li>
+					</ul>
 
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion"
-										href="#collapseTwo">变量管理</a>
-									<button type="button"
-										class="btn btn-primary btn-xs margin-left"
-										onclick="addVariable()">新增变量</button>
-								</h4>
-							</div>
-							<div id="collapseTwo" class="panel-collapse collapse in">
-								<div class="panel-body">
-									<!-- Nav tabs -->
-									<ul class="nav nav-tabs">
-										<li class="active"><a href="#userVar" data-toggle="tab">用户变量</a>
-										</li>
-										<li><a href="#header" data-toggle="tab">公共header</a></li>
-										<li><a href="#param" data-toggle="tab">公共param</a></li>
-										<li><a href="#relation" data-toggle="tab">接口关联</a></li>
-									</ul>
-
-									<!-- Tab panes -->
-									<div class="tab-content">
-										<div class="tab-pane fade in active" id="userVar">
-											<h5></h5>
-											<div>
-												<c:if test="${fn:length(uvs) < 1}">
-													<div align="center">没有数据</div>
-												</c:if>
-												<c:if test="${fn:length(uvs) > 0}">
-													<table
-														class="table table-striped table-bordered table-hover listTable"
-														id="dataTables-userVar">
-														<thead>
-															<tr>
-																<th>Name</th>
-																<th>Value</th>
-																<th>描述</th>
-																<th>操作</th>
-															</tr>
-														</thead>
-														<tbody>
-															<c:forEach items="${uvs }" var="uv">
-																<tr>
-																	<td>${uv.name }</td>
-																	<td>${uv.value }</td>
-																	<td>${uv.description }</td>
-																	<td><a
-																		onclick="editVariable(${uv.id});return false;">编辑<span
-																			class="glyphicon glyphicon-edit"></span></a> <a
-																		onclick="delVariable(${uv.id});return false;">删除<span
-																			class="glyphicon glyphicon-trash"></span></a></td>
-																</tr>
-															</c:forEach>
-														</tbody>
-													</table>
-												</c:if>
-											</div>
-										</div>
-										<div class="tab-pane fade" id="header">
-											<h5></h5>
-											<div>
-												<c:if test="${fn:length(hvs) < 1}">
-													<div align="center">没有数据</div>
-												</c:if>
-												<c:if test="${fn:length(hvs) > 0}">
-													<table
-														class="table table-striped table-bordered table-hover listTable"
-														id="dataTables-header">
-														<thead>
-															<tr>
-																<th>Name</th>
-																<th>Value</th>
-																<th>描述</th>
-																<th>操作</th>
-															</tr>
-														</thead>
-														<tbody>
-															<c:forEach items="${hvs }" var="hv">
-																<tr>
-																	<td>${hv.name }</td>
-																	<td>${hv.value }</td>
-																	<td>${hv.description }</td>
-																	<td><a
-																		onclick="editVariable(${hv.id});return false;">编辑<span
-																			class="glyphicon glyphicon-edit"></span></a> <a
-																		onclick="delVariable(${hv.id});return false;">删除<span
-																			class="glyphicon glyphicon-trash"></span></a></td>
-																</tr>
-															</c:forEach>
-														</tbody>
-													</table>
-												</c:if>
-											</div>
-										</div>
-										<div class="tab-pane fade" id="param">
-											<h5></h5>
-											<div>
-												<c:if test="${fn:length(pvs) < 1}">
-													<div align="center">没有数据</div>
-												</c:if>
-												<c:if test="${fn:length(pvs) > 0}">
-													<table
-														class="table table-striped table-bordered table-hover listTable"
-														id="dataTables-param">
-														<thead>
-															<tr>
-																<th>Name</th>
-																<th>Value</th>
-																<th>描述</th>
-																<th>操作</th>
-															</tr>
-														</thead>
-														<tbody>
-															<c:forEach items="${pvs }" var="pv">
-																<tr>
-																	<td>${pv.name }</td>
-																	<td>${pv.value }</td>
-																	<td>${pv.description }</td>
-																	<td><a
-																		onclick="editVariable(${pv.id});return false;">编辑<span
-																			class="glyphicon glyphicon-edit"></span></a> <a
-																		onclick="delVariable(${pv.id});return false;">删除<span
-																			class="glyphicon glyphicon-trash"></span></a></td>
-																</tr>
-															</c:forEach>
-														</tbody>
-													</table>
-												</c:if>
-											</div>
-										</div>
-										<div class="tab-pane fade" id="relation">
-											<h5></h5>
-											<div>
-												<c:if test="${fn:length(avs) < 1}">
-													<div align="center">没有数据</div>
-												</c:if>
-												<c:if test="${fn:length(avs) > 0}">
-													<table
-														class="table table-striped table-bordered table-hover listTable"
-														id="dataTables-relation">
-														<thead>
-															<tr>
-																<th>Name</th>
-																<th>Value</th>
-																<th>描述</th>
-																<th>操作</th>
-															</tr>
-														</thead>
-														<tbody>
-															<c:forEach items="${avs }" var="av">
-																<tr>
-																	<td>${av.name }</td>
-																	<td>${av.value }</td>
-																	<td>${av.description }</td>
-																	<td><a
-																		onclick="editVariable(${av.id});return false;">编辑<span
-																			class="glyphicon glyphicon-edit"></span></a> <a
-																		onclick="delVariable(${av.id});return false;">删除<span
-																			class="glyphicon glyphicon-trash"></span></a></td>
-																</tr>
-															</c:forEach>
-														</tbody>
-													</table>
-												</c:if>
-											</div>
-										</div>
-									</div>
-								</div>
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div class="tab-pane fade in active" id="userVar">
+							<h5></h5>
+							<div>
+								<c:if test="${fn:length(uvs) < 1}">
+									<div align="center">没有数据</div>
+								</c:if>
+								<c:if test="${fn:length(uvs) > 0}">
+									<table
+										class="table table-striped table-bordered table-hover listTable"
+										id="dataTables-userVar">
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>Value</th>
+												<th>描述</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${uvs }" var="uv">
+												<tr>
+													<td>${uv.name }</td>
+													<td>${uv.value }</td>
+													<td>${uv.comments }</td>
+													<td><a onclick="editVariable(${uv.id});return false;">编辑<span
+															class="glyphicon glyphicon-edit"></span></a> <a
+														onclick="delVariable(${uv.id});return false;">删除<span
+															class="glyphicon glyphicon-trash"></span></a></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</c:if>
 							</div>
 						</div>
-
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion"
-										href="#collapseThree">接口配置</a>
-								</h4>
+						<div class="tab-pane fade" id="header">
+							<h5></h5>
+							<div>
+								<c:if test="${fn:length(hvs) < 1}">
+									<div align="center">没有数据</div>
+								</c:if>
+								<c:if test="${fn:length(hvs) > 0}">
+									<table
+										class="table table-striped table-bordered table-hover listTable"
+										id="dataTables-header">
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>Value</th>
+												<th>描述</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${hvs }" var="hv">
+												<tr>
+													<td>${hv.name }</td>
+													<td>${hv.value }</td>
+													<td>${hv.comments }</td>
+													<td><a onclick="editVariable(${hv.id});return false;">编辑<span
+															class="glyphicon glyphicon-edit"></span></a> <a
+														onclick="delVariable(${hv.id});return false;">删除<span
+															class="glyphicon glyphicon-trash"></span></a></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</c:if>
 							</div>
-							<div id="collapseThree" class="panel-collapse collapse in">
-								<div class="panel-body">
-									<button type="button"
-										class="btn btn-primary btn-xs margin-right"
-										onclick="apiManage(${p.id})">接口管理</button>
-									<span>管理接口的增删改查</span> <br> <br>
-									<button type="button"
-										class="btn btn-primary btn-xs margin-right"
-										onclick="testcaseList(${p.id})">用例列表</button>
-									<span>管理接口的增删改查</span> <br> <br>
-									<button type="button"
-										class="btn btn-primary btn-xs margin-right"
-										onclick="apiExecute()">接口执行</button>
-									<span>批量执行项目的所有接口</span> <br> <br>
-									<button type="button"
-										class="btn btn-primary btn-xs margin-right"
-										onclick="viewResult()">查看结果</button>
-									<span>查看接口执行结果</span> <br> <br>
-								</div>
+						</div>
+						<div class="tab-pane fade" id="param">
+							<h5></h5>
+							<div>
+								<c:if test="${fn:length(pvs) < 1}">
+									<div align="center">没有数据</div>
+								</c:if>
+								<c:if test="${fn:length(pvs) > 0}">
+									<table
+										class="table table-striped table-bordered table-hover listTable"
+										id="dataTables-param">
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>Value</th>
+												<th>描述</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${pvs }" var="pv">
+												<tr>
+													<td>${pv.name }</td>
+													<td>${pv.value }</td>
+													<td>${pv.comments }</td>
+													<td><a onclick="editVariable(${pv.id});return false;">编辑<span
+															class="glyphicon glyphicon-edit"></span></a> <a
+														onclick="delVariable(${pv.id});return false;">删除<span
+															class="glyphicon glyphicon-trash"></span></a></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</c:if>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="relation">
+							<h5></h5>
+							<div>
+								<c:if test="${fn:length(avs) < 1}">
+									<div align="center">没有数据</div>
+								</c:if>
+								<c:if test="${fn:length(avs) > 0}">
+									<table
+										class="table table-striped table-bordered table-hover listTable"
+										id="dataTables-relation">
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>Value</th>
+												<th>描述</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${avs }" var="av">
+												<tr>
+													<td>${av.name }</td>
+													<td>${av.value }</td>
+													<td>${av.comments }</td>
+													<td><a onclick="editVariable(${av.id});return false;">编辑<span
+															class="glyphicon glyphicon-edit"></span></a> <a
+														onclick="delVariable(${av.id});return false;">删除<span
+															class="glyphicon glyphicon-trash"></span></a></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</c:if>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- .panel-body -->
 			</div>
-			<!-- /.panel -->
 		</div>
-		<!-- /.col-lg-12 -->
+		<!-- 其他功能 -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion"
+						href="#collapseThree">功能</a>
+				</h4>
+			</div>
+			<div id="collapseThree" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<button type="button" class="btn btn-primary btn-xs margin-right"
+						onclick="apiManage(${p.id})">接口管理</button>
+					<span>管理接口的增删改查</span> <br> <br>
+					<button type="button" class="btn btn-primary btn-xs margin-right"
+						onclick="testcaseList(${p.id})">用例列表</button>
+					<span>管理接口的增删改查</span> <br> <br>
+					<button type="button" class="btn btn-primary btn-xs margin-right"
+						onclick="apiExecute()">接口执行</button>
+					<span>批量执行项目的所有接口</span> <br> <br>
+					<button type="button" class="btn btn-primary btn-xs margin-right"
+						onclick="viewResult()">查看结果</button>
+					<span>查看接口执行结果</span> <br> <br>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
-<!-- /.row -->
+
+
+

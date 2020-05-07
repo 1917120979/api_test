@@ -2,31 +2,41 @@ package api.bean;
 
 public class Api {
 	private int id;
-	private Project project;
-	private Group group;
+	private Project project;	
 	private String name;
+	private int protocol;
 	private String url;
 	private String method;
 	private int dataType;
-	private int hasExtractor;
-	private int hasAssert;
+	private int filesUpload;
+	private String comments;
 	
 	@Override
 	public String toString() {
-		return String.format("project[id:%d, name:%s, method:%s, dataType:%d, hasExtractor:%d, hasAssert:%d]",id,name,method,dataType,hasExtractor,hasAssert);
+		return String.format("project[id:%d, name:%s, method:%s, dataType:%d]",id,name,method,dataType);
 	}
 	public int getId() {
 		return id;
 	}
 
-	public Group getGroup() {
-		return group;
+	public int getProtocol() {
+		return protocol;
 	}
-
-	public void setGroup(Group group) {
-		this.group = group;
+	public void setProtocol(int protocol) {
+		this.protocol = protocol;
 	}
-
+	public int getFilesUpload() {
+		return filesUpload;
+	}
+	public void setFilesUpload(int filesUpload) {
+		this.filesUpload = filesUpload;
+	}
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 	public String getUrl() {
 		return url;
 	}
@@ -41,22 +51,6 @@ public class Api {
 
 	public void setDataType(int dataType) {
 		this.dataType = dataType;
-	}
-
-	public int getHasExtractor() {
-		return hasExtractor;
-	}
-
-	public void setHasExtractor(int hasExtractor) {
-		this.hasExtractor = hasExtractor;
-	}
-
-	public int getHasAssert() {
-		return hasAssert;
-	}
-
-	public void setHasAssert(int hasAssert) {
-		this.hasAssert = hasAssert;
 	}
 
 	public void setId(int id) {

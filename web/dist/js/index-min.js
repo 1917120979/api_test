@@ -1,6 +1,6 @@
 $(function() {
     var item = {
-	'id' : '1',
+	'id' : '0',
 	'name' : '首页',
 	'url' : 'admin_home_list',
 	'closable' : false

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONObject;
 
 import api.bean.Api;
-import api.bean.Group;
 import api.bean.Project;
 import api.bean.Variable;
 
@@ -17,20 +16,20 @@ public class ApiServlet extends BaseBackServlet{
 	@Override
 	public String add(HttpServletRequest request, HttpServletResponse response) {		
 		int pid = Integer.parseInt(request.getParameter("pid"));
-		int gid = Integer.parseInt(request.getParameter("gid"));
+		int protocol = Integer.parseInt(request.getParameter("protocol"));
 		int dataType = Integer.parseInt(request.getParameter("dataType"));
+		int filesUpload = Integer.parseInt(request.getParameter("filesUpload"));
 		Project project = pDAO.get(pid);
-		Group group = gDAO.get(gid);
 						
 		Api bean = new Api();		
 		bean.setProject(project);
-		bean.setGroup(group);
 		bean.setName(request.getParameter("name"));
+		bean.setProtocol(protocol);
 		bean.setUrl(request.getParameter("url"));			
 		bean.setMethod(request.getParameter("method"));
 		bean.setDataType(dataType);
-		bean.setHasExtractor(0);
-		bean.setHasAssert(0);
+		bean.setFilesUpload(filesUpload);
+		bean.setComments(request.getParameter("comments"));
 
 		JSONObject json = new JSONObject();		
 		if (apiDAO.add(bean)) {
@@ -101,17 +100,22 @@ public class ApiServlet extends BaseBackServlet{
 	@Override
 	public String update(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
-		//int gid = Integer.parseInt(request.getParameter("gid"));
+		int pid = Integer.parseInt(request.getParameter("pid"));
+		int protocol = Integer.parseInt(request.getParameter("protocol"));
 		int dataType = Integer.parseInt(request.getParameter("dataType"));
-		//Group group = gDAO.get(gid);
-				
-		Api bean = new Api();
+		int filesUpload = Integer.parseInt(request.getParameter("filesUpload"));
+		Project project = pDAO.get(pid);
+						
+		Api bean = new Api();	
 		bean.setId(id);
-		//bean.setGroup(group);
+		bean.setProject(project);
 		bean.setName(request.getParameter("name"));
+		bean.setProtocol(protocol);
 		bean.setUrl(request.getParameter("url"));			
 		bean.setMethod(request.getParameter("method"));
 		bean.setDataType(dataType);
+		bean.setFilesUpload(filesUpload);
+		bean.setComments(request.getParameter("comments"));
 
 		JSONObject json = new JSONObject();		
 		if (apiDAO.update(bean)) {
@@ -131,13 +135,13 @@ public class ApiServlet extends BaseBackServlet{
 	@Override
 	public String list(HttpServletRequest request, HttpServletResponse response) {		
 		int pid = Integer.parseInt(request.getParameter("pid"));
-		List<Group> gs = gDAO.list(pid);	
+		List<Api> apis = apiDAO.list(pid);	
 		Project p = pDAO.get(pid);
 			
 		request.setAttribute("p", p);
-		request.setAttribute("gs", gs);
+		request.setAttribute("apis", apis);
 
-		return "pages/listApi.jsp";
+		return "/pages/listApi.jsp";
 	}
 
 }

@@ -33,7 +33,7 @@
 		    	data : $("#loginForm").serialize(),
 		    	success : function(data) {
 		    	    if(data.code == 0){
-		    			window.location.href = "index_";
+		    			window.location.href = "index";
 		    			return;
 		    	    }
 		    	    if(data.code == 401){

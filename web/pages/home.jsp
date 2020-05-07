@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<!--page-header  -->
 <div>
 	<div class="col-lg-12">
-		<h1 class="page-header">统计</h1>
+		<div class="page-header-p">统计</div>
 	</div>
-	<!-- /.col-lg-12 -->
 </div>
+<!--统计概述  -->
 <div>
 	<div class="col-lg-4 col-md-6">
 		<div class="panel panel-primary">

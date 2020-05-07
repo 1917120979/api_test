@@ -10,7 +10,7 @@ import api.bean.Variable;
 /**
  * 
  * @ClassName:  VariableDAO   
- * @Description:TODO(描述这个类的作用)   
+ * @Comments:TODO(描述这个类的作用)   
  * @author: liuyang
  * @date:   2020年4月23日 下午10:27:30      
  * @Copyright:
@@ -21,7 +21,7 @@ public class VariableDAO extends BaseDAO{
 
 	public boolean add(Variable bean) {	
 		String sql = "insert into variable_info values(null,?,?,?,?,?)";
-		Object[] params = {bean.getProject().getId(), bean.getName(), bean.getValue(),bean.getType(), bean.getDescription()};
+		Object[] params = {bean.getProject().getId(), bean.getName(), bean.getValue(),bean.getType(), bean.getComments()};
 		return super.update(sql, params);
 	}
 	
@@ -32,8 +32,8 @@ public class VariableDAO extends BaseDAO{
 	}
 	
 	public boolean update(Variable bean) {
-		String sql = "update variable_info set name = ? ,value = ?,type = ?,description = ? where id=?";
-		Object[] params = {bean.getName(), bean.getValue(), bean.getType(), bean.getDescription(), bean.getId()};
+		String sql = "update variable_info set name = ? ,value = ?,type = ?,comments = ? where id=?";
+		Object[] params = {bean.getName(), bean.getValue(), bean.getType(), bean.getComments(), bean.getId()};
 		return super.update(sql, params);
 	}
 	
@@ -50,7 +50,7 @@ public class VariableDAO extends BaseDAO{
 				bean.setName(rs.getString("name"));
 				bean.setValue(rs.getString("value"));
 				bean.setType(rs.getInt("type"));
-				bean.setDescription(rs.getString("description"));
+				bean.setComments(rs.getString("comments"));
 				
 				return bean;
 			}
@@ -106,7 +106,7 @@ public class VariableDAO extends BaseDAO{
 				bean.setType(rs.getInt("type"));
 				bean.setName(rs.getString("name"));
 				bean.setValue(rs.getString("value"));
-				bean.setDescription(rs.getString("description"));
+				bean.setComments(rs.getString("comments"));
 				
 				beans.add(bean);
 			}

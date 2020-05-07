@@ -9,7 +9,7 @@ function addProject() {
 }
 
 function submitProject() {
-    if (!checkEmpty("name", "项目名"))
+    if (!checkEmpty("projectName", "项目名"))
 	return false;
     if (!checkEmpty("sign", "签名"))
 	return false;
@@ -53,11 +53,11 @@ function editProject(id) {
 	},
 	success : function(data) {
 	    var p = data.data;
-	    $("#id").val(p.id);
-	    $("#name").val(p.name);
+	    $("#projectId").val(p.id);
+	    $("#projectName").val(p.name);
 	    $("#sign").val(p.sign);
 	    $("#encrypt").val(p.encrypt);
-	    $("#description").val(p.description);
+	    $("#comments").val(p.comments);
 	    
 	    $('#addProjectDiv').css({
 		"display" : "block"

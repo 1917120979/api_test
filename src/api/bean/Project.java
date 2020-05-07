@@ -3,7 +3,7 @@ package api.bean;
 /**
  * 
  * @ClassName: Project
- * @Description:封装Project并对外提供属性获取的方法
+ * @Comments:封装Project并对外提供属性获取的方法
  * @author: Durant2035
  * @date: 2020年4月15日 下午8:32:43
  * @Copyright:
@@ -14,7 +14,7 @@ public class Project {
 	private int sign;
 	private int encrypt;
 	private User user;
-	private String description;
+	private String comments;
 	private String createDate;
 
 	public int getId() {
@@ -71,12 +71,12 @@ public class Project {
 		return String.format("project[id:%d, name:%s]", id, name);
 	}
 
-	public String getDescription() {
-		return description;
+	public String getComments() {
+		return comments;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 
 }

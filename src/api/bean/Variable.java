@@ -3,7 +3,7 @@ package api.bean;
 /**
  * 
  * @ClassName:  Variable   
- * @Description:TODO(描述这个类的作用)   
+ * @Comments:TODO(描述这个类的作用)   
  * @author: liuyang
  * @date:   2020年4月23日 下午10:26:32      
  * @Copyright:
@@ -15,7 +15,7 @@ public class Variable {
 	private String name;
 	private String value;
 	private int type;
-	private String description;
+	private String comments;
 	
 	public int getId() {
 		return id;
@@ -48,11 +48,11 @@ public class Variable {
 	public void setType(int type) {
 		this.type = type;
 	}
-	public String getDescription() {
-		return description;
+	public String getComments() {
+		return comments;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 
 

@@ -35,7 +35,7 @@ public class HomeServlet extends  BaseBackServlet{
 		request.setAttribute("pNum", pNum);
 		request.setAttribute("apiNum", apiNum);
 		request.setAttribute("userNum", userNum);
-		return "/pages/homeContent.jsp";
+		return "/pages/home.jsp";
 	}
 
 }

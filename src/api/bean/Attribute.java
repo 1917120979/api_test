@@ -3,10 +3,11 @@ package api.bean;
 public class Attribute {
 	private int id;
 	private Api api;
+	private Testcase testcase;
 	private String name;
 	private String value;
 	private int type;
-	private String description;
+	private String comments;
 	public int getId() {
 		return id;
 	}
@@ -37,11 +38,17 @@ public class Attribute {
 	public void setType(int type) {
 		this.type = type;
 	}
-	public String getDescription() {
-		return description;
+	public String getComments() {
+		return comments;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+	public Testcase getTestcase() {
+		return testcase;
+	}
+	public void setTestcase(Testcase testcase) {
+		this.testcase = testcase;
 	}
 	
 	

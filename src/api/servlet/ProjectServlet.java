@@ -15,7 +15,7 @@ import api.bean.Project;
 /**
  * 
  * @ClassName:  ProjectServlet   
- * @Description:继承抽象类并实现抽象方法  
+ * @Comments:继承抽象类并实现抽象方法  
  * @author: Durant2035
  * @date:   2020年4月15日 下午8:39:30      
  * @Copyright:
@@ -29,14 +29,14 @@ public class ProjectServlet extends BaseBackServlet{
 		String name = request.getParameter("name");
 		int sign = Integer.parseInt(request.getParameter("sign"));
 		int encrypt = Integer.parseInt(request.getParameter("encrypt"));
-		String description = request.getParameter("description");
+		String comments = request.getParameter("comments");
 				
 		Project bean = new Project();
 		bean.setName(name);
 		bean.setSign(sign);
 		bean.setEncrypt(encrypt);
 		bean.setUser(super.user);
-		bean.setDescription(description);
+		bean.setComments(comments);
 		
 		JSONObject json = new JSONObject();		
 		if (pDAO.add(bean)) {
@@ -98,14 +98,14 @@ public class ProjectServlet extends BaseBackServlet{
 		int sign = Integer.parseInt(request.getParameter("sign"));
 		int encrypt = Integer.parseInt(request.getParameter("encrypt"));
 		String name = request.getParameter("name");
-		String description = request.getParameter("description");
+		String comments = request.getParameter("comments");
 			
 		Project bean = new Project();
 		bean.setId(id);
 		bean.setName(name);
 		bean.setSign(sign);
 		bean.setEncrypt(encrypt);
-		bean.setDescription(description);
+		bean.setComments(comments);
 		
 		JSONObject json = new JSONObject();		
 		if (pDAO.update(bean)) {

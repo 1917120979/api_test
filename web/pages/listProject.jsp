@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <script src="dist/js/list-project.js"></script>
+
 <script>
 $(document).ready(function() {
     $('table.listTable').DataTable({
@@ -21,6 +22,8 @@ $(document).ready(function() {
     });
 });
 </script>
+
+<!-- 新增项目div -->
 <div id="addProjectDiv" class="panel panel-primary addDiv addDiv-size-2">
 	<div id="projectPanelHead" class="panel-heading">新增项目</div>
 	<div class="panel-body">
@@ -29,8 +32,8 @@ $(document).ready(function() {
 			<div class="form-group">
 				<label for="name" class="col-sm-2 control-label">名称</label>
 				<div class="col-sm-10">
-					<input id="id" name="id" type="hidden"> <input type="text"
-						class="form-control" id="name" name="name" placeholder="请输入项目名称">
+					<input id="projectId" name="id" type="hidden"> <input type="text"
+						class="form-control" id="projectName" name="name" placeholder="请输入项目名称">
 				</div>
 			</div>
 			<div class="form-group">
@@ -54,10 +57,10 @@ $(document).ready(function() {
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="description" class="col-sm-2 control-label">描述</label>
+				<label for="pComments" class="col-sm-2 control-label">备注</label>
 				<div class="col-sm-10">
-					<textarea class="form-control" rows="3" name="description"
-						id="description"></textarea>
+					<textarea class="form-control" rows="3" name="comments"
+						id="pComments"></textarea>
 				</div>
 			</div>
 			<div class="form-group">
@@ -70,13 +73,13 @@ $(document).ready(function() {
 		</form>
 	</div>
 </div>
-<!-- /.row -->
+<!-- page-header -->
 <div>
 	<div class="col-lg-12">
-		<h1 class="page-header">项目列表</h1>
+		<div class="page-header-p">项目列表</div>
 	</div>
-	<!-- /.col-lg-12 -->
 </div>
+<!-- 项目列表 -->
 <div class="col-lg-12">
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -138,5 +141,4 @@ $(document).ready(function() {
 	</div>
 	<!-- /.panel -->
 </div>
-<!-- /.col-lg-12 -->
 
