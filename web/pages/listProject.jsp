@@ -3,11 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<script src="dist/js/list-project.js"></script>
+
 
 <script>
 $(document).ready(function() {
-    $('table.listTable').DataTable({
+    $('#dataTable-project').DataTable({
 	bPaginate : true,
 	bInfo : false,
 	retrieve: true,
@@ -67,7 +67,7 @@ $(document).ready(function() {
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="button" class="btn btn-primary"
 						onclick="submitProject()">提交</button>
-					<button type="button" class="btn btn-default" onclick="cancel()">取消</button>
+					<button type="button" class="btn btn-default" onclick="closeAddDiv('addProjectDiv')">取消</button>
 				</div>
 			</div>
 		</form>
@@ -84,7 +84,7 @@ $(document).ready(function() {
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<button type="button" class="btn btn-primary btn-sm"
-				onclick="addProject()">新增项目</button>
+				onclick="showAddDiv('addProjectDiv')">新增项目</button>
 		</div>
 		<!-- /.panel-heading -->
 		<div class="panel-body">

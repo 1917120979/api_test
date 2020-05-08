@@ -3,11 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<script src="dist/js/list-api.js"></script>
-
 <script>
     $(document).ready(function() {
-		$('table.listTable').DataTable({
+		$('#dataTables-api').DataTable({
 		    retrieve: true,
 		    "language" : {
 			"info" : "共 _TOTAL_ 条目",
@@ -16,37 +14,11 @@
 			"paginate" : {
 			    "previous" : "上一页",
 			    "next" : "下一页"
-			}
+				}
 		    }
 		});
     });
 </script>
-
-<!--新增 编辑分组div  -->
-<%-- 	<div id="addGroupDiv" class="panel panel-primary addDiv addDiv-size-1">
-		<div id="groupPanelHead" class="panel-heading">新增分组</div>
-		<div class="panel-body">
-			<form action="" id="addGroupForm" name="admin_group_add"
-				class="form-horizontal">
-				<div class="form-group">
-					<label for="name" class="col-sm-2 control-label">NAME</label>
-					<div class="col-sm-10">
-						<input id="gid" name="id" type="hidden"> <input id="gpid"
-							name="pid" type="hidden" value="${p.id }"> <input
-							type="text" class="form-control" id="name" name="name"
-							placeholder="请输入Name">
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="button" class="btn btn-primary"
-							onclick="submitGroup()">提交</button>
-						<button type="button" class="btn btn-default" onclick="cancel()">取消</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div> --%>
 
 <!--新增 编辑 接口 div  -->
 <div id="addApiDiv" class="panel panel-primary addDiv addDiv-size-3">
@@ -100,7 +72,7 @@
 			<div class="form-group">
 				<label for="filesUpload" class="col-sm-2 control-label">上传</label>
 				<div class="col-sm-10">
-					<select id="dataType" name="filesUpload">
+					<select id="filesUpload" name="filesUpload">
 						<option value="0">不上传</option>
 						<option value="1">上传</option>
 					</select>
@@ -109,7 +81,7 @@
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="button" class="btn btn-primary" onclick="submitApi()">提交</button>
-					<button type="button" class="btn btn-default" onclick="cancel()">取消</button>
+					<button type="button" class="btn btn-default" onclick="closeAddDiv('addApiDiv')">取消</button>
 				</div>
 			</div>
 		</form>
@@ -118,7 +90,7 @@
 <!-- page-header -->
 <div>
 	<div class="col-lg-12">
-		<div class="page-header-p">接口列表</div>
+		<div class="page-header-p">项目名：${p.name } // <strong>接口列表</strong></div>
 	</div>
 </div>
 <!--分组和接口展示  -->
@@ -126,7 +98,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<button type="button" class="btn btn-primary btn-sm"
-				onclick="addApi()">新增项目</button>
+				onclick="showAddDiv('addApiDiv')">新增接口</button>
 		</div>
 		<!-- .panel-heading -->
 		<div class="panel-body">
@@ -179,4 +151,3 @@
 		</div>
 	</div>
 </div>
-

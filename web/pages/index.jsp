@@ -9,11 +9,11 @@
 	<!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
-    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <!-- <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet"> -->
     <!-- DataTables CSS -->
     <link href="vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
     <!-- DataTables Responsive CSS -->
-    <link href="vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+    <!-- <link href="vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet"> -->
     <!-- Custom CSS -->
     <link href="dist/css/sb-admin-2.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -29,11 +29,10 @@
     <!-- DataTables JavaScript -->
     <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-    <script src="vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <!-- <script src="vendor/datatables-responsive/dataTables.responsive.js"></script> -->
     <!-- Custom Theme JavaScript -->
     <script src="dist/js/sb-admin-2.js"></script>
     <!-- Custom JavaScript -->
-    <script src="dist/js/header-check.js"></script>
     <script src="dist/js/close-tab-div.js"></script>
     <script src="dist/js/index-min.js"></script>
 </head>
@@ -85,7 +84,7 @@
 </div>
 <!-- 工作区域 -->
 <div id="nav-bar">
-	<ul class="nav nav-tabs nav-ul" role="tablist"></ul>
+	<ul class="nav nav-tabs nav-ul" id="nav-tabs" role="tablist"></ul>
 	<div class="tab-content" id="tab-content"></div>
 </div>
 

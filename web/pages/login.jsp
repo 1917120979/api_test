@@ -18,9 +18,16 @@
     <link href="dist/css/sb-admin-2.css" rel="stylesheet">
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="dist/js/header-check.js"></script>
-    <script src="dist/js/popup-div.js"></script>
     <script>
+	    function checkEmpty(id, name) {
+		    var value = $("#" + id).val();
+		    if (value.length == 0) {
+			alert(name + "不能为空");
+			$("#" + id)[0].focus();
+			return false;
+		    }
+		    return true;
+		}
     	function login(){
 	    	if (!checkEmpty("username", "用户名"))
 	    		return false;
@@ -67,7 +74,7 @@
                                     <input class="form-control" placeholder="用户名" id="username" name="username" type="text" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="密码" id="password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="密码" id="password" name="password" type="password" value="" autocomplete="off">
                                 </div>
                                 <a href="#" class="btn btn-lg btn-success btn-block" onclick="login();return false;">登录</a>
                             </fieldset>

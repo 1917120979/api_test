@@ -3,7 +3,7 @@ var closableTab = {
     jsonItems : {},
     // 添加tab
     addTab : function(tabItem) {
-    	
+
 	var id = "tab_seed_" + tabItem.id;
 	var container = "tab_container_" + tabItem.id;
 
@@ -30,17 +30,17 @@ var closableTab = {
 		    + container + '" style="width: 100%;">' + '正在加载...'
 		    + '</div>';
 
-	    $('.nav-tabs').append(li_tab);
-	    $('.tab-content').append(tabpanel);
+	    $('#nav-tabs').append(li_tab);
+	    $('#tab-content').append(tabpanel);
 	    $('#' + container).load(tabItem.url,
-		    function(response, status, xhr) {
+		    function(response, status) {
 			if (status == 'error') {// status的值为success和error，如果error则显示一个错误页面
 			    $(this).html(response);
 			}
 		    });
-	}else{
+	} else {
 	    $('#' + container).load(tabItem.url,
-		    function(response, status, xhr) {
+		    function(response, status) {
 			if (status == 'error') {// status的值为success和error，如果error则显示一个错误页面
 			    $(this).html(response);
 			}
@@ -49,9 +49,9 @@ var closableTab = {
 	$("#" + id).addClass("active");
 	$("#" + container).addClass("active");
 	var strItems = localStorage.getItem("jsonItems");
-	if(strItems != null){
-		this.jsonItems = JSON.parse(strItems);
-	}	
+	if (null != strItems) {
+	    this.jsonItems = JSON.parse(strItems);
+	}
 	this.jsonItems[container] = tabItem;
 	localStorage.setItem("jsonItems", JSON.stringify(this.jsonItems));
     },
@@ -66,10 +66,9 @@ var closableTab = {
 	}
 	$("#" + val).remove();
 	$("#" + containerId).remove();
+	
 	var strItems = localStorage.getItem("jsonItems");
-	if(strItems != null){
-		this.jsonItems = JSON.parse(strItems);
-	}
+	this.jsonItems = JSON.parse(strItems);
 	delete this.jsonItems[containerId];
 	localStorage.setItem("jsonItems", JSON.stringify(this.jsonItems));
     }

@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<script src="dist/js/project-info.js"></script>
 <script>
 $(function() {
     var sign = ${p.sign};
@@ -41,8 +40,7 @@ $(document).ready(function() {
 </script>
 
 <!--新增 编辑变量 div  -->
-<div id="addVariableDiv"
-	class="panel panel-primary addDiv addDiv-size-2">
+<div id="addVariableDiv" class="panel panel-primary addDiv addDiv-size-2">
 	<div id="varPanelHead" class="panel-heading">新增变量</div>
 	<div class="panel-body">
 		<form action="" id="addVariableForm" name="admin_variable_add"
@@ -84,7 +82,7 @@ $(document).ready(function() {
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="button" class="btn btn-primary"
 						onclick="submitVariable()">提交</button>
-					<button type="button" class="btn btn-default" onclick="cancel()">取消</button>
+					<button type="button" class="btn btn-default" onclick="closeAddDiv('addVariableDiv')">取消</button>
 				</div>
 			</div>
 		</form>
@@ -93,7 +91,7 @@ $(document).ready(function() {
 <!-- page-header -->
 <div>
 	<div class="col-lg-12">
-		<div class="page-header-p">${p.name }</div>
+		<div class="page-header-p">项目名：${p.name }</div>
 	</div>
 </div>
 <!--详情  -->
@@ -122,7 +120,7 @@ $(document).ready(function() {
 					<a data-toggle="collapse" data-parent="#accordion"
 						href="#collapseTwo">变量列表</a>
 					<button type="button" class="btn btn-primary btn-xs margin-left"
-						onclick="addVariable()">新增变量</button>
+						onclick="showAddDiv('addVariableDiv')">新增变量</button>
 				</h4>
 			</div>
 			<div id="collapseTwo" class="panel-collapse collapse in">

@@ -28,7 +28,7 @@ public class ProjectInfoServlet extends BaseBackServlet{
 		request.setAttribute("pvs", pvs);
 		request.setAttribute("avs", avs);
 
-		return "pages/projectInfo.jsp";
+		return "/pages/projectInfo.jsp";
 	}
 
 	@Override
