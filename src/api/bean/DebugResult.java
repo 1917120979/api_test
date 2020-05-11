@@ -2,53 +2,49 @@ package api.bean;
 
 public class DebugResult {
 	private int id;
-	private Api apiInfo;
-	private String date;
-	private String debugReq;
-	private String debugResp;
-	private String debugExtractor;
-	private String debugAssert;
+	private Api api;
+	private String debugTime;
+	private String debugRequest;
+	private String debugRespose;
+	private String debugPost;
+
+	public Api getApi() {
+		return api;
+	}
+	public void setApi(Api api) {
+		this.api = api;
+	}
+	public String getDebugTime() {
+		return debugTime;
+	}
+	public void setDebugTime(String debugTime) {
+		this.debugTime = debugTime;
+	}
+	public String getDebugRequest() {
+		return debugRequest;
+	}
+	public void setDebugRequest(String debugRequest) {
+		this.debugRequest = debugRequest;
+	}
+	public String getDebugRespose() {
+		return debugRespose;
+	}
+	public void setDebugRespose(String debugRespose) {
+		this.debugRespose = debugRespose;
+	}
+
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Api getApiInfo() {
-		return apiInfo;
+	public String getDebugPost() {
+		return debugPost;
 	}
-	public void setApiInfo(Api apiInfo) {
-		this.apiInfo = apiInfo;
+	public void setDebugPost(String debugPost) {
+		this.debugPost = debugPost;
 	}
-	public String getDate() {
-		return date;
-	}
-	public void setDate(String date) {
-		this.date = date;
-	}
-	public String getDebugReq() {
-		return debugReq;
-	}
-	public void setDebugReq(String debugReq) {
-		this.debugReq = debugReq;
-	}
-	public String getDebugResp() {
-		return debugResp;
-	}
-	public void setDebugResp(String debugResp) {
-		this.debugResp = debugResp;
-	}
-	public String getDebugExtractor() {
-		return debugExtractor;
-	}
-	public void setDebugExtractor(String debugExtractor) {
-		this.debugExtractor = debugExtractor;
-	}
-	public String getDebugAssert() {
-		return debugAssert;
-	}
-	public void setDebugAssert(String debugAssert) {
-		this.debugAssert = debugAssert;
-	}
+	
 
 }

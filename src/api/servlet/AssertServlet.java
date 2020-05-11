@@ -16,22 +16,21 @@ import api.util.Page;
 public class AssertServlet extends BaseBackServlet{
 	private static final Logger logger = LoggerFactory.getLogger(AssertServlet.class);
 	@Override
-	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int aid = Integer.parseInt(request.getParameter("ass_aid"));
+	public String add(HttpServletRequest request, HttpServletResponse response) {
+		int aid = Integer.parseInt(request.getParameter("aid"));
 		Assert bean = new Assert();
-		Api apiInfo = apiDAO.get(aid);
-		bean.setApiInfo(apiInfo);
-		bean.setAssertExpress(request.getParameter("assertExpress"));
-		bean.setAssertExpect(request.getParameter("assertExpect"));
+		Api api = apiDAO.get(aid);
+		bean.setApi(api);
+		bean.setAssertName(request.getParameter("assertName"));
+		bean.setAssertRegular(request.getParameter("assertRegular"));
+		bean.setExpectValue(request.getParameter("expectValue"));
+		bean.setComments(request.getParameter("comments"));
 		
 		JSONObject json = new JSONObject();
 		if (assertDAO.add(bean)) {
 			json.put("code", "0");
 			json.put("msg", "success");
-			json.put("data", "null");
-			apiInfo.setHasAssert(1);
-			logger.debug("断言关联的接口是>>>"+apiInfo.toString());
-			apiDAO.updateFlag(apiInfo);			
+			json.put("data", "null");		
 		}else {
 			json.put("code", "401");
 			json.put("msg", "fail");
@@ -42,16 +41,13 @@ public class AssertServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String delete(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
-		Api apiInfo = assertDAO.get(id).getApiInfo();
 		JSONObject json = new JSONObject();
 		if (assertDAO.delete(id)) {
 			json.put("code", "0");
 			json.put("msg", "success");
 			json.put("data", "null");
-			apiInfo.setHasExtractor(0);
-			apiDAO.updateFlag(apiInfo);
 		}else {
 			json.put("code", "401");
 			json.put("msg", "fail");
@@ -62,7 +58,7 @@ public class AssertServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String edit(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String edit(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Assert bean = assertDAO.get(id);
 		JSONObject json = new JSONObject();
@@ -80,14 +76,17 @@ public class AssertServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String update(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String update(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("assertId"));
 		int aid = Integer.parseInt(request.getParameter("ass_aid"));
 		Assert bean = new Assert();
+		Api api = apiDAO.get(aid);
 		bean.setId(id);
-		bean.setApiInfo(apiDAO.get(aid));
-		bean.setAssertExpress(request.getParameter("assertExpress"));
-		bean.setAssertExpect(request.getParameter("assertExpect"));
+		bean.setApi(api);
+		bean.setAssertName(request.getParameter("assertName"));
+		bean.setAssertRegular(request.getParameter("assertRegular"));
+		bean.setExpectValue(request.getParameter("expectValue"));
+		bean.setComments(request.getParameter("comments"));
 		
 		JSONObject json = new JSONObject();
 		if (assertDAO.update(bean)) {
@@ -104,7 +103,7 @@ public class AssertServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String list(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String list(HttpServletRequest request, HttpServletResponse response) {
 		return null;
 	}
 

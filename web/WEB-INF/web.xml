@@ -81,6 +81,56 @@
 	</servlet-mapping>	
 	
 	<servlet>
+		<servlet-name>AttributeServlet</servlet-name>
+		<servlet-class>api.servlet.AttributeServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>AttributeServlet</servlet-name>
+		<url-pattern>/attributeServlet</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>AssertServlet</servlet-name>
+		<servlet-class>api.servlet.AssertServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>AssertServlet</servlet-name>
+		<url-pattern>/assertServlet</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>ExtractorServlet</servlet-name>
+		<servlet-class>api.servlet.ExtractorServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ExtractorServlet</servlet-name>
+		<url-pattern>/extractorServlet</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>DebugResultServlet</servlet-name>
+		<servlet-class>api.servlet.DebugResultServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>DebugResultServlet</servlet-name>
+		<url-pattern>/debugResultServlet</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>ApiInfoServlet</servlet-name>
+		<servlet-class>api.servlet.ApiInfoServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ApiInfoServlet</servlet-name>
+		<url-pattern>/apiInfoServlet</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
 		<servlet-name>GroupServlet</servlet-name>
 		<servlet-class>api.servlet.GroupServlet</servlet-class>
 	</servlet>

@@ -18,19 +18,17 @@ public class AttributeDAO extends BaseDAO {
 	private VariableDAO pvDAO = new VariableDAO();
 
 	public boolean add(Attribute bean) {
-		if (null != bean.getTestcase() && null == bean.getApi()) {
+		if (null != bean.getTestcase()) {
 			String sql = "insert into api_attribute values(null,null,?,?,?,?,?)";
 			Object[] params = {bean.getTestcase().getId(), bean.getName(), bean.getValue(),
 					bean.getType(), bean.getComments() };
 			return super.update(sql, params);
-		}
-		if (null == bean.getTestcase() && null != bean.getApi()) {
+		}else {
 			String sql = "insert into api_attribute values(null,?,null,?,?,?,?)";
 			Object[] params = {bean.getApi().getId(), bean.getName(), bean.getValue(),
 					bean.getType(), bean.getComments() };
 			return super.update(sql, params);
 		}
-		return false;	
 	}
 
 	public boolean delete(int id) {
@@ -40,16 +38,24 @@ public class AttributeDAO extends BaseDAO {
 	}
 
 	public boolean update(Attribute bean) {
-		String sql = "update api_attribute set name= ?,value =?,type=?,description=? where id = ?";
+		String sql = "update api_attribute set name= ?,value =?,type=?,comments=? where id = ?";
 		Object[] params = { bean.getName(), bean.getValue(), bean.getType(), bean.getComments(), bean.getId() };
 		return super.update(sql, params);
 	}
 
-	public List<Attribute> list(int aid, int type) {
-		String sql = "select * from api_attribute where aid = ? and type = ?";
-		Object[] params = { aid, type };
+	public List<Attribute> list(int aid,int tid, int type) {
 		List<Attribute> beans = new ArrayList<Attribute>();
-		ResultSet rs = super.query(sql, params);
+		ResultSet rs = null;
+		if (aid == 0) {
+			String sql = "select * from api_attribute where tid = ? and type = ?";
+			Object[] params = { tid, type};
+			rs = super.query(sql, params);
+		}
+		if (tid == 0) {
+			String sql = "select * from api_attribute where aid = ? and type = ?";
+			Object[] params = { aid, type };
+			rs = super.query(sql, params);
+		}		
 		try {
 			while (rs.next()) {
 				Attribute bean = new Attribute();
@@ -57,7 +63,7 @@ public class AttributeDAO extends BaseDAO {
 				bean.setName(rs.getString("name"));
 				bean.setValue(rs.getString("value"));
 				bean.setType(rs.getInt("type"));
-				bean.setComments(rs.getString("description"));
+				bean.setComments(rs.getString("comments"));
 				beans.add(bean);
 			}
 		} catch (Exception e) {
@@ -87,7 +93,7 @@ public class AttributeDAO extends BaseDAO {
 				bean.setName(rs.getString("name"));
 				bean.setValue(rs.getString("value"));
 				bean.setType(rs.getInt("type"));
-				bean.setComments(rs.getString("description"));
+				bean.setComments(rs.getString("comments"));
 				return bean;
 			}
 		} catch (Exception e) {

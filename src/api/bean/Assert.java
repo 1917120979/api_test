@@ -2,33 +2,54 @@ package api.bean;
 
 public class Assert {
 	private int id;
-	private Api apiInfo;
-	private String assertExpress;
-	private String assertExpect;
+	private Api api;
+	private Testcase testcase;
+	private String assertName;
+	private String assertRegular;
+	private String expectValue;
+	private String comments;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Api getApiInfo() {
-		return apiInfo;
+	public Api getApi() {
+		return api;
 	}
-	public void setApiInfo(Api apiInfo) {
-		this.apiInfo = apiInfo;
+	public void setApi(Api api) {
+		this.api = api;
 	}
-	
-	public String getAssertExpect() {
-		return assertExpect;
+	public Testcase getTestcase() {
+		return testcase;
 	}
-	public void setAssertExpect(String assertExpect) {
-		this.assertExpect = assertExpect;
+	public void setTestcase(Testcase testcase) {
+		this.testcase = testcase;
 	}
-	public String getAssertExpress() {
-		return assertExpress;
+	public String getAssertName() {
+		return assertName;
 	}
-	public void setAssertExpress(String assertExpress) {
-		this.assertExpress = assertExpress;
+	public void setAssertName(String assertName) {
+		this.assertName = assertName;
+	}
+	public String getAssertRegular() {
+		return assertRegular;
+	}
+	public void setAssertRegular(String assertRegular) {
+		this.assertRegular = assertRegular;
 	}
 
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+	public String getExpectValue() {
+		return expectValue;
+	}
+	public void setExpectValue(String expectValue) {
+		this.expectValue = expectValue;
+	}
+	
 }

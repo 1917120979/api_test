@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSONObject;
 
 import api.bean.Api;
-import api.bean.RegularExtractor;
+import api.bean.Extractor;
 import api.util.Page;
 
 /**
@@ -21,8 +21,8 @@ import api.util.Page;
  * @Copyright:
  */
 @SuppressWarnings("serial")
-public class RegularExtractorServlet extends BaseBackServlet{
-	private static final Logger logger = LoggerFactory.getLogger(RegularExtractorServlet.class);
+public class ExtractorServlet extends BaseBackServlet{
+	private static final Logger logger = LoggerFactory.getLogger(ExtractorServlet.class);
 	
 	/**
 	 * 
@@ -35,25 +35,21 @@ public class RegularExtractorServlet extends BaseBackServlet{
 	 * @see api.servlet.BaseBackServlet#add(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, api.util.Page)
 	 */
 	@Override
-	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String add(HttpServletRequest request, HttpServletResponse response) {
 		int aid = Integer.parseInt(request.getParameter("aid"));
 		Api apiInfo = apiDAO.get(aid);
 		
-		RegularExtractor bean = new RegularExtractor();		
-		bean.setApiInfo(apiInfo);
+		Extractor bean = new Extractor();		
+		bean.setApi(apiInfo);
+		bean.setVariableName(request.getParameter("variableName"));
 		bean.setExtractorName(request.getParameter("extractorName"));
 		bean.setRegularExpression(request.getParameter("regularExpression"));
-		
+		bean.setComments(request.getParameter("comments"));
 		JSONObject json = new JSONObject();	
 		if (reDAO.add(bean)) {
-			apiInfo.setHasExtractor(1);
-			apiDAO.updateFlag(apiInfo);
-			
 			json.put("code", "0");
 			json.put("msg", "add success");
 			json.put("data", bean);
-			logger.debug("新增提取器设置标志位----"+apiInfo.toString());
-			logger.debug("新增后的提取器对象是----"+bean.toString());
 		}else {
 			json.put("code", "401");
 			json.put("msg", "add fail");
@@ -74,19 +70,13 @@ public class RegularExtractorServlet extends BaseBackServlet{
 	 * @see api.servlet.BaseBackServlet#delete(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, api.util.Page)
 	 */
 	@Override
-	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
-		int id = Integer.parseInt(request.getParameter("id"));
-		Api apiInfo = reDAO.get(id).getApiInfo();
-		
+	public String delete(HttpServletRequest request, HttpServletResponse response) {
+		int id = Integer.parseInt(request.getParameter("id"));		
 		JSONObject json = new JSONObject();
 		if (reDAO.delete(id)) {
 			json.put("code", "0");
 			json.put("msg", "delete success");
-			json.put("data", "null");
-			if (reDAO.getTotal(apiInfo.getId()) == 0) {
-				apiInfo.setHasExtractor(0);
-				apiDAO.updateFlag(apiInfo);
-			}		
+			json.put("data", "null");		
 		}else {
 			json.put("code", "401");
 			json.put("msg", "delete fail");
@@ -97,9 +87,9 @@ public class RegularExtractorServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String edit(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String edit(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
-		RegularExtractor bean = reDAO.get(id);
+		Extractor bean = reDAO.get(id);
 		
 		JSONObject json = new JSONObject();
 		if (bean != null) {
@@ -116,12 +106,12 @@ public class RegularExtractorServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String update(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String update(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		int aid = Integer.parseInt(request.getParameter("aid"));
-		RegularExtractor bean = new RegularExtractor();
+		Extractor bean = new Extractor();
 		bean.setId(id);
-		bean.setApiInfo(apiDAO.get(aid));
+		bean.setApi(apiDAO.get(aid));
 		bean.setExtractorName(request.getParameter("extractorName"));
 		bean.setRegularExpression(request.getParameter("regularExpression"));
 		
@@ -140,7 +130,7 @@ public class RegularExtractorServlet extends BaseBackServlet{
 	}
 
 	@Override
-	public String list(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String list(HttpServletRequest request, HttpServletResponse response) {
 		return null;
 	}
 

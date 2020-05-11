@@ -8,14 +8,20 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 
+import api.dao.VariableDAO;
 import apitest.utils.encrypt.Aes;
 import apitest.utils.encrypt.Md5;
 import apitest.utils.encrypt.SignCore;
 
 public class SignEncryptUtil {
 	private static final Logger logger = LoggerFactory.getLogger(SignEncryptUtil.class);
+	private static String appsecret;
+	static {
+		VariableDAO varDAO = new VariableDAO();
+		appsecret = varDAO.getValue("appsecret");
+	}
 	
-	public static String getPostGatewayResponse(String url, Map<String, String> header,String requestData,String appsecret) {
+	public static String getPostGatewayResponse(String url, Map<String, String> header,String requestData) {
 		Map<String,String> signMap = header;
 		requestData =  Aes.encryptAes(requestData,appsecret);
 		
@@ -33,6 +39,21 @@ public class SignEncryptUtil {
 		result = replaceData(result, appsecret).toJSONString();
 		logger.info("解密后的返回数据：>>>"+result+"\r\n");
 		return result;
+	}
+	
+	public static Map<String, String> getSignedMap(Map<String, String> header, String data) {
+		String timestamp = String.valueOf(Calendar.getInstance().getTimeInMillis());
+		data = Aes.encryptAes(data,appsecret);
+		header.put("data", data);
+		header.put("timestamp", timestamp);
+		String sign = Md5.sign( SignCore.createLinkString(header), appsecret, "");
+		header.put("sign", sign);
+		header.remove("data");
+		return header;		
+	}
+	
+	public static void getEncryptData(String data) {
+		data = Aes.encryptAes(data,appsecret);
 	}
 	
 	public static String getGetGatewayResponse(String url, Map<String, String> header, String appsecret) {

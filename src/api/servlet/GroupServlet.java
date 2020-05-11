@@ -42,7 +42,7 @@ public class GroupServlet extends BaseBackServlet{
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 		JSONObject json = new JSONObject();		
-		if (gDAO.delete(id) && apiDAO.deleteAll(id)) {
+		if (gDAO.delete(id) && apiDAO.delete(id)) {
 			json.put("msg", "sucess");
 			json.put("code", 0);
 			json.put("data", "null");

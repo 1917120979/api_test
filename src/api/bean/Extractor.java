@@ -8,22 +8,37 @@ package api.bean;
  * @date:   2020年4月16日 下午9:18:52      
  * @Copyright:
  */
-public class RegularExtractor {
+public class Extractor {
 	private int id;
-	private Api apiInfo;
+	private Api api;
+	private Testcase testcase;
 	private String extractorName;
+	private String variableName;
 	private String regularExpression;
+	private String comments;
+	public Testcase getTestcase() {
+		return testcase;
+	}
+	public void setTestcase(Testcase testcase) {
+		this.testcase = testcase;
+	}
+	public String getVariableName() {
+		return variableName;
+	}
+	public void setVariableName(String variableName) {
+		this.variableName = variableName;
+	}
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public Api getApiInfo() {
-		return apiInfo;
-	}
-	public void setApiInfo(Api apiInfo) {
-		this.apiInfo = apiInfo;
 	}
 	public String getExtractorName() {
 		return extractorName;
@@ -37,8 +52,11 @@ public class RegularExtractor {
 	public void setRegularExpression(String regularExpression) {
 		this.regularExpression = regularExpression;
 	}
-	@Override
-	public String toString() {
-		return String.format("RegularExtractor[id:%d, apiInfo:%s, extractorName:%d, regularExpression:%d]", id, apiInfo.toString(), extractorName, regularExpression);
+	
+	public Api getApi() {
+		return api;
+	}
+	public void setApi(Api api) {
+		this.api = api;
 	}
 }

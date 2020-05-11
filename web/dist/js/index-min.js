@@ -132,6 +132,22 @@ function apiManage(pid){
 }
 
 /**
+ * 打开接口配置tab
+ * @param aid
+ * @returns
+ */
+function configApi(aid){
+    var url = 'admin_apiInfo_list?aid=' + aid;
+    var item = {
+	'id' : '5',
+	'name' : '接口配置',
+	'url' : url,
+	'closable' : true
+    };
+    closableTab.addTab(item);   
+}
+
+/**
  * 打开新增、编辑弹窗
  * @returns
  */

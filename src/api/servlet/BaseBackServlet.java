@@ -18,12 +18,14 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import api.bean.Testcase;
 import api.bean.User;
 import api.dao.AttributeDAO;
 import api.dao.ApiDAO;
 import api.dao.AssertDAO;
 import api.dao.DebugResultDAO;
-import api.dao.RegularExtractorDAO;
+import api.dao.ExtractorDAO;
+import api.dao.TestcaseDAO;
 import api.dao.UserDAO;
 import api.dao.ProjectDAO;
 import api.dao.VariableDAO;
@@ -49,10 +51,10 @@ public abstract class BaseBackServlet extends HttpServlet{
 	
 	protected ApiDAO apiDAO = new ApiDAO();
 	protected AttributeDAO attrDAO = new AttributeDAO();
-	
+	protected TestcaseDAO tcDAO = new TestcaseDAO();
 	
 	protected GroupDAO gDAO = new GroupDAO();
-	protected RegularExtractorDAO reDAO = new RegularExtractorDAO();
+	protected ExtractorDAO reDAO = new ExtractorDAO();
 	protected AssertDAO assertDAO = new AssertDAO();
 	protected DebugResultDAO drDAO = new DebugResultDAO();
 	

@@ -9,30 +9,30 @@ import api.util.Page;
 public class ExecuteAPIServlet extends BaseBackServlet{
 
 	@Override
-	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String add(HttpServletRequest request, HttpServletResponse response) {
 		return null;
 	}
 
 	@Override
-	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String delete(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String edit(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String edit(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String update(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String update(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String list(HttpServletRequest request, HttpServletResponse response, Page page) {
+	public String list(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		return null;
 	}

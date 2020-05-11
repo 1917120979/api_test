@@ -27,8 +27,14 @@ table.listTable{
     padding-top: 20px;
     margin-bottom:10px;
     border-bottom: 1px solid #eee;
-    font-size: 25px;
+    font-size: 20px;
 }
+
+.page-header-p1{
+	font-size: 14px !important;
+	margin-bottom:10px;
+}
+
 
 .buttonRow{
 	margin-bottom:10px;

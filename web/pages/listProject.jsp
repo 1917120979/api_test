@@ -76,7 +76,10 @@ $(document).ready(function() {
 <!-- page-header -->
 <div>
 	<div class="col-lg-12">
-		<div class="page-header-p">项目列表</div>
+		<div class="page-header-p">
+			<div class="page-header-p1">所有项目</div>
+			项目列表
+		</div>
 	</div>
 </div>
 <!-- 项目列表 -->

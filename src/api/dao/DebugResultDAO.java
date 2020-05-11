@@ -21,8 +21,8 @@ public class DebugResultDAO extends BaseDAO{
 	 * @throws
 	 */
 	public boolean add(DebugResult bean) {
-		String sql = "insert into api_debug_result values(null,?,?,?,?,?,?)";
-		Object[] params = {bean.getApiInfo().getId(), bean.getDebugReq(),bean.getDebugResp(),bean.getDebugExtractor(),bean.getDebugAssert(),DateUtil.d2t(new Date())};
+		String sql = "insert into debug_result values(null,?,?,?,?,?,?)";
+		Object[] params = {bean.getApi().getId(), bean.getDebugRequest(),bean.getDebugRespose(),bean.getDebugPost(),DateUtil.d2t(new Date())};
 		return super.update(sql, params);
 	}
 	
@@ -36,27 +36,24 @@ public class DebugResultDAO extends BaseDAO{
 	 * @throws
 	 */
 	public boolean delete(int aid) {
-		String sql = "delete from api_debug_result where aid = ?";
+		String sql = "delete from debug_result where aid = ?";
 		Object[] params = {aid};
 		return super.update(sql, params);
 	}
 	
 	public List<DebugResult> list(int aid){
-		String sql = "select * from api_debug_result where aid = ?";
+		String sql = "select * from debug_result where aid = ?";
 		Object[] params = {aid};
 		List<DebugResult> beans = new ArrayList<DebugResult>();
 		ResultSet rs = super.query(sql, params);
 		try {
 			while(rs.next()) {
 				DebugResult bean = new DebugResult();
-				ApiDAO apiInfoDAO =  new ApiDAO();
 				bean.setId(rs.getInt("id"));
-				bean.setApiInfo(apiInfoDAO.get(aid));
-				bean.setDebugReq(rs.getString("debug_request"));
-				bean.setDebugResp(rs.getString("debug_response"));
-				bean.setDebugExtractor(rs.getString("debug_extractor"));
-				bean.setDebugAssert(rs.getString("debug_assert"));
-				bean.setDate(DateUtil.t2d(rs.getTimestamp("debug_time")));
+				bean.setDebugRequest(rs.getString("debug_request"));
+				bean.setDebugRespose(rs.getString("debug_response"));
+				bean.setDebugPost(rs.getString("debug_post"));
+				bean.setDebugTime(rs.getTimestamp("debug_time").toString());
 				beans.add(bean);
 			}
 		} catch (Exception e) {

@@ -81,7 +81,8 @@
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="button" class="btn btn-primary" onclick="submitApi()">提交</button>
-					<button type="button" class="btn btn-default" onclick="closeAddDiv('addApiDiv')">取消</button>
+					<button type="button" class="btn btn-default"
+						onclick="closeAddDiv('addApiDiv')">取消</button>
 				</div>
 			</div>
 		</form>
@@ -90,7 +91,10 @@
 <!-- page-header -->
 <div>
 	<div class="col-lg-12">
-		<div class="page-header-p">项目名：${p.name } // <strong>接口列表</strong></div>
+		<div class="page-header-p">
+			<div class="page-header-p1">项目名：${p.name }</div>
+			接口列表
+		</div>
 	</div>
 </div>
 <!--分组和接口展示  -->
@@ -137,7 +141,7 @@
 										<c:when test="${api.filesUpload == 1}">上传</c:when>
 									</c:choose></td>
 								<td>${api.comments }</td>
-								<td><a href="admin_apiInfo_list?aid=${api.id}">配置<span
+								<td><a href="#" onclick="configApi(${p.id});return false;">配置<span
 										class="glyphicon glyphicon-cog"></span></a> <a
 									onclick="editApi(${api.id});return false;">编辑<span
 										class="glyphicon glyphicon-edit"></span></a> <a

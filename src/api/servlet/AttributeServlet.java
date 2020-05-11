@@ -1,18 +1,10 @@
 package api.servlet;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.alibaba.fastjson.JSONObject;
-
 import api.bean.Attribute;
-import api.bean.Api;
-import api.bean.Assert;
-import api.bean.DebugResult;
-import api.bean.RegularExtractor;
-import api.util.Page;
+import api.bean.Testcase;
 
 @SuppressWarnings("serial")
 public class AttributeServlet extends BaseBackServlet{
@@ -21,12 +13,19 @@ public class AttributeServlet extends BaseBackServlet{
 	public String add(HttpServletRequest request, HttpServletResponse response) {
 		int aid = Integer.parseInt(request.getParameter("aid"));
 		int type = Integer.parseInt(request.getParameter("type"));
+		String tid = request.getParameter("tid");
 		
 		Attribute bean = new Attribute();
-		bean.setApiInfo(apiDAO.get(aid));
-		bean.setAttributeName(request.getParameter("attributeName"));
-		bean.setAttributeValue(request.getParameter("attributeValue"));
+		bean.setApi(apiDAO.get(aid));
+		if (tid != null && tid.length()>0) {
+			Testcase testcase = tcDAO.get(Integer.parseInt(tid));
+			bean.setTestcase(testcase);
+		}
+		bean.setName(request.getParameter("name"));
+		bean.setValue(request.getParameter("value"));
 		bean.setType(type);
+		bean.setComments(request.getParameter("comments"));
+		
 		JSONObject json = new JSONObject();
 		if (attrDAO.add(bean)) {
 			json.put("code", "0");
@@ -82,14 +81,21 @@ public class AttributeServlet extends BaseBackServlet{
 	@Override
 	public String update(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("attrId"));
+		int aid = Integer.parseInt(request.getParameter("aid"));
 		int type = Integer.parseInt(request.getParameter("type"));
+		String tid = request.getParameter("tid");
 		
 		Attribute bean = new Attribute();
-		
 		bean.setId(id);
-		bean.setAttributeName(request.getParameter("attributeName"));
-		bean.setAttributeValue(request.getParameter("attributeValue"));
+		bean.setApi(apiDAO.get(aid));
+		if (tid != null && tid.length()>0) {
+			Testcase testcase = tcDAO.get(Integer.parseInt(tid));
+			bean.setTestcase(testcase);
+		}
+		bean.setName(request.getParameter("name"));
+		bean.setValue(request.getParameter("value"));
 		bean.setType(type);
+		bean.setComments(request.getParameter("comments"));
 		JSONObject json = new JSONObject();
 		if (attrDAO.update(bean)) {
 			json.put("code", "0");
@@ -106,32 +112,7 @@ public class AttributeServlet extends BaseBackServlet{
 
 	@Override
 	public String list(HttpServletRequest request, HttpServletResponse response) {
-		String type = request.getParameter("type");
-		int aid = Integer.parseInt(request.getParameter("aid"));
-		Api api = apiDAO.get(aid);
-		
-		List<RegularExtractor> extrs = reDAO.list(aid);
-		List<Assert> asserts = assertDAO.list(aid);
-		List<DebugResult> drs = drDAO.list(aid);
-		List<Attribute> attrs = null;
-		if (null == type) {
-			type = "-1";
-			attrs = attrDAO.list(aid);
-		}else {
-			if (type.equals("0")) {
-				attrs = attrDAO.list(aid, 0);
-			}
-			if (type.equals("1")) {
-				attrs = attrDAO.list(aid, 1);
-			}	
-		}
-		request.setAttribute("api", api);
-		request.setAttribute("attrs", attrs);
-		request.setAttribute("type", type);
-		request.setAttribute("extrs", extrs);
-		request.setAttribute("asserts", asserts);
-		request.setAttribute("drs", drs);
-		return "admin/listApiAttribute.jsp";
+		return null;
 	}
 
 }
