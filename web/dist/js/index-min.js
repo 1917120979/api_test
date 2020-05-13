@@ -253,7 +253,7 @@ function delProject(id) {
 		window.location.reload(true);
 	    },
 	    error : function() {
-		alert("系统错误");
+		alert("系统错误！");
 	    }
 	});
     }
