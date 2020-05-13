@@ -228,7 +228,7 @@ function editProject(id) {
 	    showAddDiv('addProjectDiv');
 	},
 	error : function() {
-	    alert("系统错误");
+	    alert("系统错误！");
 	}
     });
 }
