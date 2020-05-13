@@ -92,7 +92,6 @@
 <div>
 	<div class="col-lg-12">
 		<div class="page-header-p">
-			<div class="page-header-p1">项目名：${p.name }</div>
 			接口列表
 		</div>
 	</div>
@@ -101,7 +100,8 @@
 <div class="col-lg-12">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<button type="button" class="btn btn-primary btn-sm"
+			项目名：${p.name }
+			<button type="button" class="btn btn-primary btn-sm margin-left"
 				onclick="showAddDiv('addApiDiv')">新增接口</button>
 		</div>
 		<!-- .panel-heading -->
@@ -141,7 +141,7 @@
 										<c:when test="${api.filesUpload == 1}">上传</c:when>
 									</c:choose></td>
 								<td>${api.comments }</td>
-								<td><a href="#" onclick="configApi(${p.id});return false;">配置<span
+								<td><a href="#" onclick="configApi(${api.id});return false;">调试<span
 										class="glyphicon glyphicon-cog"></span></a> <a
 									onclick="editApi(${api.id});return false;">编辑<span
 										class="glyphicon glyphicon-edit"></span></a> <a

@@ -80,7 +80,7 @@ public class AttributeServlet extends BaseBackServlet{
 
 	@Override
 	public String update(HttpServletRequest request, HttpServletResponse response) {
-		int id = Integer.parseInt(request.getParameter("attrId"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		int aid = Integer.parseInt(request.getParameter("aid"));
 		int type = Integer.parseInt(request.getParameter("type"));
 		String tid = request.getParameter("tid");

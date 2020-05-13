@@ -40,7 +40,8 @@ $(document).ready(function() {
 </script>
 
 <!--新增 编辑变量 div  -->
-<div id="addVariableDiv" class="panel panel-primary addDiv addDiv-size-2">
+<div id="addVariableDiv"
+	class="panel panel-primary addDiv addDiv-size-2">
 	<div id="varPanelHead" class="panel-heading">新增变量</div>
 	<div class="panel-body">
 		<form action="" id="addVariableForm" name="admin_variable_add"
@@ -82,7 +83,8 @@ $(document).ready(function() {
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="button" class="btn btn-primary"
 						onclick="submitVariable()">提交</button>
-					<button type="button" class="btn btn-default" onclick="closeAddDiv('addVariableDiv')">取消</button>
+					<button type="button" class="btn btn-default"
+						onclick="closeAddDiv('addVariableDiv')">取消</button>
 				</div>
 			</div>
 		</form>
@@ -91,10 +93,7 @@ $(document).ready(function() {
 <!-- page-header -->
 <div>
 	<div class="col-lg-12">
-		<div class="page-header-p">
-			<div class="page-header-p1">项目名：${p.name }</div>
-			项目配置
-		</div>
+		<div class="page-header-p">项目配置</div>
 	</div>
 </div>
 <!--详情  -->
@@ -105,14 +104,20 @@ $(document).ready(function() {
 			<div class="panel-heading">
 				<h4 class="panel-title">
 					<a data-toggle="collapse" data-parent="#accordion"
-						href="#collapseOne">描述</a>
+						href="#collapseOne">项目名：${p.name }</a>
 				</h4>
 			</div>
 			<div id="collapseOne" class="panel-collapse collapse in">
 				<div class="panel-body">
-					<div class="form-group">
-						<textarea class="form-control" rows="1" disabled>${p.comments }</textarea>
+					<div class="form-group div-height">
+						<label class="col-sm-1 control-label" for="pComments">
+							Comments </label>
+						<div class="col-sm-11">
+							<input type="text" class="form-control" id="proComments"
+								value="${p.comments }" disabled>
+						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>

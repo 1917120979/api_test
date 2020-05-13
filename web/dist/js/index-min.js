@@ -140,7 +140,7 @@ function configApi(aid){
     var url = 'admin_apiInfo_list?aid=' + aid;
     var item = {
 	'id' : '5',
-	'name' : '接口配置',
+	'name' : '接口调试',
 	'url' : url,
 	'closable' : true
     };
@@ -433,6 +433,252 @@ function delApi(id) {
     }
 }
 
+/**
+ * 提交新增、编辑变量form
+ * @returns
+ */
+function submitAttribute() {
+    if (!checkEmpty("attrName", "Name"))
+	return false;
+    if (!checkEmpty("attrValue", "Value"))
+	return false;
+    var targetUrl = $("#addAttributeForm").attr("name");
+    $.ajax({
+	type : "post",
+	dataType : "json",
+	url : targetUrl,
+	data : $("#addAttributeForm").serialize(),
+	success : function(data) {
+	    alert(data.msg);
+	    window.location.reload(true);
+	},
+	error : function() {
+	    alert("错误！！");
+	}
+    });
+}
 
+/**
+ * 编辑变量
+ * @param id
+ * @returns
+ */
+function editAttribute(id) {
+    $("#addAttributeForm").attr("name", "admin_attribute_update");
+    $("#attrPanelHead").html("编辑属性");
+    $.ajax({
+	type : "post",
+	dataType : "json",
+	url : "admin_attribute_edit",
+	data : {
+	    "id" : id
+	},
+	success : function(data) {
+	    var v = data.data;
+	    $("#attrid").val(v.id);
+	    $("#attrName").val(v.name);
+	    $("#attrValue").val(v.value);
+	    $("#attrType").val(v.type);
+	    $("#comments").val(v.comments);
+	    
+	    showAddDiv('addAttributeDiv');
+	},
+	error : function() {
+	    alert("系统错误");
+	}
+    });
+}
 
+/**
+ * 删除变量
+ * @param id
+ * @returns
+ */
+function delAttribute(id) {
+    var flag = confirm("是否确认删除？");
+    if (flag) {
+	$.ajax({
+	    type : "post",
+	    dataType : "json",
+	    url : "admin_attribute_delete",
+	    data : {
+		"id" : id
+	    },
+	    success : function(data) {
+		alert(data.msg);
+		window.location.reload(true);
+	    },
+	    error : function() {
+		alert("系统错误");
+	    }
+	});
+    }
+}
 
+/**
+ * 提交新增、编辑变量form
+ * @returns
+ */
+function submitExtractor() {
+    if (!checkEmpty("extrName", "Name"))
+	return false;
+    if (!checkEmpty("extrVariable", "变量"))
+	return false;
+    if (!checkEmpty("extrRegular", "正则"))
+	return false;
+    var targetUrl = $("#addExtractorForm").extr("name");
+    $.ajax({
+	type : "post",
+	dataType : "json",
+	url : targetUrl,
+	data : $("#addExtractorForm").serialize(),
+	success : function(data) {
+	    alert(data.msg);
+	    window.location.reload(true);
+	},
+	error : function() {
+	    alert("错误！！");
+	}
+    });
+}
+
+/**
+ * 编辑变量
+ * @param id
+ * @returns
+ */
+function editExtractor(id) {
+    $("#addExtractorForm").extr("name", "admin_extractor_update");
+    $("#extrPanelHead").html("编辑属性");
+    $.ajax({
+	type : "post",
+	dataType : "json",
+	url : "admin_extractor_edit",
+	data : {
+	    "id" : id
+	},
+	success : function(data) {
+	    var v = data.data;
+	    $("#extrid").val(v.id);
+	    $("#extrName").val(v.extractorName);
+	    $("#extrVariable").val(v.variableName);
+	    $("#extrRegular").val(v.regularExpression);
+	    $("#extrComments").val(v.comments);
+	    
+	    showAddDiv('addExtractorDiv');
+	},
+	error : function() {
+	    alert("系统错误");
+	}
+    });
+}
+
+/**
+ * 删除变量
+ * @param id
+ * @returns
+ */
+function delExtractor(id) {
+    var flag = confirm("是否确认删除？");
+    if (flag) {
+	$.ajax({
+	    type : "post",
+	    dataType : "json",
+	    url : "admin_extractor_delete",
+	    data : {
+		"id" : id
+	    },
+	    success : function(data) {
+		alert(data.msg);
+		window.location.reload(true);
+	    },
+	    error : function() {
+		alert("系统错误");
+	    }
+	});
+    }
+}
+
+/**
+ * 提交新增、编辑变量form
+ * @returns
+ */
+function submitAssert() {
+    if (!checkEmpty("assName", "Name"))
+	return false;
+    if (!checkEmpty("assRegular", "正则"))
+	return false;
+    if (!checkEmpty("expect", "期望"))
+	return false;
+    var targetUrl = $("#addAssertForm").extr("name");
+    $.ajax({
+	type : "post",
+	dataType : "json",
+	url : targetUrl,
+	data : $("#addAssertForm").serialize(),
+	success : function(data) {
+	    alert(data.msg);
+	    window.location.reload(true);
+	},
+	error : function() {
+	    alert("错误！！");
+	}
+    });
+}
+
+/**
+ * 编辑变量
+ * @param id
+ * @returns
+ */
+function editAssert(id) {
+    $("#addAssertForm").extr("name", "admin_assert_update");
+    $("#extrPanelHead").html("编辑属性");
+    $.ajax({
+	type : "post",
+	dataType : "json",
+	url : "admin_assert_edit",
+	data : {
+	    "id" : id
+	},
+	success : function(data) {
+	    var v = data.data;
+	    $("#assId").val(v.id);
+	    $("#assName").val(v.assertName);
+	    $("#assRegular").val(v.assertRegular);
+	    $("#expect").val(v.expectValue);
+	    $("#assComments").val(v.comments);
+	    
+	    showAddDiv('addAssertDiv');
+	},
+	error : function() {
+	    alert("系统错误");
+	}
+    });
+}
+
+/**
+ * 删除变量
+ * @param id
+ * @returns
+ */
+function delAssert(id) {
+    var flag = confirm("是否确认删除？");
+    if (flag) {
+	$.ajax({
+	    type : "post",
+	    dataType : "json",
+	    url : "admin_assert_delete",
+	    data : {
+		"id" : id
+	    },
+	    success : function(data) {
+		alert(data.msg);
+		window.location.reload(true);
+	    },
+	    error : function() {
+		alert("系统错误");
+	    }
+	});
+    }
+}

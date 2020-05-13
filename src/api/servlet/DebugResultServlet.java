@@ -113,7 +113,7 @@ public class DebugResultServlet extends BaseBackServlet{
 		if (drDAO.add(bean)) {
 			json.put("code", "0");
 			json.put("msg", "success");
-			json.put("data", "null");
+			json.put("data", bean);
 		}else {
 			json.put("code", "401");
 			json.put("msg", "fail");

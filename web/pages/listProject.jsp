@@ -77,7 +77,6 @@ $(document).ready(function() {
 <div>
 	<div class="col-lg-12">
 		<div class="page-header-p">
-			<div class="page-header-p1">所有项目</div>
 			项目列表
 		</div>
 	</div>

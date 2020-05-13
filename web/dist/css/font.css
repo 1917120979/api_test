@@ -92,6 +92,10 @@ table.listTable{
     height: 540px;
 }
 
+.div-height{
+	line-height: 2.6;
+    height: 36px;
+}
 
 form button{
 	margin:10px 40px;

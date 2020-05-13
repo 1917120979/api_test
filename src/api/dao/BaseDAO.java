@@ -102,7 +102,8 @@ public class BaseDAO {
 			}
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				return rs.getInt(1);
+				int num = rs.getInt(1);
+				return num;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
