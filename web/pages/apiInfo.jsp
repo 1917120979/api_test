@@ -407,8 +407,8 @@ $(document).ready(function() {
 					<ul class="nav nav-tabs">
 						<li class="active"><a href="#debugRequest" data-toggle="tab">Request</a>
 						</li>
-						<li><a href="#debugResponse" data-toggle="tab">Respnse</a></li>
-						<li><a href="#debugResult" data-toggle="tab">Extractor/Assert</a></li>
+						<li><a href="#debugResponse" data-toggle="tab">Response</a></li>
+						<li><a href="#debugPost" data-toggle="tab">Extractor/Assert</a></li>
 					</ul>
 
 					<!-- Tab panes -->
@@ -419,7 +419,7 @@ $(document).ready(function() {
 						<div class="tab-pane fade" id="debugResponse">
 
 						</div>
-						<div class="tab-pane fade" id="debugResult">
+						<div class="tab-pane fade" id="debugPost">
 
 						</div>
 						

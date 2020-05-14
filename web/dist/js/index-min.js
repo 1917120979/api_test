@@ -682,3 +682,24 @@ function delAssert(id) {
 	});
     }
 }
+
+function debugApi(aid){
+	$.ajax({
+	    type : "post",
+	    dataType : "json",
+	    url : "admin_debugResult_add",
+	    data : {
+		"aid" : aid
+	    },
+	    success : function(data) {
+		    var result = data.data;
+			alert(data.msg);
+			$("#debugRequest").html(result.debugRequest);
+			$("#debugResponse").html(result.debugResponse);
+			$("#debugPost").html(result.debugPost);
+	    },
+	    error : function() {
+		alert("系统错误");
+	    }
+	});
+}

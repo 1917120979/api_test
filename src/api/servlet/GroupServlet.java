@@ -106,21 +106,7 @@ public class GroupServlet extends BaseBackServlet{
 	 */
 	@Override
 	public String list(HttpServletRequest request, HttpServletResponse response) {
-		int gid = Integer.parseInt(request.getParameter("id"));
-		JSONObject json = new JSONObject();	
-		if (gid == 1) {
-			json.put("msg", "sucess");
-			json.put("code", 0);
-			json.put("data", "null");
-		}else {
-			json.put("msg", "fail");
-			json.put("code", 401);
-			json.put("data", "null");
-		}
-		
-		
-		response.setContentType("text/html;charset=UTF-8");
-		return "%"+json.toJSONString();
+		return null;
 	}
 
 }

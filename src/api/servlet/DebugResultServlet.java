@@ -37,8 +37,6 @@ public class DebugResultServlet extends BaseBackServlet{
 	public String add(HttpServletRequest request, HttpServletResponse response) {
 		String debugRequest = "";
 		String debugResponse = "";
-		String debugExtractor = "";
-		String debugAssert = "";
 		int aid = Integer.parseInt(request.getParameter("aid"));
 		Map<String, String> headerMap = attrDAO.getMap(aid, 2);
 		Map<String, String> requestMap = attrDAO.getMap(aid, 3);
@@ -100,10 +98,9 @@ public class DebugResultServlet extends BaseBackServlet{
 			}
 		}
 		DebugResult bean = new DebugResult();					
-		logger.debug("调试请求是>>>"+debugRequest);
-		logger.debug("调试响应是>>>"+debugResponse);
-		logger.debug("调试提取器是>>>"+debugExtractor);
-		logger.debug("调试断言是>>>"+debugAssert);
+		logger.debug("调试请求是--"+debugRequest);
+		logger.debug("调试响应是--"+debugResponse);
+		logger.debug("调试后置元件结果是--"+resultMap.toString());
 
 		bean.setApi(api);
 		bean.setDebugRequest(debugRequest);

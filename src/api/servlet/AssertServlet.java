@@ -10,7 +10,6 @@ import com.alibaba.fastjson.JSONObject;
 
 import api.bean.Api;
 import api.bean.Assert;
-import api.util.Page;
 
 @SuppressWarnings("serial")
 public class AssertServlet extends BaseBackServlet{
