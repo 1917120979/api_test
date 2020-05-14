@@ -35,8 +35,10 @@ public class DebugResultServlet extends BaseBackServlet{
 	 */
 	@Override
 	public String add(HttpServletRequest request, HttpServletResponse response) {
-		String debugRequest = "";
+		Map<String, String> debugRequest = new HashMap<String, String>();
+		Map<String, String> resultMap = new HashMap<String, String>();
 		String debugResponse = "";
+		
 		int aid = Integer.parseInt(request.getParameter("aid"));
 		Map<String, String> headerMap = attrDAO.getMap(aid, 2);
 		Map<String, String> requestMap = attrDAO.getMap(aid, 3);
@@ -57,16 +59,13 @@ public class DebugResultServlet extends BaseBackServlet{
 		}
 			
 		switch (method) {
-		case "GET":
-			debugRequest += headerMap.toString() +";"+  requestMap.toString();
+		case "GET":			
 			debugResponse = HttpClientUtil.doGet(url, headerMap, requestMap);
 			break;
 		case "POST":
 			if (dataType == 1) {
-				debugRequest += headerMap.toString() +";"+  data;
 				debugResponse = HttpClientUtil.doPostJson(url, headerMap, data);				
 			}else {
-				debugRequest += headerMap.toString() +";"+  requestMap.toString();
 				debugResponse = HttpClientUtil.doPost(url, headerMap, requestMap);	
 			}
 			break;
@@ -74,7 +73,9 @@ public class DebugResultServlet extends BaseBackServlet{
 			debugResponse = "method方法不支持";
 			break;
 		}
-		Map<String, String> resultMap = new HashMap<String, String>();
+		debugRequest.put("header", headerMap.toString());
+		debugRequest.put("param", requestMap.toString());
+				
 		List<Extractor> extractors = reDAO.list(aid, 0);
 		if (extractors.size() > 0 && null != extractors) {
 			for (int i = 0; i < extractors.size(); i++) {
@@ -103,7 +104,7 @@ public class DebugResultServlet extends BaseBackServlet{
 		logger.debug("调试后置元件结果是--"+resultMap.toString());
 
 		bean.setApi(api);
-		bean.setDebugRequest(debugRequest);
+		bean.setDebugRequest(debugRequest.toString());
 		bean.setDebugRespose(debugResponse);
 		bean.setDebugPost(requestMap.toString());
 		JSONObject json = new JSONObject();

@@ -610,7 +610,7 @@ function submitAssert() {
 	return false;
     if (!checkEmpty("expect", "期望"))
 	return false;
-    var targetUrl = $("#addAssertForm").extr("name");
+    var targetUrl = $("#addAssertForm").attr("name");
     $.ajax({
 	type : "post",
 	dataType : "json",
