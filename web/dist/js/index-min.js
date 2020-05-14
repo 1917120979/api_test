@@ -171,7 +171,6 @@ function closeAddDiv(id) {
     $('#layerBg').css({
 	"display" : "none"
     });
-    window.location.reload(true);
 }
 
 
@@ -223,7 +222,7 @@ function editProject(id) {
 	    $("#projectName").val(p.name);
 	    $("#sign").val(p.sign);
 	    $("#encrypt").val(p.encrypt);
-	    $("#comments").val(p.comments);
+	    $("#pComments").val(p.comments);
 	    
 	    showAddDiv('addProjectDiv');
 	},
@@ -526,7 +525,7 @@ function submitExtractor() {
 	return false;
     if (!checkEmpty("extrRegular", "正则"))
 	return false;
-    var targetUrl = $("#addExtractorForm").extr("name");
+    var targetUrl = $("#addExtractorForm").attr("name");
     $.ajax({
 	type : "post",
 	dataType : "json",
@@ -548,7 +547,7 @@ function submitExtractor() {
  * @returns
  */
 function editExtractor(id) {
-    $("#addExtractorForm").extr("name", "admin_extractor_update");
+    $("#addExtractorForm").attr("name", "admin_extractor_update");
     $("#extrPanelHead").html("编辑属性");
     $.ajax({
 	type : "post",
@@ -632,7 +631,7 @@ function submitAssert() {
  * @returns
  */
 function editAssert(id) {
-    $("#addAssertForm").extr("name", "admin_assert_update");
+    $("#addAssertForm").attr("name", "admin_assert_update");
     $("#extrPanelHead").html("编辑属性");
     $.ajax({
 	type : "post",
@@ -694,12 +693,12 @@ function debugApi(aid){
 	    success : function(data) {
 		    var result = data.data;
 			alert(data.msg);
-			$("#debugRequest").html(result.debugRequest);
-			$("#debugResponse").html(result.debugResponse);
-			$("#debugPost").html(result.debugPost);
+			$("#debugRequestText").val(result.debugRequest);
+			$("#debugResponseText").val(result.debugResponse);
+			$("#debugPostText").val(result.debugPost);
 	    },
 	    error : function() {
-		alert("系统错误");
+	    	alert("系统错误");
 	    }
 	});
 }

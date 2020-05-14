@@ -96,7 +96,7 @@ public class ExtractorDAO extends BaseDAO{
 				bean.setId(rs.getInt("id"));
 				bean.setVariableName(rs.getString("variable_name"));
 				bean.setExtractorName(rs.getString("extractor_name"));
-				bean.setRegularExpression(rs.getString("extractor_expression"));
+				bean.setRegularExpression(rs.getString("regular_expression"));
 				bean.setComments(rs.getString("comments"));
 				beans.add(bean);
 			}

@@ -63,7 +63,7 @@ $(document).ready(function() {
 				<div class="col-sm-10">
 					<select id="attrType" name="type">
 						<option value="2">header</option>
-						<option value="3">param</option>
+						<option value="3">params</option>
 					</select>
 				</div>
 			</div>
@@ -209,7 +209,7 @@ $(document).ready(function() {
 					</div>
 					<div class="form-group div-height">
 						<label class="col-sm-1 control-label" for="apiComments">
-							Comments </label>
+							描述 </label>
 						<div class="col-sm-11">
 							<input type="text" class="form-control" id="apiComments"
 								value="${api.comments }" disabled>
@@ -414,13 +414,25 @@ $(document).ready(function() {
 					<!-- Tab panes -->
 					<div class="tab-content">
 						<div class="tab-pane fade in active" id="debugRequest">
-
+							<h4></h4>
+							<div>
+								<textarea class="form-control" rows="4"
+									id="debugRequestText" disabled></textarea>
+							</div>
 						</div>
 						<div class="tab-pane fade" id="debugResponse">
-
+							<h4></h4>
+							<div>
+								<textarea class="form-control" rows="4"
+									id="debugResponseText" disabled></textarea>
+							</div>
 						</div>
 						<div class="tab-pane fade" id="debugPost">
-
+							<h4></h4>
+							<div>
+								<textarea class="form-control" rows="4"
+									id="debugPostText" disabled></textarea>
+							</div>
 						</div>
 						
 					</div>

@@ -76,8 +76,8 @@ public class AssertServlet extends BaseBackServlet{
 
 	@Override
 	public String update(HttpServletRequest request, HttpServletResponse response) {
-		int id = Integer.parseInt(request.getParameter("assertId"));
-		int aid = Integer.parseInt(request.getParameter("ass_aid"));
+		int id = Integer.parseInt(request.getParameter("id"));
+		int aid = Integer.parseInt(request.getParameter("aid"));
 		Assert bean = new Assert();
 		Api api = apiDAO.get(aid);
 		bean.setId(id);

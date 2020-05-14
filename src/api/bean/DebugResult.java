@@ -5,7 +5,7 @@ public class DebugResult {
 	private Api api;
 	private String debugTime;
 	private String debugRequest;
-	private String debugRespose;
+	private String debugResponse;
 	private String debugPost;
 
 	public Api getApi() {
@@ -26,11 +26,11 @@ public class DebugResult {
 	public void setDebugRequest(String debugRequest) {
 		this.debugRequest = debugRequest;
 	}
-	public String getDebugRespose() {
-		return debugRespose;
+	public String getDebugResponse() {
+		return debugResponse;
 	}
-	public void setDebugRespose(String debugRespose) {
-		this.debugRespose = debugRespose;
+	public void setDebugResponse(String debugResponse) {
+		this.debugResponse = debugResponse;
 	}
 
 	public int getId() {

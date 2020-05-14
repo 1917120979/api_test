@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import api.bean.Api;
+import api.bean.Assert;
 import api.bean.Attribute;
+import api.bean.Extractor;
 
 @SuppressWarnings("serial")
 public class ApiInfoServlet extends BaseBackServlet{
@@ -19,11 +21,15 @@ public class ApiInfoServlet extends BaseBackServlet{
 		Api api = apiDAO.get(aid);
 		List<Attribute> has = attrDAO.list(aid,0, 2);
 		List<Attribute> pas = attrDAO.list(aid,0, 3);
+		List<Extractor> eas = reDAO.list(aid, 0);
+		List<Assert> aas = assertDAO.list(aid, 0);
 		
 		request.setAttribute("api", api);
 		request.setAttribute("has", has);
 		request.setAttribute("pas", pas);
-
+		request.setAttribute("eas", eas);
+		request.setAttribute("aas", aas);
+		
 		return "/pages/apiInfo.jsp";
 	}
 

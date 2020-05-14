@@ -22,7 +22,7 @@ public class DebugResultDAO extends BaseDAO{
 	 */
 	public boolean add(DebugResult bean) {
 		String sql = "insert into debug_result values(null,?,?,?,?,?)";
-		Object[] params = {bean.getApi().getId(), bean.getDebugRequest(),bean.getDebugRespose(),bean.getDebugPost(),DateUtil.d2t(new Date())};
+		Object[] params = {bean.getApi().getId(), bean.getDebugRequest(),bean.getDebugResponse(),bean.getDebugPost(),DateUtil.d2t(new Date())};
 		return super.update(sql, params);
 	}
 	
@@ -51,7 +51,7 @@ public class DebugResultDAO extends BaseDAO{
 				DebugResult bean = new DebugResult();
 				bean.setId(rs.getInt("id"));
 				bean.setDebugRequest(rs.getString("debug_request"));
-				bean.setDebugRespose(rs.getString("debug_response"));
+				bean.setDebugResponse(rs.getString("debug_response"));
 				bean.setDebugPost(rs.getString("debug_post"));
 				bean.setDebugTime(rs.getTimestamp("debug_time").toString());
 				beans.add(bean);

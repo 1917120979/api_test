@@ -73,6 +73,7 @@ public class DebugResultServlet extends BaseBackServlet{
 			debugResponse = "method方法不支持";
 			break;
 		}
+		debugRequest.put("url", url);
 		debugRequest.put("header", headerMap.toString());
 		debugRequest.put("param", requestMap.toString());
 				
@@ -105,18 +106,14 @@ public class DebugResultServlet extends BaseBackServlet{
 
 		bean.setApi(api);
 		bean.setDebugRequest(debugRequest.toString());
-		bean.setDebugRespose(debugResponse);
-		bean.setDebugPost(requestMap.toString());
+		bean.setDebugResponse(debugResponse);
+		bean.setDebugPost(resultMap.toString());
+		
 		JSONObject json = new JSONObject();
-		if (drDAO.add(bean)) {
-			json.put("code", "0");
-			json.put("msg", "success");
-			json.put("data", bean);
-		}else {
-			json.put("code", "401");
-			json.put("msg", "fail");
-			json.put("data", "null");
-		}
+		json.put("code", "0");
+		json.put("msg", "success");
+		json.put("data", bean);
+		
 		response.setContentType("text/html;charset=UTF-8");
 		return "%"+json.toJSONString();	
 	}

@@ -44,6 +44,7 @@ public class TestServlet extends BaseBackServlet {
 			json.put("code", 401);
 			json.put("data", "");
 		}
+		response.setContentType("text/html;charset=UTF-8");
 		return "%"+json.toJSONString();
 	}
 	
