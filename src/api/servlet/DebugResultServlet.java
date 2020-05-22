@@ -51,13 +51,17 @@ public class DebugResultServlet extends BaseBackServlet{
 		Project project = api.getProject();
 		int isSgin = project.getSign();
 		
-		if (isSgin == 1 && null != headerMap) {
-			SignEncryptUtil.getSignedMap(headerMap, data);
-		}
+		
 		if (project.getEncrypt() == 1 && data != null) {
-			SignEncryptUtil.getEncryptData(data);
+			data = SignEncryptUtil.getEncryptData(data);
 		}
-			
+		
+		if (isSgin == 1 && null != headerMap) {
+			headerMap = SignEncryptUtil.getSignedMap(headerMap, data);
+		}
+		logger.debug("method:"+method);
+		logger.debug("data:"+data);
+		logger.debug("headerMap:"+headerMap);
 		switch (method) {
 		case "GET":			
 			debugResponse = HttpClientUtil.doGet(url, headerMap, requestMap);

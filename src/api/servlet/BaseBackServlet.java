@@ -69,6 +69,7 @@ public abstract class BaseBackServlet extends HttpServlet {
 
 	public void service(HttpServletRequest request, HttpServletResponse response) {
 		try {
+			user = (User) request.getSession().getAttribute("user");
 			String method = (String) request.getAttribute("method");
 			Method m = this.getClass().getMethod(method, HttpServletRequest.class, HttpServletResponse.class);
 			String redirect = m.invoke(this, request, response).toString();

@@ -19,69 +19,32 @@ public class SignEncryptUtil {
 	static {
 		VariableDAO varDAO = new VariableDAO();
 		appsecret = varDAO.getValue("appsecret");
-	}
-	
-	public static String getPostGatewayResponse(String url, Map<String, String> header,String requestData) {
-		Map<String,String> signMap = header;
-		requestData =  Aes.encryptAes(requestData,appsecret);
-		
-		String timestamp = String.valueOf(Calendar.getInstance().getTimeInMillis());		
-		signMap.put("data", requestData);
-		signMap.put("timestamp", timestamp);
-		String sign = Md5.sign( SignCore.createLinkString(signMap), appsecret, "");
-		
-		header.put("sign", sign);
-		header.put("timestamp", timestamp);			
-		
-		logger.info("请求头：>>>"+header.toString()+"\r\n");
-		String result = HttpClientUtil.doPostJson(url, header, requestData);
-
-		result = replaceData(result, appsecret).toJSONString();
-		logger.info("解密后的返回数据：>>>"+result+"\r\n");
-		return result;
+		logger.debug("appsecret:"+appsecret);
 	}
 	
 	public static Map<String, String> getSignedMap(Map<String, String> header, String data) {
+		Map<String, String> signMap = header;
 		String timestamp = String.valueOf(Calendar.getInstance().getTimeInMillis());
-		data = Aes.encryptAes(data,appsecret);
-		header.put("data", data);
+		signMap.put("data", data);
+		signMap.put("timestamp", timestamp);
+		
+		signMap.remove("Content-Type");
+		String sign = Md5.sign( SignCore.createLinkString(signMap), appsecret, "");
 		header.put("timestamp", timestamp);
-		String sign = Md5.sign( SignCore.createLinkString(header), appsecret, "");
 		header.put("sign", sign);
-		header.remove("data");
 		return header;		
 	}
 	
-	public static void getEncryptData(String data) {
-		data = Aes.encryptAes(data,appsecret);
+	public static String getEncryptData(String data) {
+		return Aes.encryptAes(data,appsecret);
 	}
-	
-	public static String getGetGatewayResponse(String url, Map<String, String> header, String appsecret) {
-		Map<String,String> signMap = header;
 		
-		String timestamp = String.valueOf(Calendar.getInstance().getTimeInMillis());
-		signMap.remove("Content-Type");
-		signMap.put("timestamp", timestamp);
-		String sign = Md5.sign( SignCore.createLinkString(signMap), appsecret, "");
-		
-		header.put("sign", sign);
-		header.put("timestamp", timestamp);			
-		
-		logger.info("请求头：>>>"+header.toString()+"\r\n");
-		String result = HttpClientUtil.doGet(url, header, null);
-
-		result = replaceData(result, appsecret).toJSONString();
-		logger.info("解密后的返回数据：>>>"+result+"\r\n");
-		return result;
-	}
-	
-	
 	public static JSONObject replaceData(String result,String appsecret) {
 		JSONObject jsonObject = JSONObject.parseObject(result);
 		try {
 
 			Object data = jsonObject.get("data");
-			if (data != null) {			
+			if (data != null && !data.equals("null")) {			
 				String tempdata = Aes.decryptAes((String) data, appsecret);
 				jsonObject.remove("data");
 				logger.info("》》》》"+tempdata);

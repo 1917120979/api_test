@@ -94,7 +94,7 @@ public class BaseDAO {
 	public int getTotal(String sql, Object[] params) {
 		try {
 			conn = DBUtil.getConnection();
-			pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pst = conn.prepareStatement(sql);
 			if ( null != params && params.length > 0) {
 				for (int i = 0; i < params.length; i++) {
 					pst.setObject(i + 1, params[i]);
